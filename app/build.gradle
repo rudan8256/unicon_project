@@ -37,8 +37,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'com.google.firebase:firebase-firestore:24.1.2'
     implementation 'com.google.firebase:firebase-auth:21.0.3'
-    implementation 'com.google.android.gms:play-services-maps'
-    implementation 'com.google.android.gms:play-services-location'
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
