@@ -10,21 +10,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Unicon_project">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA" />
+
         <activity
             android:name=".MapTest"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
+            android:exported="true" >
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
-            <meta-data
-                android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA" />
+           </intent-filter>
+
+
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
+
+
         </activity>
     </application>
 

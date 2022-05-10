@@ -65,9 +65,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_test);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.activity_map_test);
+        SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         mActivity = this;
 
@@ -76,10 +75,6 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
     }
 
     @Override
