@@ -19,12 +19,12 @@ public class SaleProduct {
    전기세, 가스 , 수도 ,인터넷
    면적
    층 , 구조
-   옵션( 전기보일러 가스보일러 인덕션 에어컨 세탁기 냉장고 옷장 가스레인지 하이라이트
+   옵션( 전기보일러 가스보일러 인덕션
+   에어컨 세탁기 냉장고 옷장 가스레인지 하이라이트
    편세권 역세권 주차가능)
    개인의견 (소음 , 낙후 , 집주인  평점 선그래프 )
    상세설명
      */
-
 
     private String home_adress;
     private Boolean month_rent,deposit;
@@ -73,7 +73,7 @@ public class SaleProduct {
         this.options.put("closet",false);
         this.options.put("gasrange",false);
         this.options.put("highlight",false);
-        this.options.put("convenience store",false);
+        this.options.put("convenience_store",false);
         this.options.put("subway",false);
         this.options.put("parking",false);
 

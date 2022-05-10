@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Unicorn/unicon_project/app/src/main/res/layout/activity_map_test.xml" value="0.2814814814814815" />
+        <entry key="..\:/Users/ruddd/AndroidStudioProjects/Unicon_project/app/src/main/res/layout/activity_main.xml" value="0.31875" />
+        <entry key="..\:/Users/ruddd/AndroidStudioProjects/Unicon_project/app/src/main/res/layout/activity_map_test.xml" value="0.31875" />
+        <entry key="..\:/Users/ruddd/AndroidStudioProjects/Unicon_project/app/src/main/res/layout/activity_sale_page.xml" value="0.33" />
+        <entry key="..\:/Users/ruddd/AndroidStudioProjects/Unicon_project/app/src/main/res/layout/marker.xml" value="0.3359375" />
       </map>
     </option>
   </component>
