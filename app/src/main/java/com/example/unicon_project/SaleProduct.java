@@ -28,8 +28,8 @@ public class SaleProduct {
 
     private String home_adress;
     private Boolean month_rent,deposit;
-    private String[] live_period;
-    private String[] price_options;
+    private String month_rent_price , deposit_price;
+    private String live_period_start, live_period_end;
     private ArrayList<String> images_url;
     private String maintenance_cost;
     private String room_size;
@@ -38,12 +38,15 @@ public class SaleProduct {
     private Map<String, Boolean > maintains;
     private Map<String, Boolean > options;
     private Map<String,String> personal_proposal;
+    private String productId;
+
 
     public SaleProduct(){
         this.home_adress="" ;
-        this.live_period = new String[]{"",""};
-        // array[0] 은 보증금 array[1]은 월세 가격
-        this.price_options = new String[]{"",""};
+        this.month_rent_price="";
+        this.deposit_price="";
+        this.live_period_start="";
+        this.live_period_end="";
         this.images_url= new ArrayList<>();
         this.maintenance_cost ="";
         this.room_size="";
@@ -55,6 +58,7 @@ public class SaleProduct {
         this.personal_proposal = new HashMap<>();
         this.month_rent = false;
         this.deposit = false;
+        this.productId = "";
 
         //집주인 동의여부 ,  관리비 옵션
         this.maintains.put("owner_agree", false);
@@ -84,6 +88,13 @@ public class SaleProduct {
 
     }
 
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
 
 
     public String getHome_adress() {
@@ -110,20 +121,36 @@ public class SaleProduct {
         this.deposit = deposit;
     }
 
-    public String[] getLive_period() {
-        return live_period;
+    public String getMonth_rent_price() {
+        return month_rent_price;
     }
 
-    public void setLive_period(String[] live_period) {
-        this.live_period = live_period;
+    public void setMonth_rent_price(String month_rent_price) {
+        this.month_rent_price = month_rent_price;
     }
 
-    public String[] getPrice_options() {
-        return price_options;
+    public String getDeposit_price() {
+        return deposit_price;
     }
 
-    public void setPrice_options(String[] price_options) {
-        this.price_options = price_options;
+    public void setDeposit_price(String deposit_price) {
+        this.deposit_price = deposit_price;
+    }
+
+    public String getLive_period_start() {
+        return live_period_start;
+    }
+
+    public void setLive_period_start(String live_period_start) {
+        this.live_period_start = live_period_start;
+    }
+
+    public String getLive_period_end() {
+        return live_period_end;
+    }
+
+    public void setLive_period_end(String live_period_end) {
+        this.live_period_end = live_period_end;
     }
 
     public ArrayList<String> getImages_url() {
