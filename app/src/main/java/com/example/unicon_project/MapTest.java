@@ -71,7 +71,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapTest extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationButtonClickListener, TextView.OnEditorActionListener, View.OnClickListener, SearchView.OnQueryTextListener {
+public class MapTest extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationButtonClickListener,   SearchView.OnQueryTextListener,  GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraMoveListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient = null;
@@ -97,13 +97,14 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     private LocationManager locationManager;
     private UiSettings mUiSettings;
     private SearchView searchView;
-    private ImageView iv_search;
+    private ImageView iv_search_current_camera_position;
     private ImageView iv_center;
-    LocationRequest locationRequest = new LocationRequest()
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            .setInterval(UPDATE_INTERVAL_MS)
-            .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
+    private ImageView iv_detail;
 
+    private LocationRequest locationRequest;
+
+    private LatLng currentCameraPosition;
+    private Geocoder geocoder;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +113,11 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         //
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        locationRequest = new LocationRequest()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(UPDATE_INTERVAL_MS)
+                .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
         //
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         //
@@ -134,7 +140,20 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         //
         searchView=findViewById(R.id.et_search);
         searchView.setOnQueryTextListener(this);
-        //iv_search.setOnClickListener(this);
+        geocoder = new Geocoder(MapTest.this);
+
+        iv_search_current_camera_position=findViewById(R.id.iv_search_current_camera_position);
+        iv_search_current_camera_position.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getCurrentCameraPosition();
+            }
+        });
+
+        iv_detail = findViewById(R.id.iv_detail);
+        iv_detail.setVisibility(View.GONE);
+
+
 
     }
 
@@ -208,7 +227,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         /*  mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Seoul,10));*/
 
         getCurrentPosition();
-
+        currentCameraPosition=currentPosition;
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -223,6 +242,11 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         mMap.setOnMarkerClickListener(this);
 
+        mMap.setOnCameraIdleListener(this);
+
+        //mMap.setOnCameraMoveStartedListener(this);
+
+        mMap.setOnCameraMoveListener(this);
     }
 
 
@@ -260,7 +284,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
             @Override
             public void onSuccess(Location location) {
                 if(location!=null) {
-                    currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                    currentCameraPosition =    currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 15));
                     Log.e(TAG, "currentPosition : success" + currentPosition);
                 }
@@ -275,6 +299,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         }).addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
+                Location location = task.getResult();
+                currentCameraPosition=currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
                 Log.e(TAG, "currentPosition : complete"+task.getResult().toString());
                 getSampleMarkerList();
             }
@@ -357,6 +383,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
+        iv_detail.setVisibility(View.VISIBLE);
         changeSelectedMarker(marker);
         return false;
     }
@@ -374,46 +401,114 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
     @Override
     public boolean onMyLocationButtonClick() {
-        currentPosition = mMap.getCameraPosition().target;
+        currentCameraPosition = currentPosition = mMap.getCameraPosition().target;
+        iv_center.setVisibility(View.GONE);
         Log.e(TAG,"onMyLocationButtonClick : "+currentPosition);
         return false;
     }
 
-    @Override
-    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-        return false;
-    }
-
-    @Override
-    public void onClick(View view) {
-
-    }
-
-    void clickSearch(){
-    }
 
     @Override
     public boolean onQueryTextSubmit(String s) {
         String location = searchView.getQuery().toString();
         List<Address> addressList = null;
 
-    if(location != null || !location.equals("")){
-        Geocoder geocoder = new Geocoder(MapTest.this);
-        try {
-            addressList = geocoder.getFromLocationName(location, 10);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(location != null || !location.equals("")){
+            try {
+                addressList = geocoder.getFromLocationName(location, 10);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            Address address = addressList.get(0);
+            LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(latLng));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
         }
-        Address address = addressList.get(0);
-        LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(latLng));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
-    }
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
+
         return false;
+    }
+
+    void getCurrentCameraPosition(){
+        mMap.addMarker(new MarkerOptions().position(currentCameraPosition));
+
+    }
+
+    int abs(int a){
+        if(a>=0)return a;
+        else return -a;
+    }
+    boolean cmpLatLng(LatLng p1,LatLng p2){
+        int lat1=(int)(p1.latitude*100000);
+        int lat2=(int)(p2.latitude*100000);
+        int lng1=(int)(p1.longitude*100000);
+        int lng2=(int)(p2.longitude*100000);
+        Log.e(TAG,"lat1 : "+lat1);
+        Log.e(TAG,"lng1 : "+lng1);
+        Log.e(TAG,"lat2 : "+lat2);
+        Log.e(TAG,"lng2 : "+lng2);
+
+        if(abs(lat1-lat2)>20){
+            return false;
+        }
+        if(abs(lng1-lng2)>20){
+            return false;
+        }
+        return true;
+    }
+
+
+
+
+
+    @Override
+    public void onCameraIdle() {
+
+        currentCameraPosition=mMap.getCameraPosition().target;
+        Log.e(TAG,"cameraPosition : "+ currentCameraPosition);
+        Log.e(TAG,"currentPosition : "+ currentPosition);
+
+        if(cmpLatLng(currentCameraPosition,currentPosition)){
+            Log.e(TAG,"setVisibility : GONE");
+            iv_center.setVisibility(View.GONE);
+        }
+        else{
+            Log.e(TAG,"setVisibility : VISIBLE");
+            iv_center.setVisibility(View.VISIBLE);
+        }
+
+        try {
+            List<Address> addressList= geocoder.getFromLocation(currentCameraPosition.latitude,currentCameraPosition.longitude,1);
+            if(addressList.size()!=0) {
+                String string_center_address = addressList.get(0).toString();
+                Log.e(TAG, "center_address : " + string_center_address);
+            }
+            else {
+                Log.e(TAG, "center_address : null");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(selectedMarker!=null) {
+            if (!cmpLatLng(currentCameraPosition, selectedMarker.getPosition())) {
+                iv_detail.setVisibility(View.GONE);
+                addMarker(selectedMarker,false);
+                selectedMarker.remove();
+            }
+
+
+        }
+    }
+
+    @Override
+    public void onCameraMove() {
+
     }
 }
