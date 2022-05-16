@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -21,6 +22,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -32,10 +35,13 @@ import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +56,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -59,11 +66,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapTest extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationButtonClickListener {
+public class MapTest extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationButtonClickListener, TextView.OnEditorActionListener, View.OnClickListener, SearchView.OnQueryTextListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient = null;
@@ -87,7 +95,10 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     private View marker_root_view;
     private TextView tv_marker;
     private LocationManager locationManager;
-
+    private UiSettings mUiSettings;
+    private SearchView searchView;
+    private ImageView iv_search;
+    private ImageView iv_center;
     LocationRequest locationRequest = new LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
             .setInterval(UPDATE_INTERVAL_MS)
@@ -110,7 +121,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         builder.addLocationRequest(locationRequest);
 
         //
-
+        iv_center=findViewById(R.id.iv_center);
+        iv_center.setVisibility(View.GONE);
         mActivity = this;
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -120,7 +132,9 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 .build();
 
         //
-
+        searchView=findViewById(R.id.et_search);
+        searchView.setOnQueryTextListener(this);
+        //iv_search.setOnClickListener(this);
 
     }
 
@@ -182,7 +196,9 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
+        mUiSettings = mMap.getUiSettings();
 
+        mUiSettings.setMapToolbarEnabled(true);
        /* MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(Seoul);
         markerOptions.title("서울");
@@ -198,6 +214,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
             return;
         }
         mMap.setMyLocationEnabled(true);
+
         mMap.setOnMyLocationButtonClickListener(this);
 
         //마커 테스트
@@ -205,6 +222,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         //*마커 테스트
 
         mMap.setOnMarkerClickListener(this);
+
     }
 
 
@@ -358,6 +376,44 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     public boolean onMyLocationButtonClick() {
         currentPosition = mMap.getCameraPosition().target;
         Log.e(TAG,"onMyLocationButtonClick : "+currentPosition);
+        return false;
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        return false;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    void clickSearch(){
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        String location = searchView.getQuery().toString();
+        List<Address> addressList = null;
+
+    if(location != null || !location.equals("")){
+        Geocoder geocoder = new Geocoder(MapTest.this);
+        try {
+            addressList = geocoder.getFromLocationName(location, 10);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Address address = addressList.get(0);
+        LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(latLng));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
+    }
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
         return false;
     }
 }
