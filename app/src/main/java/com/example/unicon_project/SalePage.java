@@ -1,19 +1,29 @@
 package com.example.unicon_project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-public class SalePage extends AppCompatActivity {
+public class SalePage extends AppCompatActivity implements View.OnClickListener {
 
     Button complete_btn;
     SaleProduct newproduct;
@@ -22,6 +32,9 @@ public class SalePage extends AppCompatActivity {
     FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     FirebaseAuth mauth = FirebaseAuth.getInstance();
     String curdate;
+    LinearLayout deposit,month_rent;
+
+    private Map<String, Boolean > maintains;
 
 
     @Override
@@ -30,7 +43,7 @@ public class SalePage extends AppCompatActivity {
         setContentView(R.layout.activity_sale_page);
 
 
-
+        //새로운 판매글 클래스 생성
          newproduct = new SaleProduct();
 
          complete_btn = findViewById(R.id.complete_btn);
@@ -42,12 +55,23 @@ public class SalePage extends AppCompatActivity {
          maintenance_cost = findViewById(R.id.maintenance_cost);
          room_size = findViewById(R.id.room_size);
          specific = findViewById(R.id.specific);
+         deposit = findViewById(R.id.deposit);
+         month_rent = findViewById(R.id.month_rent);
+
+
+        maintains = newproduct.getMaintains();
+
+        deposit.setOnClickListener(this);
+        month_rent.setOnClickListener(this);
 
 
 
-         complete_btn.setOnClickListener(new View.OnClickListener() {
+        complete_btn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+
+
+                 // Create a new user with a first and last name
 
 
                  newproduct.setHome_adress(home_address.getText().toString());
@@ -60,9 +84,18 @@ public class SalePage extends AppCompatActivity {
                  newproduct.setSpecific(specific.getText().toString());
 
                 curdate = String.valueOf(System.currentTimeMillis());
+                newproduct.setProductId(curdate);
 
 
-                 mstore.collection("SaleProducts").document(mauth.getUid() + curdate).set(newproduct);
+                 mstore.collection("SaleProducts").document( curdate)
+                         .set(newproduct)
+                         .addOnSuccessListener(new OnSuccessListener<Void>() {
+                             @Override
+                             public void onSuccess(Void unused) {
+                                 Log.e("***","업로드 성공");
+
+                             }
+                         });
 
 
 
@@ -72,4 +105,33 @@ public class SalePage extends AppCompatActivity {
 
 
     }
+
+
+
+    @Override
+    public void onClick(View view) {
+        switch ( view.getId()){
+            case R.id.deposit:
+                if( !newproduct.getDeposit() ){
+                    newproduct.setDeposit(true);
+                    deposit.setBackgroundColor(Color.BLUE); }
+                else{
+                    newproduct.setDeposit(false);
+                    deposit.setBackgroundColor(Color.WHITE); }
+                break;
+            case R.id.month_rent:
+                if( !newproduct.getMonth_rent() ){
+                    newproduct.setMonth_rent(true);
+                    month_rent.setBackgroundColor(Color.BLUE); }
+                else{
+                    newproduct.setMonth_rent(false);
+                    month_rent.setBackgroundColor(Color.WHITE); }
+                break;
+
+
+        }
+    }
+
+
 }
+
