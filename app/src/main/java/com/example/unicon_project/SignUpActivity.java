@@ -80,8 +80,6 @@ public class SignUpActivity extends AppCompatActivity {
                             SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                    //가입 성공시
                                     if (task.isSuccessful()) {
                                         mDialog.dismiss();
 
@@ -102,8 +100,6 @@ public class SignUpActivity extends AppCompatActivity {
                                         DatabaseReference reference = database.getReference("Users");
                                         reference.child(uid).setValue(hashMap);*/
 
-
-                                        //가입이 이루어져을시 가입 화면을 빠져나감.
                                         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -113,17 +109,11 @@ public class SignUpActivity extends AppCompatActivity {
                                         mDialog.dismiss();
                                         Toast.makeText(SignUpActivity.this, "이미 존재하는 아이디 입니다.", Toast.LENGTH_SHORT).show();
                                         return;  //해당 메소드 진행을 멈추고 빠져나감.
-
                                     }
-
                                 }
                             });
-
-                    //비밀번호 오류시
                 }else{
-
                     Toast.makeText(SignUpActivity.this, "비밀번호가 틀렸습니다. 다시 입력해 주세요.", Toast.LENGTH_SHORT).show();
-                    return;
                 }
             }
         });

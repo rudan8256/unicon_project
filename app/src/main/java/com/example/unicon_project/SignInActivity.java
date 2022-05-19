@@ -34,6 +34,7 @@ import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.sdk.auth.model.OAuthToken;
+import com.kakao.sdk.user.UserApi;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
 import com.kakao.usermgmt.UserManagement;
@@ -98,14 +99,16 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //구글, 앱 로그인 자동로그인
         if (firebaseAuth.getCurrentUser() != null) {
             Log.e("###", "firebase automatic log in");
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
+
+        //카카오톡 자동로그인
         if (Session.getCurrentSession().checkAndImplicitOpen()) {
-            // 사용자의 세션이 유효하므로 카카오 사용자 정보를 요청한다.
             UserManagement.getInstance().me(new MeV2ResponseCallback() {
                     @Override
                     public void onSuccess(MeV2Response result) {
@@ -120,6 +123,7 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
             });
         }
 
+        //회원가입
         text_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +133,7 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
             }
         });
 
+        //앱 로그인
         btn_log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,6 +162,7 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
             }
         });
 
+        //카카오톡 로그인
         mSessionCallback = new SessionCallBack() {
             @Override
             public void onSessionOpened() {
@@ -171,17 +177,13 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                     @Override
                     public void onSessionClosed(ErrorResult errorResult) {
                         // 로그인 세션이 닫힘
-                        // Toast.makeText(KakaoLogin.this, "세션이 닫혔습니다.. 다시 시도해주세요", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(MeV2Response result) {
                         // 로그인 성공
-                        // result에 카카오 항목들의 정보가 담겨 있음
+                        Log.e("###", "id : "+result.getId());
                         Intent intent=new Intent(SignInActivity.this,MainActivity.class);
-                       /* intent.putExtra("name",result.getKakaoAccount().getProfile().getNickname());
-                        intent.putExtra("profileImg",result.getKakaoAccount().getProfile().getProfileImageUrl());
-                        intent.putExtra("state","on");*/
                         startActivity(intent);
                         finish();
                     }
@@ -196,11 +198,13 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
         Session.getCurrentSession().addCallback(mSessionCallback);
         Session.getCurrentSession().checkAndImplicitOpen();
 
+        //구글 로그인
         btn_google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 Log.e("###", "google log in");
+                Log.e("###", "진행 1");
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
@@ -210,7 +214,6 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)) {
             return;
-            //super.onActivityResult(requestCode, resultCode, data);
         }
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -219,6 +222,8 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.e("###", "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
+
+                Log.e("###", "진행 2");
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.e("###", "Google sign in failed", e);
@@ -236,6 +241,7 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.e("###", "signInWithCredential:success");
+                            Log.e("###", "진행 3");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             updateUI(user);
                             goMainActivity();
@@ -247,12 +253,12 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                     }
                 });
     }
+
     private void goMainActivity(){
         Intent intent = new Intent(SignInActivity.this, SignInActivity.class);
         startActivity(intent);
         finish();
     }
-
     private void updateUI(FirebaseUser user) {
 
     }

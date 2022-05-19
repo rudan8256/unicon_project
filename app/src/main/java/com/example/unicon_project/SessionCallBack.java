@@ -52,9 +52,10 @@ public class SessionCallBack implements ISessionCallback {
 
             @Override
             public void onSuccess(MeV2Response result) {
-                Log.e("SessionCallback :: ", "onSuccess");
+
                 Log.e("###","여기까지 옴1");
                 String id = String.valueOf(result.getId());
+                Log.e("###", "id : "+id);
                 UserAccount kakaoAccount = result.getKakaoAccount();
                 Log.e("###","여기까지 옴2");
                 if (kakaoAccount != null) {
