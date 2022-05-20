@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    Button btn_log_out;
+    Button btn_log_out, btn_toChatting;
     FirebaseAuth firebaseAuth;
     private long clickTime = 0;
     private SessionCallBack mSessionCallback = new SessionCallBack();
@@ -141,6 +141,15 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        btn_toChatting = findViewById(R.id.btn_toChatting);
+        btn_toChatting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChattingActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     // 뒤로가기 버튼 2번 누를 시에 앱 종료

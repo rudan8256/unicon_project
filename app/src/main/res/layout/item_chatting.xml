@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_chatting_id"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="25sp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:text="상대방"/>
+
+    <TextView
+        android:id="@+id/tv_chatting_msg"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="30sp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:text="채팅내용"/>
+
+    <TextView
+        android:id="@+id/tv_chatting_time"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="20sp"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:text="시간"/>
+</LinearLayout>
