@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 
     <application
         android:name=".GlobalApplication"
@@ -18,8 +21,22 @@
             android:name=".ChattingActivity"
             android:exported="false" />
         <activity
+            android:name=".SaleProductPage"
+            android:exported="true" />
+        <activity
+            android:name=".SaleList"
+            android:exported="true" />
+        <activity
             android:name=".SalePage"
             android:exported="true" />
+
+        <activity
+            android:name=".Image_zoom"
+            android:exported="true" />
+        <activity
+            android:name=".ImageViewpager"
+            android:exported="true" />
+
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

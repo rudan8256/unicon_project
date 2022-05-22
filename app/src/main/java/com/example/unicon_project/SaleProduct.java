@@ -1,10 +1,11 @@
 package com.example.unicon_project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SaleProduct {
+public class SaleProduct implements Serializable {
 
     /*
     주소
@@ -41,6 +42,8 @@ public class SaleProduct {
     private String productId;
 
 
+
+
     public SaleProduct(){
         this.home_adress="" ;
         this.month_rent_price="";
@@ -62,7 +65,7 @@ public class SaleProduct {
 
         //집주인 동의여부 ,  관리비 옵션
         this.maintains.put("owner_agree", false);
-        this.maintains.put("elect_cost", false);
+        this.maintains.put("elec_cost", false);
         this.maintains.put("gas_cost", false);
         this.maintains.put("water_cost", false);
         this.maintains.put("internet_cost", false);
@@ -87,6 +90,8 @@ public class SaleProduct {
         this.personal_proposal.put("homeowner","");
 
     }
+
+
 
     public String getProductId() {
         return productId;

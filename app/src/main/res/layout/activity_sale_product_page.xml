@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
+            <TextView
                 android:id="@+id/home_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,13 +58,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <EditText
+                <TextView
                     android:id="@+id/deposit_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="보증금"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/month_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,13 +77,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <EditText
+                <TextView
                     android:id="@+id/live_period_start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="입주 첫날"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/live_period_end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,15 +101,6 @@
                     android:layout_height="wrap_content"/>
 
 
-                    <TextView
-                        android:id="@+id/post_gallery"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/ic_baseline_image_24"
-                        android:gravity="center" />
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/photo_list"
                     android:layout_width="match_parent"
@@ -121,9 +112,7 @@
 
             </LinearLayout>
 
-
-
-            <EditText
+            <TextView
                 android:id="@+id/maintenance_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,7 +165,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <EditText
+            <TextView
                 android:id="@+id/room_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -211,6 +200,7 @@
                     android:background="#F2F2F2"
                     android:layout_width="200px"
                     android:layout_height="100px">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -351,23 +341,23 @@
 
             </LinearLayout>
 
-            <EditText
+            <TextView
                 android:id="@+id/specific"
                 android:layout_width="wrap_content"
                 android:layout_height="300px"
                 android:hint="상세설명"/>
 
-
             <Button
-                android:id="@+id/complete_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="완료"></Button>
+                android:text="채팅하기">
+
+            </Button>
+
+
+
 
         </LinearLayout>
-
-
-
 
 
 

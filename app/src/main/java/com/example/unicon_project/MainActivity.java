@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button ToSalePage,ToMapTest;
+    Button ToSalePage,ToMapTest,ToSaleList;
 
     FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         ToSalePage= findViewById(R.id.to_SalePage);
         ToMapTest =findViewById(R.id.to_MapTest);
+        ToSaleList = findViewById(R.id.to_SaleList);
 
         ToSalePage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MapTest.class);
+                startActivity(intent);
+            }
+        });
+
+        ToSaleList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SaleList.class);
                 startActivity(intent);
             }
         });

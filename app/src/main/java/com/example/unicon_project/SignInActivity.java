@@ -110,16 +110,16 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
         //카카오톡 자동로그인
         if (Session.getCurrentSession().checkAndImplicitOpen()) {
             UserManagement.getInstance().me(new MeV2ResponseCallback() {
-                    @Override
-                    public void onSuccess(MeV2Response result) {
-                        Log.e("###", "kakao automatic log in");
-                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    @Override
-                    public void onSessionClosed(ErrorResult errorResult) {
-                    }
+                @Override
+                public void onSuccess(MeV2Response result) {
+                    Log.e("###", "kakao automatic log in");
+                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                @Override
+                public void onSessionClosed(ErrorResult errorResult) {
+                }
             });
         }
 
