@@ -137,6 +137,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                  newproduct.setMaintenance_cost(maintenance_cost.getText().toString());
                  newproduct.setRoom_size(room_size.getText().toString());
                  newproduct.setSpecific(specific.getText().toString());
+                 newproduct.setWriterId(mAuth.getUid());
 
                 curdate = String.valueOf(System.currentTimeMillis());
                 newproduct.setProductId(curdate + mAuth.getUid());
