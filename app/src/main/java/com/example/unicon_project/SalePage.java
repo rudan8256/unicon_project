@@ -1,28 +1,76 @@
 package com.example.unicon_project;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.Manifest;
+import android.content.ClipData;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class SalePage extends AppCompatActivity {
+public class SalePage extends AppCompatActivity implements View.OnClickListener {
 
-    Button complete_btn;
-    SaleProduct newproduct;
-    EditText home_address, deposit_price, month_price,live_period_start,live_period_end;
-    EditText maintenance_cost, room_size, specific;
-    FirebaseFirestore mstore = FirebaseFirestore.getInstance();
-    FirebaseAuth mauth = FirebaseAuth.getInstance();
-    String curdate;
 
+    private static final int FROM_GALLERY = 2;
+    private Button complete_btn;
+    private SaleProduct newproduct;
+    private  EditText home_address, deposit_price, month_price,live_period_start,live_period_end;
+    private EditText maintenance_cost, room_size, specific;
+    private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private String curdate;
+    private  LinearLayout deposit,month_rent, elec_cost, gas_cost, water_cost, internet_cost;
+    private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange,highlight;
+    private LinearLayout convenience_store, subway, parking;
+
+    private Map<String, Boolean > maintains,options;
+    private Map<String ,String> personal_proposal;
+
+    FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+    StorageReference storageReference;
+
+    private ArrayList<String>image_urllist = new ArrayList<>();
+    private ArrayList<Uri> uriList = new ArrayList<>();
+    MultiImageAdapter photoadapter;
+    private RecyclerView photo_list;
+    private TextView post_gallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,26 +78,57 @@ public class SalePage extends AppCompatActivity {
         setContentView(R.layout.activity_sale_page);
 
 
-
+        //새로운 판매글 클래스 생성
          newproduct = new SaleProduct();
-
-         complete_btn = findViewById(R.id.complete_btn);
-         home_address = findViewById(R.id.home_address);
-         deposit_price = findViewById(R.id.deposit_price);
-         month_price = findViewById(R.id.month_price);
-         live_period_start = findViewById(R.id.live_period_start);
-         live_period_end = findViewById(R.id.live_period_end);
-         maintenance_cost = findViewById(R.id.maintenance_cost);
-         room_size = findViewById(R.id.room_size);
-         specific = findViewById(R.id.specific);
+         maintains = newproduct.getMaintains();
+         options = newproduct.getOptions();
+         personal_proposal = newproduct.getPersonal_proposal();
+        post_gallery=findViewById(R.id.post_gallery);
+        photo_list=findViewById(R.id.photo_list);
 
 
+        storageReference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
 
-         complete_btn.setOnClickListener(new View.OnClickListener() {
+         Construter();
+         set_Clicklistner();
+
+        PermissionListener permissionListener=new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                Toast.makeText(getApplicationContext(),"권한이 거부됨",Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        TedPermission.with(getApplicationContext())
+                .setPermissionListener(permissionListener)
+                .setRationaleMessage("카메라 권한이 필요합니다")
+                .setDeniedMessage("거부하셨습니다")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
+
+
+        post_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                useGallery();
+            }
+        });
+
+
+
+
+        complete_btn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
 
 
+                 // Create a new user with a first and last name
                  newproduct.setHome_adress(home_address.getText().toString());
                  newproduct.setMonth_rent_price(month_price.getText().toString());
                  newproduct.setDeposit_price(deposit_price.getText().toString());
@@ -60,16 +139,321 @@ public class SalePage extends AppCompatActivity {
                  newproduct.setSpecific(specific.getText().toString());
 
                 curdate = String.valueOf(System.currentTimeMillis());
+                newproduct.setProductId(curdate + mAuth.getUid());
 
+                 UploadPhoto(uriList,0);
 
-                 mstore.collection("SaleProducts").document(mauth.getUid() + curdate).set(newproduct);
+                 mstore.collection("SaleProducts").document(curdate + mAuth.getUid())
+                         .set(newproduct)
+                         .addOnSuccessListener(new OnSuccessListener<Void>() {
+                             @Override
+                             public void onSuccess(Void unused) {
+                                 Log.e("***","업로드 성공");
+                                 finish();
+                             }
+                         });
 
 
 
              }
          });
+    }
 
+
+
+    @Override
+    public void onClick(View view) {
+        switch ( view.getId()){
+
+            case R.id.deposit:
+                if( !newproduct.getDeposit() ){
+                    newproduct.setDeposit(true); deposit.setBackgroundColor(Color.BLUE); }
+                else{
+                    newproduct.setDeposit(false);deposit.setBackgroundColor(Color.WHITE); }
+                break;
+            case R.id.month_rent:
+                if( !newproduct.getMonth_rent() ){
+                    newproduct.setMonth_rent(true);month_rent.setBackgroundColor(Color.BLUE); }
+                else{
+                    newproduct.setMonth_rent(false);month_rent.setBackgroundColor(Color.WHITE); }
+                break;
+            case R.id.elec_cost:
+                if( !maintains.get("elec_cost") ){
+                    maintains.put("elec_cost",true); elec_cost.setBackgroundColor(Color.BLUE);
+                } else{
+                    maintains.put("elec_cost",false);elec_cost.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.gas_cost:
+                if( !maintains.get("gas_cost") ){
+                    maintains.put("gas_cost",true); gas_cost.setBackgroundColor(Color.BLUE);
+                } else{
+                    maintains.put("gas_cost",false);gas_cost.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.water_cost:
+                if( !maintains.get("water_cost") ){
+                    maintains.put("water_cost",true); water_cost.setBackgroundColor(Color.BLUE);
+                } else{
+                    maintains.put("water_cost",false); water_cost.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.internet_cost:
+                if( !maintains.get("internet_cost") ){
+                    maintains.put("internet_cost",true); internet_cost.setBackgroundColor(Color.BLUE);
+                } else{
+                    maintains.put("internet_cost",false); internet_cost.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.elec_boiler:
+                if( !options.get("elec_boiler") ){
+                    options.put("elec_boiler",true); elec_boiler.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("elec_boiler",false);elec_boiler.setBackgroundColor(Color.WHITE);
+                }
+                break;
+
+            case R.id.gas_boiler:
+                if( !options.get("gas_boiler") ){
+                    options.put("gas_boiler",true); gas_boiler.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("gas_boiler",false); gas_boiler.setBackgroundColor(Color.WHITE);
+                }
+                break;
+
+            case R.id.induction:
+                if( !options.get("induction") ){
+                    options.put("induction",true); induction.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("induction",false); induction.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.aircon:
+                if( !options.get("aircon") ){
+                    options.put("aircon",true); aircon.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("aircon",false); aircon.setBackgroundColor(Color.WHITE);
+                }
+                break;
+
+            case R.id.washer:
+                if( !options.get("washer") ){
+                    options.put("washer",true); washer.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("washer",false); washer.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.refrigerator:
+                if( !options.get("refrigerator") ){
+                    options.put("refrigerator",true);  refrigerator.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("refrigerator",false);  refrigerator.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.closet:
+                if( !options.get("closet") ){
+                    options.put("closet",true);  closet.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("closet",false);  closet.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.gasrange:
+                if( !options.get("gasrange") ){
+                    options.put("gasrange",true);  gasrange.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("gasrange",false); gasrange.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.highlight:
+                if( !options.get("highlight") ){
+                    options.put("highlight",true);  highlight.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("highlight",false); highlight.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.convenience_store:
+                if( !options.get("convenience_store") ){
+                    options.put("convenience_store",true); convenience_store.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("convenience_store",false); convenience_store.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.subway:
+                if( !options.get("subway") ){
+                    options.put("subway",true); subway.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("subway",false); subway.setBackgroundColor(Color.WHITE);
+                }
+                break;
+            case R.id.parking:
+                if( !options.get("parking") ){
+                    options.put("parking",true); parking.setBackgroundColor(Color.BLUE);
+                } else{
+                    options.put("parking",false); parking.setBackgroundColor(Color.WHITE);
+                }
+                break;
+
+
+        }
+    }
+
+    public void Construter(){
+        complete_btn = findViewById(R.id.complete_btn);
+        home_address = findViewById(R.id.home_address);
+        deposit_price = findViewById(R.id.deposit_price);
+        month_price = findViewById(R.id.month_price);
+        live_period_start = findViewById(R.id.live_period_start);
+        live_period_end = findViewById(R.id.live_period_end);
+        maintenance_cost = findViewById(R.id.maintenance_cost);
+        room_size = findViewById(R.id.room_size);
+        specific = findViewById(R.id.specific);
+
+        deposit = findViewById(R.id.deposit);
+        month_rent = findViewById(R.id.month_rent);
+        elec_boiler = findViewById(R.id.elec_boiler);
+        elec_cost = findViewById(R.id.elec_cost);
+        gas_cost = findViewById(R.id.gas_cost);
+        water_cost = findViewById(R.id.water_cost);
+        internet_cost = findViewById(R.id.internet_cost);
+        gas_boiler = findViewById(R.id.gas_boiler);
+        induction = findViewById(R.id.induction);
+        aircon = findViewById(R.id.aircon);
+        washer = findViewById(R.id.washer);
+        refrigerator = findViewById(R.id.refrigerator);
+        closet =findViewById(R.id.closet);
+        gasrange = findViewById(R.id.gasrange);
+        highlight = findViewById(R.id.highlight);
+        convenience_store =findViewById(R.id.convenience_store);
+        subway = findViewById(R.id.subway);
+        parking = findViewById(R.id.parking);
 
 
     }
+
+    public void set_Clicklistner(){
+
+        deposit.setOnClickListener(this);
+        month_rent.setOnClickListener(this);
+        elec_boiler.setOnClickListener(this);
+        elec_cost.setOnClickListener(this);
+        gas_cost.setOnClickListener(this);
+        water_cost.setOnClickListener(this);
+        internet_cost.setOnClickListener(this);
+        gas_boiler.setOnClickListener(this);
+        induction.setOnClickListener(this);
+        aircon.setOnClickListener(this);
+        washer.setOnClickListener(this);
+        refrigerator.setOnClickListener(this);
+        closet.setOnClickListener(this);
+        gasrange.setOnClickListener(this);
+        highlight.setOnClickListener(this);
+        convenience_store.setOnClickListener(this);
+        subway.setOnClickListener(this);
+        parking.setOnClickListener(this);
+    }
+
+    private void useGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        startActivityForResult(intent, FROM_GALLERY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        uriList.clear(); // 초기화한번해주고
+        if(data == null){   // 어떤 이미지도 선택하지 않은 경우
+            Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+        }
+        else{   // 이미지를 하나라도 선택한 경우
+            if(data.getClipData() == null){     // 이미지를 하나만 선택한 경우
+                Log.e("single choice: ", String.valueOf(data.getData()));
+                Uri imageUri = data.getData();
+                uriList.add(imageUri);
+
+            }
+            else{      // 이미지를 여러장 선택한 경우
+                ClipData clipData = data.getClipData();
+
+                if(clipData.getItemCount() > 10){   // 선택한 이미지가 11장 이상인 경우
+                    Toast.makeText(getApplicationContext(), "사진은 10장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
+                }
+                else{   // 선택한 이미지가 1장 이상 10장 이하인 경우
+
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
+                        Uri imageUri = clipData.getItemAt(i).getUri();  // 선택한 이미지들의 uri를 가져온다.
+                        try {
+                            uriList.add(imageUri);  //uri를 list에 담는다.
+
+                        } catch (Exception e) {
+                        }
+                    }
+                }
+            }
+
+            photoadapter = new MultiImageAdapter(uriList, getApplicationContext());
+            photo_list.setAdapter(photoadapter);
+            photo_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+
+            //사진 스토리지에 업로드
+            //((MainActivity)MainActivity.maincontext).Onprogress(Post_write.this,"사진 업로드중");
+
+
+
+            photoadapter.setOnItemClickListener(new MultiImageAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View v, int pos) {
+
+                    Intent intent=new Intent(getApplicationContext(),Image_zoom.class);
+                    intent.putExtra("uri",uriList.get(pos));
+                    startActivity(intent);
+                }
+            });
+        }
+
+
+    }
+
+
+    private void UploadPhoto(ArrayList<Uri> uris, int n){
+
+        int i=0;
+        for(Uri uri:uris ) {
+            Log.d("###", "Uri 는: " + uri);
+            String filename = mAuth.getUid() + "_" + System.currentTimeMillis() + n;
+            StorageReference ref = storageReference.child("post_image/" + filename + ".jpg");
+            image_urllist.add(filename);
+            newproduct.setImages_url(image_urllist);
+
+            Log.d("###", filename);
+
+            UploadTask uploadTask;
+            uploadTask = ref.putFile(uri);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Toast.makeText(getApplicationContext(),"업로드 실패",Toast.LENGTH_LONG).show();
+
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(getApplicationContext(),"업로드 성공",Toast.LENGTH_LONG).show();
+
+                }
+            });
+
+            //++i;
+            //if(uris.size() ==i)((MainActivity)MainActivity.maincontext).progressOFF();
+        }
+    }
+
+
+
 }
+
