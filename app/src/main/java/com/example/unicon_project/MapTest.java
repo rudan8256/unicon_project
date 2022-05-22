@@ -5,18 +5,16 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -27,27 +25,21 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -65,13 +57,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
-public class MapTest extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationButtonClickListener,   SearchView.OnQueryTextListener,  GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraMoveListener {
+public class MapTest extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener,  GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraMoveListener{
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient = null;
@@ -96,10 +96,11 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     private TextView tv_marker;
     private LocationManager locationManager;
     private UiSettings mUiSettings;
-    private SearchView searchView;
-    private ImageView iv_search_current_camera_position;
+    private TextView tv_search_current_camera_position;
     private ImageView iv_center;
     private ImageView iv_detail;
+    private List<Address> addressList= Collections.emptyList();
+    private EditText et_auto;
 
     private LocationRequest locationRequest;
 
@@ -138,24 +139,77 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 .build();
 
         //
-        searchView=findViewById(R.id.et_search);
+        /*searchView=findViewById(R.id.et_search);
         searchView.setOnQueryTextListener(this);
-        geocoder = new Geocoder(MapTest.this);
+        searchView.setOnQueryTextFocusChangeListener(this);
+        searchView.setIconifiedByDefault(true);*/
+        et_auto = findViewById(R.id.et_autocomplete);
+        et_auto.setFocusable(false);
+        et_auto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,Place.Field.LAT_LNG,Place.Field.NAME);
 
-        iv_search_current_camera_position=findViewById(R.id.iv_search_current_camera_position);
-        iv_search_current_camera_position.setOnClickListener(new View.OnClickListener() {
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fieldList).build(MapTest.this);
+                startActivityForResult(intent,100);
+
+            }
+        });
+
+        //
+        geocoder = new Geocoder(MapTest.this, Locale.KOREAN);
+
+
+        tv_search_current_camera_position =findViewById(R.id.tv_search_current_camera_position);
+        tv_search_current_camera_position.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getCurrentCameraPosition();
             }
+            //현재위치 중심 검색
         });
 
         iv_detail = findViewById(R.id.iv_detail);
         iv_detail.setVisibility(View.GONE);
+        iv_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //상세페이지로 이동
+            }
+        });
 
+
+
+
+        Places.initialize(getApplicationContext(),"AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA",Locale.KOREAN);
 
 
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e(TAG,"자동완성");
+        if(requestCode==100&&resultCode==RESULT_OK){
+            //when success
+            //Initialize plcae;
+
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            //set Address on EditText
+            Log.e(TAG,"자동완성 클릭 : "+place.getLatLng());
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
+            //Set LocalityName
+
+        }
+        else if(resultCode == AutocompleteActivity.RESULT_ERROR){
+            Status status = Autocomplete.getStatusFromIntent(data);
+            Log.e(TAG,"자동완성 클릭 : 실패");
+            //Display toast
+            Toast.makeText(getApplicationContext(),status.getStatusMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -171,7 +225,6 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
             if (!mRequestingLocationUpdates) {
 
             }
-
         }
 
         if (askPermissionOnceAgain) {
@@ -234,7 +287,6 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         }
         mMap.setMyLocationEnabled(true);
 
-        mMap.setOnMyLocationButtonClickListener(this);
 
         //마커 테스트
         setCustomMarkerView();
@@ -284,7 +336,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
             @Override
             public void onSuccess(Location location) {
                 if(location!=null) {
-                    currentCameraPosition =    currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                    currentCameraPosition = currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 15));
                     Log.e(TAG, "currentPosition : success" + currentPosition);
                 }
@@ -399,39 +451,11 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         }
     }
 
-    @Override
+
     public boolean onMyLocationButtonClick() {
         currentCameraPosition = currentPosition = mMap.getCameraPosition().target;
         iv_center.setVisibility(View.GONE);
         Log.e(TAG,"onMyLocationButtonClick : "+currentPosition);
-        return false;
-    }
-
-
-    @Override
-    public boolean onQueryTextSubmit(String s) {
-        String location = searchView.getQuery().toString();
-        List<Address> addressList = null;
-
-        if(location != null || !location.equals("")){
-            try {
-                addressList = geocoder.getFromLocationName(location, 10);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            Address address = addressList.get(0);
-            LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(latLng));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-
         return false;
     }
 
@@ -511,4 +535,6 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     public void onCameraMove() {
 
     }
+
+
 }
