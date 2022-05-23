@@ -62,6 +62,10 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -71,12 +75,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class MapTest extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener,  GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraMoveListener{
+public class MapTest extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraIdleListener,  View.OnClickListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient = null;
     private Marker selectedMarker = null;
-
+    private FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+    private List<SaleProduct> mDatas=new ArrayList<>();
     private static final String TAG = "MapTest";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_ACCESE_FINE_LOCATION = 2002;
@@ -101,9 +106,9 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     private ImageView iv_detail;
     private List<Address> addressList= Collections.emptyList();
     private EditText et_auto;
-
+    private int Boundary=2000;
     private LocationRequest locationRequest;
-
+    private String productId;
     private LatLng currentCameraPosition;
     private Geocoder geocoder;
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -145,38 +150,18 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         searchView.setIconifiedByDefault(true);*/
         et_auto = findViewById(R.id.et_autocomplete);
         et_auto.setFocusable(false);
-        et_auto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,Place.Field.LAT_LNG,Place.Field.NAME);
-
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fieldList).build(MapTest.this);
-                startActivityForResult(intent,100);
-
-            }
-        });
+        et_auto.setOnClickListener(this);
 
         //
         geocoder = new Geocoder(MapTest.this, Locale.KOREAN);
 
 
         tv_search_current_camera_position =findViewById(R.id.tv_search_current_camera_position);
-        tv_search_current_camera_position.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getCurrentCameraPosition();
-            }
-            //현재위치 중심 검색
-        });
+        tv_search_current_camera_position.setOnClickListener(this);
 
         iv_detail = findViewById(R.id.iv_detail);
         iv_detail.setVisibility(View.GONE);
-        iv_detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //상세페이지로 이동
-            }
-        });
+        iv_detail.setOnClickListener(this);
 
 
 
@@ -298,7 +283,6 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         //mMap.setOnCameraMoveStartedListener(this);
 
-        mMap.setOnCameraMoveListener(this);
     }
 
 
@@ -354,7 +338,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 Location location = task.getResult();
                 currentCameraPosition=currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
                 Log.e(TAG, "currentPosition : complete"+task.getResult().toString());
-                getSampleMarkerList();
+
             }
         });
 
@@ -383,9 +367,22 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         return bitmap;
     }
 
-    private Marker addMarker(Item item, boolean isSelectedMarker){
-        LatLng position = item.getLatLng();
-        int price =item.getPrice();
+    private LatLng getLatLng(String str){
+        Address address = null;
+        LatLng latLng = null;
+        try {
+            address = geocoder.getFromLocationName(str,1).get(0);
+            latLng = new LatLng(address.getLatitude(),address.getLongitude());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return latLng;
+    }
+
+    private Marker addMarker(SaleProduct saleProduct, boolean isSelectedMarker){
+        Log.e(TAG,"saleproduct ID : "+saleProduct.getProductId());
+        LatLng position = getLatLng(saleProduct.getHome_adress());
+        int price =Integer.parseInt(saleProduct.getMonth_rent_price());
         String formatted = NumberFormat.getCurrencyInstance().format(price);
         Log.e(TAG,"addMarker"+formatted);
         tv_marker.setText(formatted);
@@ -401,6 +398,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.title(Integer.toString(price));
+        markerOptions.snippet(saleProduct.getProductId());
+        Log.e(TAG,"snippet : "+markerOptions.getSnippet());
         markerOptions.position(position);
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this,marker_root_view)));
 
@@ -409,33 +408,25 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     }
 
     private Marker addMarker(Marker marker, boolean isSelectedMarker){
-
         LatLng position = marker.getPosition();
         int price =Integer.parseInt(marker.getTitle());
-        Item temp= new Item(new LatLng(position.latitude,position.longitude),price);
+        SaleProduct saleProduct = new SaleProduct();
+        for(int i=0;i<mDatas.size();i++){
+            if(mDatas.get(i).getProductId().equals(marker.getSnippet())){
 
-        return addMarker(temp,isSelectedMarker);
-    }
-
-    private void getSampleMarkerList(){
-        LatLng latlng = new LatLng(currentPosition.latitude-0.0001,currentPosition.longitude-0.0001);
-        sampleList.add(new Item(latlng,1000));
-        latlng = new LatLng(currentPosition.latitude-0.0001,currentPosition.longitude+0.0001);
-        sampleList.add(new Item(latlng,2000));
-        latlng = new LatLng(currentPosition.latitude+0.0001,currentPosition.longitude-0.0001);
-        sampleList.add(new Item(latlng,3000));
-        latlng = new LatLng(currentPosition.latitude+0.0001,currentPosition.longitude+0.0001);
-        sampleList.add(new Item(latlng,4000));
-
-        for(Item markerItem : sampleList){
-            Log.e(TAG,"sampleList"+markerItem.getLatLng());
-            addMarker(markerItem,false);
+                saleProduct = mDatas.get(i);
+                break;
+            }
         }
+        return addMarker(saleProduct,isSelectedMarker);
     }
+
+
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
         iv_detail.setVisibility(View.VISIBLE);
+        productId= marker.getSnippet();
         changeSelectedMarker(marker);
         return false;
     }
@@ -460,7 +451,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     }
 
     void getCurrentCameraPosition(){
-        mMap.addMarker(new MarkerOptions().position(currentCameraPosition));
+        currentCameraPosition=mMap.getCameraPosition().target;
 
     }
 
@@ -531,10 +522,67 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         }
     }
 
-    @Override
-    public void onCameraMove() {
 
+    double getDist(LatLng p1,LatLng p2) {
+        Location l1= new Location("p1");
+        l1.setLatitude(p1.latitude);
+        l1.setLongitude(p1.longitude);
+
+        Location l2= new Location("p2");
+        l2.setLatitude(p2.latitude);
+        l2.setLongitude(p2.longitude);
+
+        return l1.distanceTo(l2);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.et_autocomplete:
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,Place.Field.LAT_LNG,Place.Field.NAME);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fieldList).build(MapTest.this);
+                startActivityForResult(intent,100);
+                break;
 
+            case R.id.tv_search_current_camera_position:
+                mMap.clear();
+                mDatas.clear();
+                getCurrentCameraPosition();
+
+                mStore.collection("SaleProducts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task!=null) {
+                            Log.e(TAG, "쿼리개수 : " + task.getResult().getDocuments().size());
+                            for (DocumentSnapshot snap : task.getResult().getDocuments()) {
+                                SaleProduct temp = snap.toObject(SaleProduct.class);
+                                LatLng latlng=getLatLng(temp.getHome_adress());
+
+                                if(getDist(currentCameraPosition,latlng)>Boundary)continue;
+
+                                mDatas.add(temp);
+                                addMarker(temp,false);
+
+                            }
+                            Log.e(TAG, "쿼리 : " +mDatas.get(0).getProductId());
+
+                        }
+                    }
+                });
+                break;
+
+            case R.id.iv_detail:
+                final SaleProduct[] saleProduct = {new SaleProduct()};
+                Intent it = new Intent(this, SaleProductPage.class);
+                mStore.collection("SaleProducts").whereEqualTo("productId",productId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        saleProduct[0] = task.getResult().getDocuments().get(0).toObject(SaleProduct.class);
+                        it.putExtra("select_data",saleProduct[0]);
+                        startActivity(it);
+                    }
+                });
+                break;
+        }
+    }
 }
