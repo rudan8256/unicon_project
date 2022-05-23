@@ -1,0 +1,363 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PurchaseProductPage">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/home_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="집주소"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/deposit"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전세"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/month_rent"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="월세"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/negotiable"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="협상가능"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/deposit_price_max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="보증금 최대 가격"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/month_price_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="최소 월세"/>
+                <TextView
+                    android:id="@+id/month_price_max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="최대 월세"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/live_period_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="입주 첫날"/>
+
+                <TextView
+                    android:id="@+id/live_period_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="입주 마지막날"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/maintenance_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="관리비 최대 가격"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/elec_cost"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전기세"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/gas_cost"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="가스"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/water_cost"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="수도"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/internet_cost"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="인터넷"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/room_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="면적"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/floor"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"/>
+
+                <Spinner
+                    android:id="@+id/structure"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/elec_boiler"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전기보일러" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/gas_boiler"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="가스보일러"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/induction"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="인덕션"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/aircon"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="에어컨"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/washer"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="세탁기"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/refrigerator"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="냉장고"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/closet"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="옷장"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/gasrange"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="가스레인지"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/highlight"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="하이라이트"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/convenience_store"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="편세권"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/subway"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="역세권"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/parking"
+                    android:background="#F2F2F2"
+                    android:layout_width="200px"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="주차가능"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/specific"
+                android:layout_width="wrap_content"
+                android:layout_height="300px"
+                android:hint="상세설명"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="채팅하기">
+
+            </Button>
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>

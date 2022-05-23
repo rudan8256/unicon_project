@@ -1,5 +1,7 @@
 package com.example.unicon_project;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +42,7 @@ public class SaleProduct implements Serializable {
     private Map<String, Boolean > options;
     private Map<String,String> personal_proposal;
     private String productId;
-
+    private LatLng latlng;
 
 
 
@@ -62,6 +64,7 @@ public class SaleProduct implements Serializable {
         this.month_rent = false;
         this.deposit = false;
         this.productId = "";
+        this.latlng=null;
 
         //집주인 동의여부 ,  관리비 옵션
         this.maintains.put("owner_agree", false);
@@ -91,7 +94,13 @@ public class SaleProduct implements Serializable {
 
     }
 
+    public LatLng getLatlng() {
+        return latlng;
+    }
 
+    public void setLatlng(LatLng latlng) {
+        this.latlng = latlng;
+    }
 
     public String getProductId() {
         return productId;

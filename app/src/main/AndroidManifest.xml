@@ -5,9 +5,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".GlobalApplication"
@@ -17,6 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Unicon_project">
+        <activity
+            android:name=".PurchaseProductPage"
+            android:exported="false" />
+        <activity
+            android:name=".PurchaseList"
+            android:exported="false" />
+        <activity
+            android:name=".PurchasePage"
+            android:exported="false" />
         <activity
             android:name=".ChattingActivity"
             android:exported="false" />
@@ -29,14 +37,12 @@
         <activity
             android:name=".SalePage"
             android:exported="true" />
-
         <activity
             android:name=".Image_zoom"
             android:exported="true" />
         <activity
             android:name=".ImageViewpager"
             android:exported="true" />
-
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -77,7 +83,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

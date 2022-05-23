@@ -22,6 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="판매글쓰기"></Button>
+    <Button
+        android:id="@+id/to_PurchasePage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구매글쓰기"></Button>
 
     <Button
         android:id="@+id/to_MapTest"
@@ -46,5 +51,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="판매글 리스트"></Button>
+    <Button
+        android:id="@+id/to_PurchaseList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구매글 리스트"></Button>
+
 
 </LinearLayout>

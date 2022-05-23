@@ -22,8 +22,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -40,15 +48,18 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class SalePage extends AppCompatActivity implements View.OnClickListener {
 
 
-    private static final int FROM_GALLERY = 2;
+    private static final int FROM_GALLERY = 200;
+    private static final int FROM_ADDRESS = 100;
     private Button complete_btn;
     private SaleProduct newproduct;
     private  EditText home_address, deposit_price, month_price,live_period_start,live_period_end;
@@ -56,10 +67,10 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private String curdate;
-    private  LinearLayout deposit,month_rent, elec_cost, gas_cost, water_cost, internet_cost;
+    private LinearLayout deposit,month_rent, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange,highlight;
     private LinearLayout convenience_store, subway, parking;
-
+    private LatLng latlng;
     private Map<String, Boolean > maintains,options;
     private Map<String ,String> personal_proposal;
 
@@ -76,7 +87,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale_page);
-
+        Places.initialize(getApplicationContext(),"AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
 
         //새로운 판매글 클래스 생성
          newproduct = new SaleProduct();
@@ -121,7 +132,8 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         });
 
 
-
+        home_address.setFocusable(false);
+        home_address.setOnClickListener(this);
 
         complete_btn.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -140,7 +152,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
                 curdate = String.valueOf(System.currentTimeMillis());
                 newproduct.setProductId(curdate + mAuth.getUid());
-
+                newproduct.setLatlng(latlng);
                  UploadPhoto(uriList,0);
 
                  mstore.collection("SaleProducts").document(curdate + mAuth.getUid())
@@ -160,11 +172,15 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     }
 
 
-
     @Override
     public void onClick(View view) {
         switch ( view.getId()){
+            case R.id.home_address:
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,Place.Field.LAT_LNG,Place.Field.NAME);
 
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fieldList).build(SalePage.this);
+                startActivityForResult(intent,100);
+                break;
             case R.id.deposit:
                 if( !newproduct.getDeposit() ){
                     newproduct.setDeposit(true); deposit.setBackgroundColor(Color.BLUE); }
@@ -327,7 +343,6 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         subway = findViewById(R.id.subway);
         parking = findViewById(R.id.parking);
 
-
     }
 
     public void set_Clicklistner(){
@@ -363,58 +378,75 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==FROM_ADDRESS) {
+            if (resultCode == RESULT_OK) {
+                //when success
+                //Initialize plcae;
 
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                home_address.setText(place.getAddress());
+                latlng= place.getLatLng();
+                //set Address on EditText
+                //Set LocalityName
 
-        uriList.clear(); // 초기화한번해주고
-        if(data == null){   // 어떤 이미지도 선택하지 않은 경우
-            Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
-        }
-        else{   // 이미지를 하나라도 선택한 경우
-            if(data.getClipData() == null){     // 이미지를 하나만 선택한 경우
-                Log.e("single choice: ", String.valueOf(data.getData()));
-                Uri imageUri = data.getData();
-                uriList.add(imageUri);
-
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                Status status = Autocomplete.getStatusFromIntent(data);
+                //Display toast
+                Toast.makeText(getApplicationContext(), status.getStatusMessage(), Toast.LENGTH_LONG).show();
             }
-            else{      // 이미지를 여러장 선택한 경우
-                ClipData clipData = data.getClipData();
+        }
+        else if (requestCode==FROM_GALLERY) {
+            uriList.clear(); // 초기화한번해주고
+            if (data == null) {   // 어떤 이미지도 선택하지 않은 경우
+                Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+            } else {   // 이미지를 하나라도 선택한 경우
+                if (data.getClipData() == null) {     // 이미지를 하나만 선택한 경우
+                    Log.e("single choice: ", String.valueOf(data.getData()));
+                    Uri imageUri = data.getData();
+                    uriList.add(imageUri);
 
-                if(clipData.getItemCount() > 10){   // 선택한 이미지가 11장 이상인 경우
-                    Toast.makeText(getApplicationContext(), "사진은 10장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
-                }
-                else{   // 선택한 이미지가 1장 이상 10장 이하인 경우
+                } else {      // 이미지를 여러장 선택한 경우
+                    ClipData clipData = data.getClipData();
 
-                    for (int i = 0; i < clipData.getItemCount(); i++) {
-                        Uri imageUri = clipData.getItemAt(i).getUri();  // 선택한 이미지들의 uri를 가져온다.
-                        try {
-                            uriList.add(imageUri);  //uri를 list에 담는다.
+                    if (clipData.getItemCount() > 10) {   // 선택한 이미지가 11장 이상인 경우
+                        Toast.makeText(getApplicationContext(), "사진은 10장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
+                    } else {   // 선택한 이미지가 1장 이상 10장 이하인 경우
 
-                        } catch (Exception e) {
+                        for (int i = 0; i < clipData.getItemCount(); i++) {
+                            Uri imageUri = clipData.getItemAt(i).getUri();  // 선택한 이미지들의 uri를 가져온다.
+                            try {
+                                uriList.add(imageUri);  //uri를 list에 담는다.
+
+                            } catch (Exception e) {
+                            }
                         }
                     }
                 }
+
+                photoadapter = new MultiImageAdapter(uriList, getApplicationContext());
+                photo_list.setAdapter(photoadapter);
+                photo_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+                //사진 스토리지에 업로드
+                //((MainActivity)MainActivity.maincontext).Onprogress(Post_write.this,"사진 업로드중");
+
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                home_address.setText(place.getAddress());
+                latlng= place.getLatLng();
+                //set Address on EditText
+                //Set LocalityName
+
+                photoadapter.setOnItemClickListener(new MultiImageAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int pos) {
+
+                        Intent intent = new Intent(getApplicationContext(), Image_zoom.class);
+                        intent.putExtra("uri", uriList.get(pos));
+                        startActivity(intent);
+                    }
+                });
             }
-
-            photoadapter = new MultiImageAdapter(uriList, getApplicationContext());
-            photo_list.setAdapter(photoadapter);
-            photo_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-
-            //사진 스토리지에 업로드
-            //((MainActivity)MainActivity.maincontext).Onprogress(Post_write.this,"사진 업로드중");
-
-
-
-            photoadapter.setOnItemClickListener(new MultiImageAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View v, int pos) {
-
-                    Intent intent=new Intent(getApplicationContext(),Image_zoom.class);
-                    intent.putExtra("uri",uriList.get(pos));
-                    startActivity(intent);
-                }
-            });
         }
-
 
     }
 
@@ -452,8 +484,6 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
             //if(uris.size() ==i)((MainActivity)MainActivity.maincontext).progressOFF();
         }
     }
-
-
 
 }
 

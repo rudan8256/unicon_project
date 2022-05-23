@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button ToSalePage,ToMapTest,ToSaleList;
+    Button ToSalePage, ToPurchasePage, ToMapTest, ToSaleList, ToPurchaseList;
 
     FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -50,20 +50,63 @@ public class MainActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ToSalePage= findViewById(R.id.to_SalePage);
-        ToMapTest =findViewById(R.id.to_MapTest);
+        ToSalePage = findViewById(R.id.to_SalePage);
+        ToPurchasePage = findViewById(R.id.to_PurchasePage);
+        ToMapTest = findViewById(R.id.to_MapTest);
         ToSaleList = findViewById(R.id.to_SaleList);
+        ToPurchaseList = findViewById(R.id.to_PurchaseList);
 
         ToSalePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SalePage.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
                 startActivity(intent);
             }
         });
@@ -80,6 +123,48 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SaleList.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
+                startActivity(intent);
+            }
+        });
+        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
                 startActivity(intent);
             }
         });
@@ -123,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (firebaseAuth.getCurrentUser() != null) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
-                    if(user!=null){
-                        Log.e("###", "user UID: "+user.getUid());
+                    if (user != null) {
+                        Log.e("###", "user UID: " + user.getUid());
                         user.getIdToken(true)
                                 .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
                                     public void onComplete(@NonNull Task<GetTokenResult> task) {
@@ -132,14 +217,14 @@ public class MainActivity extends AppCompatActivity {
                                             String idToken = task.getResult().getToken();
                                             // Send token to your backend via HTTPS
                                             // ...
-                                            Log.e("###", "id token: "+idToken);
+                                            Log.e("###", "id token: " + idToken);
                                         } else {
                                             // Handle error -> task.getException();
                                         }
                                     }
                                 });
                     }
-                    Log.e("###", "getCurrentUser success "+firebaseAuth.getCurrentUser().getIdToken(true));
+                    Log.e("###", "getCurrentUser success " + firebaseAuth.getCurrentUser().getIdToken(true));
                     firebaseAuth.signOut();
                     mGoogleSignInClient.revokeAccess();
 
@@ -165,14 +250,14 @@ public class MainActivity extends AppCompatActivity {
     // 뒤로가기 버튼 2번 누를 시에 앱 종료
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK) {
-            if(SystemClock.elapsedRealtime() - clickTime < 2000) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (SystemClock.elapsedRealtime() - clickTime < 2000) {
                 finish();
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 return true;
             }
             clickTime = SystemClock.elapsedRealtime();
-            Toast.makeText(getApplication(),"한번 더 클릭하시면 앱을 종료합니다",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), "한번 더 클릭하시면 앱을 종료합니다", Toast.LENGTH_SHORT).show();
         }
         return true;
     }
