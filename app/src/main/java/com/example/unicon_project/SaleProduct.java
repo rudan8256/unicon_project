@@ -42,7 +42,7 @@ public class SaleProduct implements Serializable {
     private Map<String, Boolean > options;
     private Map<String,String> personal_proposal;
     private String productId;
-    private LatLng latlng;
+
 
 
 
@@ -64,8 +64,6 @@ public class SaleProduct implements Serializable {
         this.month_rent = false;
         this.deposit = false;
         this.productId = "";
-        this.latlng=null;
-
         //집주인 동의여부 ,  관리비 옵션
         this.maintains.put("owner_agree", false);
         this.maintains.put("elec_cost", false);
@@ -93,14 +91,27 @@ public class SaleProduct implements Serializable {
         this.personal_proposal.put("homeowner","");
 
     }
-
-    public LatLng getLatlng() {
-        return latlng;
+    public SaleProduct(String home_adress, Boolean month_rent, Boolean deposit, String month_rent_price, String deposit_price, String live_period_start, String live_period_end, ArrayList<String> images_url, String maintenance_cost, String room_size, String floor, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, Map<String, String> personal_proposal, String productId) {
+        this.home_adress = home_adress;
+        this.month_rent = month_rent;
+        this.deposit = deposit;
+        this.month_rent_price = month_rent_price;
+        this.deposit_price = deposit_price;
+        this.live_period_start = live_period_start;
+        this.live_period_end = live_period_end;
+        this.images_url = images_url;
+        this.maintenance_cost = maintenance_cost;
+        this.room_size = room_size;
+        this.floor = floor;
+        this.structure = structure;
+        this.specific = specific;
+        this.maintains = maintains;
+        this.options = options;
+        this.personal_proposal = personal_proposal;
+        this.productId = productId;
     }
 
-    public void setLatlng(LatLng latlng) {
-        this.latlng = latlng;
-    }
+
 
     public String getProductId() {
         return productId;

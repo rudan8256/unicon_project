@@ -7,8 +7,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -56,31 +59,28 @@ public class SaleList extends AppCompatActivity {
 
     public void updateDatas() {
         mDatas = new ArrayList<>();//
-        mStore.collection("SaleProducts")//리사이클러뷰에 띄울 파이어베이스 테이블 경로
-                .addSnapshotListener(
-                        new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                if (queryDocumentSnapshots != null) {
-                                    mDatas.clear();//미리 생성된 게시글들을 다시 불러오지않게 데이터를 한번 정리
-                                    for (DocumentSnapshot snap : queryDocumentSnapshots.getDocuments()) {
-                                        SaleProduct product = snap.toObject(SaleProduct.class);
-                                        mDatas.add(product);//여기까지가 게시글에 해당하는 데이터 적용
-                                    }
-                                } else {
-                                }
-                                saleProductAdapter = new SaleProductAdapter( mDatas);
-                                mPostRecyclerView.setAdapter(saleProductAdapter);
+        mStore.collection("SaleProducts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task!=null){
+                    mDatas.clear();
+                    Log.e("###","쿼리개수 : "+task.getResult().getDocuments().size());
+                    for(DocumentSnapshot snap : task.getResult().getDocuments()){
+                        mDatas.add(snap.toObject(SaleProduct.class));
+                    }
+                }
+                saleProductAdapter = new SaleProductAdapter( mDatas);
+                mPostRecyclerView.setAdapter(saleProductAdapter);
+                saleProductAdapter.setOnItemClickListener(new SaleProductAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        Intent intent = new Intent(getApplicationContext(), SaleProductPage.class);
+                        intent.putExtra("select_data", mDatas.get(position));
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
 
-                                saleProductAdapter.setOnItemClickListener(new SaleProductAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View v, int position) {
-                                        Intent intent = new Intent(getApplicationContext(), SaleProductPage.class);
-                                        intent.putExtra("select_data", mDatas.get(position));
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
-                        });
     }
 }

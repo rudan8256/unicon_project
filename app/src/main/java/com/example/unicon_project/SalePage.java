@@ -70,7 +70,6 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private LinearLayout deposit,month_rent, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange,highlight;
     private LinearLayout convenience_store, subway, parking;
-    private LatLng latlng;
     private Map<String, Boolean > maintains,options;
     private Map<String ,String> personal_proposal;
 
@@ -152,7 +151,8 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
                 curdate = String.valueOf(System.currentTimeMillis());
                 newproduct.setProductId(curdate + mAuth.getUid());
-                newproduct.setLatlng(latlng);
+
+
                  UploadPhoto(uriList,0);
 
                  mstore.collection("SaleProducts").document(curdate + mAuth.getUid())
@@ -385,7 +385,6 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 home_address.setText(place.getAddress());
-                latlng= place.getLatLng();
                 //set Address on EditText
                 //Set LocalityName
 
@@ -429,12 +428,6 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
                 //사진 스토리지에 업로드
                 //((MainActivity)MainActivity.maincontext).Onprogress(Post_write.this,"사진 업로드중");
-
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                home_address.setText(place.getAddress());
-                latlng= place.getLatLng();
-                //set Address on EditText
-                //Set LocalityName
 
                 photoadapter.setOnItemClickListener(new MultiImageAdapter.OnItemClickListener() {
                     @Override
