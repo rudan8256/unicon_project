@@ -42,7 +42,7 @@ public class SaleProduct implements Serializable {
     private Map<String, Boolean > options;
     private Map<String,String> personal_proposal;
     private String productId;
-
+    private String writerId;
 
 
 
@@ -250,5 +250,12 @@ public class SaleProduct implements Serializable {
         this.personal_proposal = personal_proposal;
     }
 
+    public String getWriterId() {
+        return writerId;
+    }
+
+    public void setWriterId(String writerId) {
+        this.writerId = writerId;
+    }
 
 }
