@@ -1,4 +1,4 @@
-package com.example.unicon_project;
+package com.example.unicon_project.Adapters;
 
 
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.unicon_project.R;
+import com.example.unicon_project.Classes.SaleProduct;
 
 import java.util.List;
 

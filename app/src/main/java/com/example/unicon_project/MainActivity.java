@@ -1,7 +1,5 @@
 package com.example.unicon_project;
 
-import static com.android.volley.VolleyLog.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,30 +12,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.unicon_project.Authentic.SessionCallBack;
+import com.example.unicon_project.Authentic.SignInActivity;
+import com.example.unicon_project.Pages.MapTest;
+import com.example.unicon_project.Pages.PurchaseList;
+import com.example.unicon_project.Pages.PurchasePage;
+import com.example.unicon_project.Pages.SaleList;
+import com.example.unicon_project.Pages.SalePage;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
 
-    Button ToSalePage, ToPurchasePage, ToMapTest, ToSaleList, ToPurchaseList;
+    Button ToSalePage, ToPurchasePage, ToMapTest, ToSaleList, ToPurchaseList,ToRecommendPage;
 
     FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -60,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
         ToMapTest = findViewById(R.id.to_MapTest);
         ToSaleList = findViewById(R.id.to_SaleList);
         ToPurchaseList = findViewById(R.id.to_PurchaseList);
+        ToRecommendPage = findViewById(R.id.to_RecommendePage);
+
+        ToRecommendPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SalePage.class);
+                startActivity(intent);
+            }
+        });
 
         ToSalePage.setOnClickListener(new View.OnClickListener() {
             @Override

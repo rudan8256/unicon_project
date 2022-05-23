@@ -1,4 +1,4 @@
-package com.example.unicon_project;
+package com.example.unicon_project.Adapters;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.unicon_project.Classes.ChattingData;
+import com.example.unicon_project.R;
 
 import java.util.ArrayList;
 

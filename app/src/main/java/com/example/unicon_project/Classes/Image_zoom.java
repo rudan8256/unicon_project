@@ -1,4 +1,4 @@
-package com.example.unicon_project;
+package com.example.unicon_project.Classes;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.unicon_project.R;
 import com.otaliastudios.zoom.ZoomLayout;
 
 public class Image_zoom extends AppCompatActivity {

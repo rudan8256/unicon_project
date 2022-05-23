@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 
+import com.example.unicon_project.Adapters.ImageSliderAdapter;
 
 import java.util.ArrayList;
 

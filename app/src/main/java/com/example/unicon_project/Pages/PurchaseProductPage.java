@@ -1,4 +1,4 @@
-package com.example.unicon_project;
+package com.example.unicon_project.Pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.unicon_project.Classes.PurchaseProduct;
+import com.example.unicon_project.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 

@@ -1,4 +1,4 @@
-package com.example.unicon_project;
+package com.example.unicon_project.Authentic;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,10 +12,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.unicon_project.MainActivity;
+import com.example.unicon_project.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -29,24 +30,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.kakao.auth.AuthType;
-import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
-import com.kakao.sdk.auth.model.OAuthToken;
-import com.kakao.sdk.user.UserApi;
-import com.kakao.sdk.user.UserApiClient;
-import com.kakao.sdk.user.model.User;
 import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
-import com.kakao.usermgmt.response.model.Profile;
-import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.exception.KakaoException;
-
-import kotlin.Unit;
-import kotlin.jvm.functions.Function2;
 
 public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
     TextView text_register;

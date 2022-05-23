@@ -1,4 +1,4 @@
-package com.example.unicon_project;
+package com.example.unicon_project.Pages;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.unicon_project.Adapters.PurchaseProductAdapter;
+import com.example.unicon_project.Classes.PurchaseProduct;
+import com.example.unicon_project.Pages.PurchaseProductPage;
+import com.example.unicon_project.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;

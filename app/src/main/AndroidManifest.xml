@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".GlobalApplication"
+        android:name=".Authentic.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,28 +17,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Unicon_project">
         <activity
-            android:name=".PurchaseProductPage"
+            android:name=".Pages.RecommendPage"
+            android:exported="true" />
+        <activity
+            android:name=".Pages.PurchaseProductPage"
             android:exported="false" />
         <activity
-            android:name=".PurchaseList"
+            android:name=".Pages.PurchaseList"
             android:exported="false" />
         <activity
-            android:name=".PurchasePage"
+            android:name=".Pages.PurchasePage"
             android:exported="false" />
         <activity
             android:name=".ChattingActivity"
             android:exported="false" />
         <activity
-            android:name=".SaleProductPage"
+            android:name=".Pages.SaleProductPage"
             android:exported="true" />
         <activity
-            android:name=".SaleList"
+            android:name=".Pages.SaleList"
             android:exported="true" />
         <activity
-            android:name=".SalePage"
+            android:name=".Pages.SalePage"
             android:exported="true" />
         <activity
-            android:name=".Image_zoom"
+            android:name=".Classes.Image_zoom"
             android:exported="true" />
         <activity
             android:name=".ImageViewpager"
@@ -49,10 +52,10 @@
             android:value="@string/kakao_app_key" />
 
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Authentic.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".SignInActivity"
+            android:name=".Authentic.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -79,7 +82,7 @@
             android:value="AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA" />
 
         <activity
-            android:name=".MapTest"
+            android:name=".Pages.MapTest"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

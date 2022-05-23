@@ -1,4 +1,4 @@
-package com.example.unicon_project;
+package com.example.unicon_project.Classes;
 
 public class ChattingData {
     public String msg;

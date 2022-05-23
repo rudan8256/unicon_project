@@ -1,4 +1,4 @@
-package com.example.unicon_project;
+package com.example.unicon_project.Classes;
 
 
 import com.google.android.gms.maps.model.LatLng;

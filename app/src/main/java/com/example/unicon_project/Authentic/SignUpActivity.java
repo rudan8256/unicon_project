@@ -1,4 +1,4 @@
-package com.example.unicon_project;
+package com.example.unicon_project.Authentic;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.unicon_project.MainActivity;
+import com.example.unicon_project.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.ActionCodeSettings;
@@ -20,8 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 /*import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;*/
-
-import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";

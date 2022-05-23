@@ -1,6 +1,5 @@
-package com.example.unicon_project;
+package com.example.unicon_project.Authentic;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
@@ -12,7 +11,6 @@ import com.kakao.auth.IApplicationConfig;
 import com.kakao.auth.ISessionConfig;
 import com.kakao.auth.KakaoAdapter;
 import com.kakao.auth.KakaoSDK;
-import com.kakao.sdk.common.KakaoSdk;
 
 public class GlobalApplication extends Application {
     private static volatile GlobalApplication instance=null;
