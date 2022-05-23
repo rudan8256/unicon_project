@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +73,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private LinearLayout convenience_store, subway, parking;
     private Map<String, Boolean > maintains,options;
     private Map<String ,String> personal_proposal;
+    private Switch owner_switch;
 
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     StorageReference storageReference;
@@ -95,6 +97,9 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
          personal_proposal = newproduct.getPersonal_proposal();
         post_gallery=findViewById(R.id.post_gallery);
         photo_list=findViewById(R.id.photo_list);
+
+
+       // owner_switch.setTrackDrawable(new SwitchTrackTextDrawable(this,"left","right"));
 
 
         storageReference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
