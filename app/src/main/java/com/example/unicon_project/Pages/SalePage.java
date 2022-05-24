@@ -322,7 +322,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-    public void Construter(){
+    private void Construter(){
         complete_btn = findViewById(R.id.complete_btn);
         home_address = findViewById(R.id.home_address);
         deposit_price = findViewById(R.id.deposit_price);
@@ -354,7 +354,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-    public void set_Clicklistner(){
+    private void set_Clicklistner(){
 
         deposit.setOnClickListener(this);
         month_rent.setOnClickListener(this);

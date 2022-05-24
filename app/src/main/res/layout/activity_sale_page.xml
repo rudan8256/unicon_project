@@ -88,16 +88,15 @@
 
 
                     <Switch
-                        android:showText="true"
-                        android:textOff="비동의"
-                        android:track="@drawable/custom_track"
-                        android:thumb="@drawable/custom_thumb"
+                        android:id="@+id/owner_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textOn="동의"
-                        android:id="@+id/owner_switch"
                         android:layout_centerInParent="true"
-                       />
+                        android:showText="true"
+                        android:textOff="비동의"
+                        android:textOn="동의"
+                        android:thumb="@drawable/custom_thumb"
+                        android:track="@drawable/custom_track" />
 
                 </LinearLayout>
 

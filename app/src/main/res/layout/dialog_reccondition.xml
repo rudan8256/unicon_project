@@ -2,11 +2,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="800px"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
 
 
 
@@ -44,13 +43,16 @@
                     android:layout_height="wrap_content">
 
 
-                    <androidx.appcompat.widget.SwitchCompat
+                    <Switch
+                        android:id="@+id/owner_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textOn="ON"
-                        android:id="@+id/owner_switch"
                         android:layout_centerInParent="true"
-                        android:textOff="OFF"/>
+                        android:showText="true"
+                        android:textOff="비동의"
+                        android:textOn="동의"
+                        android:thumb="@drawable/custom_thumb"
+                        android:track="@drawable/custom_track" />
                 </LinearLayout>
 
             </LinearLayout>
