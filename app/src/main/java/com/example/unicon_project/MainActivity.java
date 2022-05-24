@@ -18,6 +18,7 @@ import com.example.unicon_project.Pages.ChattingListActivity;
 import com.example.unicon_project.Pages.MapTest;
 import com.example.unicon_project.Pages.PurchaseList;
 import com.example.unicon_project.Pages.PurchasePage;
+import com.example.unicon_project.Pages.RecommendPage;
 import com.example.unicon_project.Pages.SaleList;
 import com.example.unicon_project.Pages.SalePage;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         ToRecommendPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SalePage.class);
+                Intent intent = new Intent(getApplicationContext(), RecommendPage.class);
                 startActivity(intent);
             }
         });

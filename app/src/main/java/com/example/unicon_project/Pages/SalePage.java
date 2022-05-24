@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -88,9 +89,20 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
          personal_proposal = newproduct.getPersonal_proposal();
         post_gallery=findViewById(R.id.post_gallery);
         photo_list=findViewById(R.id.photo_list);
+        owner_switch=findViewById(R.id.owner_switch);
 
 
-       // owner_switch.setTrackDrawable(new SwitchTrackTextDrawable(this,"left","right"));
+        owner_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    maintains.put("owner_agree", true);
+                }
+                else{
+                    maintains.put("owner_agree", false);
+                }
+            }
+        });
 
 
         storageReference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
@@ -473,6 +485,10 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
             //++i;
             //if(uris.size() ==i)((MainActivity)MainActivity.maincontext).progressOFF();
         }
+    }
+
+    private void checkswitch(){
+
     }
 
 }
