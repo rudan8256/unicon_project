@@ -1,5 +1,6 @@
 package com.example.unicon_project.Pages;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,16 +8,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.unicon_project.Adapters.PurchaseProductAdapter;
 import com.example.unicon_project.Classes.PurchaseProduct;
-import com.example.unicon_project.Pages.PurchaseProductPage;
 import com.example.unicon_project.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class PurchaseList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase_list);
 
-        mPostRecyclerView = findViewById(R.id.salelist_recy);
+        mPostRecyclerView = findViewById(R.id.purchaselist_recy);
         swipeRefreshLayout=findViewById(R.id.refresh_board);
 
 
@@ -54,31 +55,28 @@ public class PurchaseList extends AppCompatActivity {
     }
     public void updateDatas() {
         mDatas = new ArrayList<>();//
-        mStore.collection("PurchaseProducts")//리사이클러뷰에 띄울 파이어베이스 테이블 경로
-                .addSnapshotListener(
-                        new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                if (queryDocumentSnapshots != null) {
-                                    mDatas.clear();//미리 생성된 게시글들을 다시 불러오지않게 데이터를 한번 정리
-                                    for (DocumentSnapshot snap : queryDocumentSnapshots.getDocuments()) {
-                                        PurchaseProduct product = snap.toObject(PurchaseProduct.class);
-                                        mDatas.add(product);//여기까지가 게시글에 해당하는 데이터 적용
-                                    }
-                                } else {
-                                }
-                                purchaseProductAdapter = new PurchaseProductAdapter( mDatas);
-                                mPostRecyclerView.setAdapter(purchaseProductAdapter);
+        mStore.collection("PurchaseProducts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task!=null){
+                    mDatas.clear();
+                    Log.e("###","쿼리개수 : "+task.getResult().getDocuments().size());
+                    for(DocumentSnapshot snap : task.getResult().getDocuments()){
+                        mDatas.add(snap.toObject(PurchaseProduct.class));
+                    }
+                }
+                purchaseProductAdapter = new PurchaseProductAdapter(mDatas);
+                mPostRecyclerView.setAdapter(purchaseProductAdapter);
+                purchaseProductAdapter.setOnItemClickListener(new PurchaseProductAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        Intent intent = new Intent(getApplicationContext(), PurchaseProductPage.class);
+                        intent.putExtra("select_data", mDatas.get(position));
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
 
-                                purchaseProductAdapter.setOnItemClickListener(new PurchaseProductAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View v, int position) {
-                                        Intent intent = new Intent(getApplicationContext(), PurchaseProductPage.class);
-                                        intent.putExtra("select_data", mDatas.get(position));
-                                        startActivity(intent);
-                                    }
-                                });
-                            }
-                        });
     }
 }

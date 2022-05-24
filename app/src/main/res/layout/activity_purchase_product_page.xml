@@ -159,11 +159,24 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/room_size"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="면적"/>
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/room_size_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="최소 면적"/>
+
+                <EditText
+                    android:id="@+id/room_size_max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="최대 면적"/>
+
+            </LinearLayout>
 
 
             <LinearLayout

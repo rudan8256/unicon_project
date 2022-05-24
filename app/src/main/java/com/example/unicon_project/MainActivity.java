@@ -82,41 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
-                startActivity(intent);
-            }
-        });
-        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
-                startActivity(intent);
-            }
-        });
-        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
-                startActivity(intent);
-            }
-        });
-        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
-                startActivity(intent);
-            }
-        });
-        ToPurchasePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
-                startActivity(intent);
-            }
-        });
 
         ToMapTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,41 +95,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SaleList.class);
-                startActivity(intent);
-            }
-        });
-        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
-                startActivity(intent);
-            }
-        });
-        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
-                startActivity(intent);
-            }
-        });
-        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
-                startActivity(intent);
-            }
-        });
-        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
-                startActivity(intent);
-            }
-        });
-        ToPurchaseList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchaseList.class);
                 startActivity(intent);
             }
         });
