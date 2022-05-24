@@ -14,10 +14,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,22 +57,23 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private static final int FROM_ADDRESS = 100;
     private Button complete_btn;
     private SaleProduct newproduct;
-    private  EditText home_address, deposit_price, month_price,live_period_start,live_period_end;
+    private EditText home_address, deposit_price, month_price, live_period_start, live_period_end;
     private EditText maintenance_cost, room_size, specific;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private String curdate;
-    private LinearLayout deposit,month_rent, elec_cost, gas_cost, water_cost, internet_cost;
-    private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange,highlight;
+    private String curdate, floor, structure;
+    private LinearLayout deposit, month_rent, elec_cost, gas_cost, water_cost, internet_cost;
+    private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
     private LinearLayout convenience_store, subway, parking;
-    private Map<String, Boolean > maintains,options;
-    private Map<String ,String> personal_proposal;
+    private Map<String, Boolean> maintains, options;
+    private Map<String, String> personal_proposal;
     private Switch owner_switch;
+    private Spinner floorSpinner, structureSpinner;
 
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     StorageReference storageReference;
 
-    private ArrayList<String>image_urllist = new ArrayList<>();
+    private ArrayList<String> image_urllist = new ArrayList<>();
     private ArrayList<Uri> uriList = new ArrayList<>();
     MultiImageAdapter photoadapter;
     private RecyclerView photo_list;
@@ -80,37 +83,59 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale_page);
-        Places.initialize(getApplicationContext(),"AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
+        Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
 
         //새로운 판매글 클래스 생성
-         newproduct = new SaleProduct();
-         maintains = newproduct.getMaintains();
-         options = newproduct.getOptions();
-         personal_proposal = newproduct.getPersonal_proposal();
-        post_gallery=findViewById(R.id.post_gallery);
-        photo_list=findViewById(R.id.photo_list);
-        owner_switch=findViewById(R.id.owner_switch);
+        newproduct = new SaleProduct();
+        maintains = newproduct.getMaintains();
+        options = newproduct.getOptions();
+        personal_proposal = newproduct.getPersonal_proposal();
+        post_gallery = findViewById(R.id.post_gallery);
+        photo_list = findViewById(R.id.photo_list);
+        owner_switch = findViewById(R.id.owner_switch);
 
+        floorSpinner = findViewById(R.id.floor);
+        structureSpinner = findViewById(R.id.structure);
+
+        floorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                floor = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+        structureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                structure = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         owner_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     maintains.put("owner_agree", true);
-                }
-                else{
+                } else {
                     maintains.put("owner_agree", false);
                 }
             }
         });
 
 
-        storageReference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
+        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
 
-         Construter();
-         set_Clicklistner();
+        Construter();
+        set_Clicklistner();
 
-        PermissionListener permissionListener=new PermissionListener() {
+        PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
                 Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
@@ -119,7 +144,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                Toast.makeText(getApplicationContext(),"권한이 거부됨",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "권한이 거부됨", Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -143,52 +168,53 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         home_address.setOnClickListener(this);
 
         complete_btn.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
 
 
-                 // Create a new user with a first and last name
-                 newproduct.setHome_adress(home_address.getText().toString());
-                 newproduct.setMonth_rent_price(month_price.getText().toString());
-                 newproduct.setDeposit_price(deposit_price.getText().toString());
-                 newproduct.setLive_period_start(live_period_start.getText().toString());
-                 newproduct.setLive_period_end(live_period_end.getText().toString());
-                 newproduct.setMaintenance_cost(maintenance_cost.getText().toString());
-                 newproduct.setRoom_size(room_size.getText().toString());
-                 newproduct.setSpecific(specific.getText().toString());
-                 newproduct.setWriterId(mAuth.getUid());
+                // Create a new user with a first and last name
+                newproduct.setHome_adress(home_address.getText().toString());
+                newproduct.setMonth_rent_price(month_price.getText().toString());
+                newproduct.setDeposit_price(deposit_price.getText().toString());
+                newproduct.setLive_period_start(live_period_start.getText().toString());
+                newproduct.setLive_period_end(live_period_end.getText().toString());
+                newproduct.setMaintenance_cost(maintenance_cost.getText().toString());
+                newproduct.setRoom_size(room_size.getText().toString());
+                newproduct.setSpecific(specific.getText().toString());
+                newproduct.setWriterId(mAuth.getUid());
+                newproduct.setFloor(floor);
+                newproduct.setStructure(structure);
 
                 curdate = String.valueOf(System.currentTimeMillis());
                 newproduct.setProductId(curdate + mAuth.getUid());
 
 
-                 UploadPhoto(uriList,0);
+                UploadPhoto(uriList, 0);
 
-                 mstore.collection("SaleProducts").document(curdate + mAuth.getUid())
-                         .set(newproduct)
-                         .addOnSuccessListener(new OnSuccessListener<Void>() {
-                             @Override
-                             public void onSuccess(Void unused) {
-                                 Log.e("***","업로드 성공");
-                                 finish();
-                             }
-                         });
+                mstore.collection("SaleProducts").document(curdate + mAuth.getUid())
+                        .set(newproduct)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.e("***", "업로드 성공");
+                                finish();
+                            }
+                        });
 
 
-
-             }
-         });
+            }
+        });
     }
 
 
     @Override
     public void onClick(View view) {
-        switch ( view.getId()){
+        switch (view.getId()) {
             case R.id.home_address:
-                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,Place.Field.LAT_LNG,Place.Field.NAME);
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
 
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fieldList).build(SalePage.this);
-                startActivityForResult(intent,100);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList).build(SalePage.this);
+                startActivityForResult(intent, 100);
                 break;
             case R.id.deposit:
                 if( !newproduct.getDeposit() ){
@@ -345,10 +371,10 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         aircon = findViewById(R.id.aircon);
         washer = findViewById(R.id.washer);
         refrigerator = findViewById(R.id.refrigerator);
-        closet =findViewById(R.id.closet);
+        closet = findViewById(R.id.closet);
         gasrange = findViewById(R.id.gasrange);
         highlight = findViewById(R.id.highlight);
-        convenience_store =findViewById(R.id.convenience_store);
+        convenience_store = findViewById(R.id.convenience_store);
         subway = findViewById(R.id.subway);
         parking = findViewById(R.id.parking);
 
@@ -387,7 +413,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==FROM_ADDRESS) {
+        if (requestCode == FROM_ADDRESS) {
             if (resultCode == RESULT_OK) {
                 //when success
                 //Initialize plcae;
@@ -453,10 +479,10 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     }
 
 
-    private void UploadPhoto(ArrayList<Uri> uris, int n){
+    private void UploadPhoto(ArrayList<Uri> uris, int n) {
 
-        int i=0;
-        for(Uri uri:uris ) {
+        int i = 0;
+        for (Uri uri : uris) {
             Log.d("###", "Uri 는: " + uri);
             String filename = mAuth.getUid() + "_" + System.currentTimeMillis() + n;
             StorageReference ref = storageReference.child("post_image/" + filename + ".jpg");
@@ -471,13 +497,13 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
-                    Toast.makeText(getApplicationContext(),"업로드 실패",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "업로드 실패", Toast.LENGTH_LONG).show();
 
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getApplicationContext(),"업로드 성공",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "업로드 성공", Toast.LENGTH_LONG).show();
 
                 }
             });
@@ -487,7 +513,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-    private void checkswitch(){
+    private void checkswitch() {
 
     }
 

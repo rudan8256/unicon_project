@@ -236,18 +236,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="층"/>
                 <Spinner
                     android:id="@+id/floor"
                     android:layout_centerHorizontal="true"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"/>
-
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/floor_array"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="구조"/>
                 <Spinner
                     android:id="@+id/structure"
                     android:layout_centerHorizontal="true"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/structure_array"/>
             </LinearLayout>
 
             <LinearLayout

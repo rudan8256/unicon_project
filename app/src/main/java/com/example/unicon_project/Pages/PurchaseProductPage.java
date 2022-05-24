@@ -21,7 +21,7 @@ public class PurchaseProductPage extends AppCompatActivity {
     PurchaseProduct select_data;
     private Button complete_btn;
     private TextView home_address, deposit_price_max, month_price_min, month_price_max, live_period_start, live_period_end;
-    private TextView maintenance_cost, room_size_min, room_size_max, specific;
+    private TextView maintenance_cost, room_size_min, room_size_max, specific, structure;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mauth = FirebaseAuth.getInstance();
     private LinearLayout deposit, month_rent, negotiable, elec_cost, gas_cost, water_cost, internet_cost;
@@ -80,6 +80,7 @@ public class PurchaseProductPage extends AppCompatActivity {
         subway = findViewById(R.id.subway);
         parking = findViewById(R.id.parking);
 
+        structure = findViewById(R.id.structure);
     }
 
     private void WritingData(){
@@ -95,6 +96,7 @@ public class PurchaseProductPage extends AppCompatActivity {
         room_size_min.setText(select_data.getRoom_size_min());
         room_size_max.setText(select_data.getRoom_size_max());
         specific.setText(select_data.getSpecific());
+        structure.setText(select_data.getStructure());
 
         if(select_data.getDeposit() ) deposit.setBackgroundColor(Color.BLUE);
         if(select_data.getMonth_rent() ) month_rent.setBackgroundColor(Color.BLUE);

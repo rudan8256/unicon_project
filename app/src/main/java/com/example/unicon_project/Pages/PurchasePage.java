@@ -8,9 +8,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.example.unicon_project.Classes.PurchaseProduct;
 import com.example.unicon_project.R;
@@ -31,10 +33,11 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     private EditText maintenance_cost, room_size_min, room_size_max, specific;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private String curDate;
+    private String curDate, structure;
     private LinearLayout deposit, month_rent, negotiable, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
     private LinearLayout convenience_store, subway, parking;
+    private Spinner structureSpinner;
 
     private Map<String, Boolean> maintains, options;
 
@@ -50,6 +53,19 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         newProduct = new PurchaseProduct();
         maintains = newProduct.getMaintains();
         options = newProduct.getOptions();
+
+        structureSpinner = findViewById(R.id.structure);
+
+        structureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                structure=adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         storageReference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
 
@@ -72,6 +88,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 newProduct.setRoom_size_min(room_size_min.getText().toString());
                 newProduct.setRoom_size_max(room_size_max.getText().toString());
                 newProduct.setSpecific(specific.getText().toString());
+                newProduct.setStructure(structure);
 
                 curDate = String.valueOf(System.currentTimeMillis());
                 newProduct.setProductId(curDate + mAuth.getUid());

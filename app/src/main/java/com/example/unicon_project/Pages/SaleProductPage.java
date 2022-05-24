@@ -34,7 +34,7 @@ public class SaleProductPage extends AppCompatActivity {
     SaleProduct select_data;
     private Button complete_btn, btn_sale_chatting;
     private TextView home_address, deposit_price, month_price,live_period_start,live_period_end;
-    private TextView maintenance_cost, room_size, specific;
+    private TextView maintenance_cost, room_size, specific, floor, structure;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mauth = FirebaseAuth.getInstance();
     private LinearLayout deposit,month_rent, elec_cost, gas_cost, water_cost, internet_cost;
@@ -146,6 +146,8 @@ public class SaleProductPage extends AppCompatActivity {
         subway = findViewById(R.id.subway);
         parking = findViewById(R.id.parking);
 
+        floor = findViewById(R.id.floor);
+        structure = findViewById(R.id.structure);
     }
 
     private void WritingData(){
@@ -159,6 +161,8 @@ public class SaleProductPage extends AppCompatActivity {
         maintenance_cost.setText(select_data.getMaintenance_cost());
         room_size.setText(select_data.getRoom_size());
         specific.setText(select_data.getSpecific());
+        floor.setText(select_data.getFloor());
+        structure.setText(select_data.getStructure());
 
         if(select_data.getDeposit() ) deposit.setBackgroundColor(Color.BLUE);
         if(select_data.getMonth_rent() ) month_rent.setBackgroundColor(Color.BLUE);
