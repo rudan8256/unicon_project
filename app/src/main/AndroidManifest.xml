@@ -35,6 +35,9 @@
             android:name=".Pages.SaleProductPage"
             android:exported="true" />
         <activity
+            android:name=".Pages.ChattingListActivity"
+            android:exported="true" />
+        <activity
             android:name=".Pages.SaleList"
             android:exported="true" />
         <activity

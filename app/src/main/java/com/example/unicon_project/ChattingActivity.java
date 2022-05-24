@@ -3,7 +3,9 @@ package com.example.unicon_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +13,7 @@ import android.widget.GridView;
 
 import com.example.unicon_project.Adapters.ChattingAdapter;
 import com.example.unicon_project.Classes.ChattingData;
+import com.example.unicon_project.Classes.ChattingListData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +46,9 @@ public class ChattingActivity extends AppCompatActivity {
 
     String uid;
 
+    String productID, writerID, homeAddress;
+
+    boolean _isChattingListExist;
     Boolean Agree1, Agree2;
 
     final FirebaseUser user = mFirebaseAuth.getInstance().getCurrentUser();
@@ -59,14 +65,24 @@ public class ChattingActivity extends AppCompatActivity {
         /*
         추후에 방 uuid를 roomInformation에 저장합니다.
          */
-        //Intent it = getIntent();
+
+
+        Intent it = getIntent();
+        productID = it.getExtras().get("productID").toString();
+        writerID = it.getExtras().get("writerID").toString();
+        homeAddress = it.getExtras().get("homeAddress").toString();
+
         roomInformation = user.getUid();
 
         et_myMsg = findViewById(R.id.et_myMsg);
         btn_sendMsg = findViewById(R.id.btn_sendMsg);
 
-        gv = findViewById(R.id.gv_chatting);
+        // 자신에게 해당 productID가 있는지 검사하고 추가하기
+        isChattingListExist(uid, productID);
+        // 상대방에게 해당 productID가 있는지 검사하고 추가하기
+        isChattingListExist(writerID, productID);
 
+        gv = findViewById(R.id.gv_chatting);
         btn_sendMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +95,7 @@ public class ChattingActivity extends AppCompatActivity {
                         user.getUid()
                 );
 
-                reference.child("storage").child(roomInformation).child("chatting").push().setValue(chattingData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                reference.child("storage").child(productID).child("chatting").push().setValue(chattingData).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
@@ -97,8 +113,48 @@ public class ChattingActivity extends AppCompatActivity {
         getInfo();
     }
 
+    public void isChattingListExist(String uid, String productID)
+    {
+        // 해당 uid에 productID 채팅정보가 존재하는지 검사하여 그 값을 반환한다.
+        _isChattingListExist = false;
+
+        reference.child("chattingList").child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    for (final DataSnapshot data : task.getResult().getChildren())
+                    {
+                        ChattingListData gds = data.getValue(ChattingListData.class);
+                        Log.e("###", "result = "+gds.getProductID().equals(productID));
+                        if(gds.getProductID().equals(productID))
+                        {
+                            //존재하는 경우 true 처리
+                            _isChattingListExist = true;
+                        }
+                    }
+
+                    if(!_isChattingListExist) {
+                        ChattingListData data = new ChattingListData(homeAddress, uid, productID);
+
+                        reference.child("chattingList").child(uid).push().setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    //삽입 완료시
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+
     public void getInfo(){
-        reference.child("storage").child(roomInformation).child("chatting").addValueEventListener(new ValueEventListener() {
+        reference.child("storage").child(productID).child("chatting").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 items.clear();

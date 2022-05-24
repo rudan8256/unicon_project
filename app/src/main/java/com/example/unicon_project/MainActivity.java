@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.unicon_project.Authentic.SessionCallBack;
 import com.example.unicon_project.Authentic.SignInActivity;
+import com.example.unicon_project.Pages.ChattingListActivity;
 import com.example.unicon_project.Pages.MapTest;
 import com.example.unicon_project.Pages.PurchaseList;
 import com.example.unicon_project.Pages.PurchasePage;
@@ -177,9 +178,8 @@ public class MainActivity extends AppCompatActivity {
         btn_toChatting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ChattingActivity.class);
+                Intent intent = new Intent(MainActivity.this, ChattingListActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }

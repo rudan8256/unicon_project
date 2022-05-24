@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.unicon_project.Adapters.MultiImageAdapter;
+import com.example.unicon_project.ChattingActivity;
 import com.example.unicon_project.ImageViewpager;
 import com.example.unicon_project.R;
 import com.example.unicon_project.Classes.SaleProduct;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 public class SaleProductPage extends AppCompatActivity {
 
     SaleProduct select_data;
-    private Button complete_btn;
+    private Button complete_btn, btn_sale_chatting;
     private TextView home_address, deposit_price, month_price,live_period_start,live_period_end;
     private TextView maintenance_cost, room_size, specific;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
@@ -56,12 +57,23 @@ public class SaleProductPage extends AppCompatActivity {
 
         photo_list=findViewById(R.id.photo_list);
 
-
-
         Construter();
         WritingData();
         Image_Load();
 
+
+        // 채팅버튼 눌렀을 때
+        btn_sale_chatting = findViewById(R.id.btn_sale_chatting);
+        btn_sale_chatting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(), ChattingActivity.class);
+                intent.putExtra("productID", select_data.getProductId());
+                intent.putExtra("writerID", select_data.getWriterId());
+                intent.putExtra("homeAddress", select_data.getHome_adress());
+                startActivity(intent);
+            }
+        });
     }
     private void Image_Load(){
         image_urllist = select_data.getImages_url();
