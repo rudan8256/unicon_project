@@ -13,20 +13,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.unicon_project.Classes.PurchaseProduct;
 import com.example.unicon_project.R;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class PurchasePage extends AppCompatActivity implements View.OnClickListener{
 
-    private static final int FROM_GALLERY = 2;
+    private static final int FROM_ADDRESS = 100;
     private Button complete_btn;
     private PurchaseProduct newProduct;
     private EditText home_address, deposit_price_max, month_price_min, month_price_max, live_period_start, live_period_end;
@@ -48,6 +58,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase_page);
+        Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
 
         //새로운 구매글 클래스 생성
         newProduct = new PurchaseProduct();
@@ -71,6 +82,9 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
 
         Construter();
         set_Clicklistner();
+
+        home_address.setFocusable(false);
+        home_address.setOnClickListener(this);
 
         complete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +123,12 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view){
         switch (view.getId()){
+            case R.id.home_address:
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
+
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList).build(PurchasePage.this);
+                startActivityForResult(intent, 100);
+                break;
             case R.id.deposit:
                 if( !newProduct.getDeposit() ){
                     newProduct.setDeposit(true); deposit.setBackgroundColor(Color.BLUE); }
@@ -308,6 +328,22 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FROM_ADDRESS) {
+            if (resultCode == RESULT_OK) {
+                //when success
+                //Initialize plcae;
+
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                home_address.setText(place.getAddress());
+                //set Address on EditText
+                //Set LocalityName
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                Status status = Autocomplete.getStatusFromIntent(data);
+                //Display toast
+                Toast.makeText(getApplicationContext(), status.getStatusMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 
