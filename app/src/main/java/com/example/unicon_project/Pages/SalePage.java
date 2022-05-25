@@ -359,6 +359,8 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         room_size = findViewById(R.id.room_size);
         specific = findViewById(R.id.specific);
 
+
+
         deposit = findViewById(R.id.deposit);
         month_rent = findViewById(R.id.month_rent);
         elec_boiler = findViewById(R.id.elec_boiler);
