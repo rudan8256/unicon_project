@@ -164,27 +164,29 @@ public class SaleProductPage extends AppCompatActivity {
         floor.setText(select_data.getFloor());
         structure.setText(select_data.getStructure());
 
-        if(select_data.getDeposit() ) deposit.setBackgroundColor(Color.BLUE);
-        if(select_data.getMonth_rent() ) month_rent.setBackgroundColor(Color.BLUE);
+
+        
+        if(select_data.getDeposit() ) deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getMonth_rent() ) month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
 
 
-        if(select_data.getMaintains().get("elec_cost") ) elec_cost.setBackgroundColor(Color.BLUE);
-        if(select_data.getMaintains().get("gas_cost") ) gas_cost.setBackgroundColor(Color.BLUE);
-        if(select_data.getMaintains().get("water_cost") )water_cost.setBackgroundColor(Color.BLUE);
-        if(select_data.getMaintains().get("internet_cost") )internet_cost.setBackgroundColor(Color.BLUE);
+        if(select_data.getMaintains().get("elec_cost") ) elec_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getMaintains().get("gas_cost") ) gas_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getMaintains().get("water_cost") )water_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getMaintains().get("internet_cost") )internet_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
 
-        if(select_data.getOptions().get("gas_boiler") ) gas_boiler.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("induction") ) induction.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("aircon") ) aircon.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("washer") ) washer.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("refrigerator") )refrigerator.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("closet") ) closet.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("gasrange") ) gasrange.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("highlight") ) highlight.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("convenience_store") ) convenience_store.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("subway") )  subway.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("parking") ) parking.setBackgroundColor(Color.BLUE);
-        if(select_data.getOptions().get("elec_boiler") ) elec_boiler.setBackgroundColor(Color.BLUE);
+        if(select_data.getOptions().get("gas_boiler") ) gas_boiler.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("induction") ) induction.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("aircon") ) aircon.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("washer") ) washer.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("refrigerator") )refrigerator.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("closet") ) closet.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("gasrange") ) gasrange.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("highlight") ) highlight.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("convenience_store") ) convenience_store.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("subway") )  subway.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("parking") ) parking.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+        if(select_data.getOptions().get("elec_boiler") ) elec_boiler.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
     }
 
 

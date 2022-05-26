@@ -78,14 +78,17 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
                     android:id="@+id/deposit"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
                     <TextView
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="전세"/>
@@ -95,10 +98,12 @@
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
                     android:id="@+id/month_rent"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
                     <TextView
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="월세"/>
@@ -300,10 +305,11 @@
                         android:layout_marginLeft="30px"
                         android:layout_gravity="bottom"
                         android:id="@+id/elec_cost"
-                        android:background="@drawable/salepage_intupborder"
+                        android:background="@drawable/salepage_inputborder"
                         android:layout_width="80dp"
                         android:layout_height="40dp">
-                        <TextView
+                        <TextView android:duplicateParentState="true"
+                            android:textColor="@color/selector_textpress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="전기세"/>
@@ -314,10 +320,11 @@
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
                     android:id="@+id/gas_cost"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="가스"/>
@@ -328,10 +335,11 @@
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
                     android:id="@+id/water_cost"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="수도"/>
@@ -342,10 +350,11 @@
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
                     android:id="@+id/internet_cost"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="인터넷"/>
@@ -450,10 +459,11 @@
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="전기보일러" />
@@ -463,10 +473,11 @@
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="가스보일러"/>
@@ -476,10 +487,11 @@
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="인덕션"/>
@@ -498,10 +510,11 @@
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="에어컨"/>
@@ -511,10 +524,11 @@
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="세탁기"/>
@@ -524,10 +538,11 @@
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="냉장고"/>
@@ -547,10 +562,11 @@
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="30px"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:gravity="center">
 
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="옷장" />
@@ -562,10 +578,11 @@
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="30px"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:gravity="center">
 
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="가스레인지" />
@@ -577,10 +594,11 @@
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="30px"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:gravity="center">
 
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="하이라이트" />
@@ -599,10 +617,11 @@
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="편세권"/>
@@ -612,10 +631,11 @@
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="역세권"/>
@@ -625,10 +645,11 @@
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/salepage_intupborder"
+                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView
+                    <TextView android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="주차가능"/>
