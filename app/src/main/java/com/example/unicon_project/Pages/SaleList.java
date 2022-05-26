@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import com.example.unicon_project.Adapters.SaleProductAdapter;
 import com.example.unicon_project.Classes.SaleProduct;
@@ -30,6 +32,9 @@ public class SaleList extends AppCompatActivity {
     private List<SaleProduct> mDatas;
     SaleProductAdapter saleProductAdapter;
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+
+    private String filter = "";
+    private Spinner filterSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,18 @@ public class SaleList extends AppCompatActivity {
             });
         }
 
+        filterSpinner = findViewById(R.id.spinner_filter);
+        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                filter = adapterView.getItemAtPosition(i).toString();
+                Log.e("###", filter);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
     }
 

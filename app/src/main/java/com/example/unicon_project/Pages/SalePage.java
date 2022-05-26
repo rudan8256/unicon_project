@@ -226,164 +226,198 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                     deposit.setSelected(true);
                 } else {
                     newproduct.setDeposit(false);
-                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));deposit.setSelected(false);
+                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
                     deposit.setSelected(false);
                 }
                 break;
             case R.id.month_rent:
                 if (!newproduct.getMonth_rent()) {
                     newproduct.setMonth_rent(true);
-                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));    month_rent.setSelected(true);
+                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    month_rent.setSelected(true);
                 } else {
                     newproduct.setMonth_rent(false);
-                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder)); month_rent.setSelected(false);
+                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    month_rent.setSelected(false);
                 }
                 break;
             case R.id.elec_cost:
                 if (!maintains.get("elec_cost")) {
                     maintains.put("elec_cost", true);
-                    elec_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));    elec_cost.setSelected(true);
+                    elec_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    elec_cost.setSelected(true);
                 } else {
                     maintains.put("elec_cost", false);
-                    elec_cost.setBackground(getDrawable(R.drawable.salepage_inputborder)); elec_cost.setSelected(false);
+                    elec_cost.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    elec_cost.setSelected(false);
                 }
                 break;
             case R.id.gas_cost:
                 if (!maintains.get("gas_cost")) {
                     maintains.put("gas_cost", true);
-                    gas_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));   gas_cost.setSelected(true);
+                    gas_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    gas_cost.setSelected(true);
                 } else {
                     maintains.put("gas_cost", false);
-                    gas_cost.setBackground(getDrawable(R.drawable.salepage_inputborder));gas_cost.setSelected(false);
+                    gas_cost.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    gas_cost.setSelected(false);
                 }
                 break;
             case R.id.water_cost:
                 if (!maintains.get("water_cost")) {
                     maintains.put("water_cost", true);
-                    water_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));   water_cost.setSelected(true);
+                    water_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    water_cost.setSelected(true);
                 } else {
                     maintains.put("water_cost", false);
-                    water_cost.setBackground(getDrawable(R.drawable.salepage_inputborder));water_cost.setSelected(false);
+                    water_cost.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    water_cost.setSelected(false);
                 }
                 break;
             case R.id.internet_cost:
                 if (!maintains.get("internet_cost")) {
                     maintains.put("internet_cost", true);
-                    internet_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));   internet_cost.setSelected(true);
+                    internet_cost.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    internet_cost.setSelected(true);
                 } else {
                     maintains.put("internet_cost", false);
-                    internet_cost.setBackground(getDrawable(R.drawable.salepage_inputborder));internet_cost.setSelected(false);
+                    internet_cost.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    internet_cost.setSelected(false);
                 }
                 break;
             case R.id.elec_boiler:
                 if (!options.get("elec_boiler")) {
                     options.put("elec_boiler", true);
-                    elec_boiler.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));   elec_boiler.setSelected(true);
+                    elec_boiler.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    elec_boiler.setSelected(true);
                 } else {
                     options.put("elec_boiler", false);
-                    elec_boiler.setBackground(getDrawable(R.drawable.salepage_inputborder));elec_boiler.setSelected(false);
+                    elec_boiler.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    elec_boiler.setSelected(false);
                 }
                 break;
 
             case R.id.gas_boiler:
                 if (!options.get("gas_boiler")) {
                     options.put("gas_boiler", true);
-                    gas_boiler.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));   gas_boiler.setSelected(true);
+                    gas_boiler.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    gas_boiler.setSelected(true);
                 } else {
                     options.put("gas_boiler", false);
-                    gas_boiler.setBackground(getDrawable(R.drawable.salepage_inputborder));gas_boiler.setSelected(false);
+                    gas_boiler.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    gas_boiler.setSelected(false);
                 }
                 break;
 
             case R.id.induction:
                 if (!options.get("induction")) {
                     options.put("induction", true);
-                    induction.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));  induction.setSelected(true);
+                    induction.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    induction.setSelected(true);
                 } else {
                     options.put("induction", false);
-                    induction.setBackground(getDrawable(R.drawable.salepage_inputborder));induction.setSelected(false);
+                    induction.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    induction.setSelected(false);
                 }
                 break;
             case R.id.aircon:
                 if (!options.get("aircon")) {
                     options.put("aircon", true);
-                    aircon.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));  aircon.setSelected(true);
+                    aircon.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    aircon.setSelected(true);
                 } else {
                     options.put("aircon", false);
-                    aircon.setBackground(getDrawable(R.drawable.salepage_inputborder));aircon.setSelected(false);
+                    aircon.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    aircon.setSelected(false);
                 }
                 break;
 
             case R.id.washer:
                 if (!options.get("washer")) {
                     options.put("washer", true);
-                    washer.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));  washer.setSelected(true);
+                    washer.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    washer.setSelected(true);
                 } else {
                     options.put("washer", false);
-                    washer.setBackground(getDrawable(R.drawable.salepage_inputborder));washer.setSelected(false);
+                    washer.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    washer.setSelected(false);
                 }
                 break;
             case R.id.refrigerator:
                 if (!options.get("refrigerator")) {
                     options.put("refrigerator", true);
-                    refrigerator.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));   refrigerator.setSelected(true);
+                    refrigerator.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    refrigerator.setSelected(true);
                 } else {
                     options.put("refrigerator", false);
-                    refrigerator.setBackground(getDrawable(R.drawable.salepage_inputborder));refrigerator.setSelected(false);
+                    refrigerator.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    refrigerator.setSelected(false);
                 }
                 break;
             case R.id.closet:
                 if (!options.get("closet")) {
                     options.put("closet", true);
-                    closet.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));   closet.setSelected(true);
+                    closet.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    closet.setSelected(true);
                 } else {
                     options.put("closet", false);
-                    closet.setBackground(getDrawable(R.drawable.salepage_inputborder));closet.setSelected(false);
+                    closet.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    closet.setSelected(false);
                 }
                 break;
             case R.id.gasrange:
                 if (!options.get("gasrange")) {
                     options.put("gasrange", true);
-                    gasrange.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));   gasrange.setSelected(true);
+                    gasrange.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    gasrange.setSelected(true);
                 } else {
                     options.put("gasrange", false);
-                    gasrange.setBackground(getDrawable(R.drawable.salepage_inputborder));gasrange.setSelected(false);
+                    gasrange.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    gasrange.setSelected(false);
                 }
                 break;
             case R.id.highlight:
                 if (!options.get("highlight")) {
                     options.put("highlight", true);
-                    highlight.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));    highlight.setSelected(true);
+                    highlight.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    highlight.setSelected(true);
                 } else {
                     options.put("highlight", false);
-                    highlight.setBackground(getDrawable(R.drawable.salepage_inputborder)); highlight.setSelected(false);
+                    highlight.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    highlight.setSelected(false);
                 }
                 break;
             case R.id.convenience_store:
                 if (!options.get("convenience_store")) {
                     options.put("convenience_store", true);
-                    convenience_store.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));   convenience_store.setSelected(true);
+                    convenience_store.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    convenience_store.setSelected(true);
                 } else {
                     options.put("convenience_store", false);
-                    convenience_store.setBackground(getDrawable(R.drawable.salepage_inputborder));convenience_store.setSelected(false);
+                    convenience_store.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    convenience_store.setSelected(false);
                 }
                 break;
             case R.id.subway:
                 if (!options.get("subway")) {
                     options.put("subway", true);
-                    subway.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));   subway.setSelected(true);
+                    subway.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    subway.setSelected(true);
                 } else {
                     options.put("subway", false);
-                    subway.setBackground(getDrawable(R.drawable.salepage_inputborder));subway.setSelected(false);
+                    subway.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    subway.setSelected(false);
                 }
                 break;
             case R.id.parking:
                 if (!options.get("parking")) {
                     options.put("parking", true);
-                    parking.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));    parking.setSelected(true);
+                    parking.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    parking.setSelected(true);
                 } else {
                     options.put("parking", false);
-                    parking.setBackground(getDrawable(R.drawable.salepage_inputborder));   parking.setSelected(false);
+                    parking.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    parking.setSelected(false);
                 }
                 break;
 

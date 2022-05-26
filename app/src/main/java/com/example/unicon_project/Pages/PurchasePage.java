@@ -131,135 +131,173 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.deposit:
                 if( !newProduct.getDeposit() ){
-                    newProduct.setDeposit(true); deposit.setBackgroundResource(R.drawable.sale_purchase_color_round15); }
+                    newProduct.setDeposit(true); deposit.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    deposit.setSelected(true);}
                 else{
-                    newProduct.setDeposit(false);deposit.setBackgroundResource(R.drawable.sale_purchase_white_round15); }
+                    newProduct.setDeposit(false);deposit.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    deposit.setSelected(false);}
                 break;
             case R.id.month_rent:
                 if( !newProduct.getMonth_rent() ){
-                    newProduct.setMonth_rent(true);month_rent.setBackgroundResource(R.drawable.sale_purchase_color_round15); }
+                    newProduct.setMonth_rent(true);month_rent.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    month_rent.setSelected(true);}
                 else{
-                    newProduct.setMonth_rent(false);month_rent.setBackgroundResource(R.drawable.sale_purchase_white_round15); }
+                    newProduct.setMonth_rent(false);month_rent.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    month_rent.setSelected(false);}
                 break;
             case R.id.negotiable:
                 if(!newProduct.getNegotiable()){
-                    newProduct.setNegotiable(true);negotiable.setBackgroundResource(R.drawable.sale_purchase_color_round15);  }
+                    newProduct.setNegotiable(true);negotiable.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    negotiable.setSelected(true);}
                 else{
-                    newProduct.setNegotiable(false);negotiable.setBackgroundResource(R.drawable.sale_purchase_white_round15); }
+                    newProduct.setNegotiable(false);negotiable.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    negotiable.setSelected(false);}
                 break;
             case R.id.elec_cost:
                 if( !maintains.get("elec_cost") ){
                     maintains.put("elec_cost",true); elec_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    elec_cost.setSelected(true);
                 } else{
                     maintains.put("elec_cost",false);elec_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    elec_cost.setSelected(false);
                 }
                 break;
             case R.id.gas_cost:
                 if( !maintains.get("gas_cost") ){
                     maintains.put("gas_cost",true); gas_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    gas_cost.setSelected(true);
                 } else{
                     maintains.put("gas_cost",false);gas_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    gas_cost.setSelected(false);
                 }
                 break;
             case R.id.water_cost:
                 if( !maintains.get("water_cost") ){
                     maintains.put("water_cost",true); water_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    water_cost.setSelected(true);
                 } else{
                     maintains.put("water_cost",false); water_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    water_cost.setSelected(false);
                 }
                 break;
             case R.id.internet_cost:
                 if( !maintains.get("internet_cost") ){
                     maintains.put("internet_cost",true); internet_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    internet_cost.setSelected(true);
                 } else{
                     maintains.put("internet_cost",false); internet_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    internet_cost.setSelected(false);
                 }
                 break;
             case R.id.elec_boiler:
                 if( !options.get("elec_boiler") ){
                     options.put("elec_boiler",true); elec_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    elec_boiler.setSelected(true);
                 } else{
                     options.put("elec_boiler",false);elec_boiler.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    elec_boiler.setSelected(false);
                 }
                 break;
 
             case R.id.gas_boiler:
                 if( !options.get("gas_boiler") ){
                     options.put("gas_boiler",true); gas_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    gas_boiler.setSelected(true);
                 } else{
                     options.put("gas_boiler",false); gas_boiler.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    gas_boiler.setSelected(false);
                 }
                 break;
 
             case R.id.induction:
                 if( !options.get("induction") ){
                     options.put("induction",true); induction.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    induction.setSelected(true);
                 } else{
                     options.put("induction",false); induction.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    induction.setSelected(false);
                 }
                 break;
             case R.id.aircon:
                 if( !options.get("aircon") ){
                     options.put("aircon",true); aircon.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    aircon.setSelected(true);
                 } else{
                     options.put("aircon",false); aircon.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    aircon.setSelected(false);
                 }
                 break;
 
             case R.id.washer:
                 if( !options.get("washer") ){
                     options.put("washer",true); washer.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    washer.setSelected(true);
                 } else{
                     options.put("washer",false); washer.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    washer.setSelected(false);
                 }
                 break;
             case R.id.refrigerator:
                 if( !options.get("refrigerator") ){
                     options.put("refrigerator",true);  refrigerator.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    refrigerator.setSelected(true);
                 } else{
                     options.put("refrigerator",false);  refrigerator.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    refrigerator.setSelected(false);
                 }
                 break;
             case R.id.closet:
                 if( !options.get("closet") ){
                     options.put("closet",true);  closet.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    closet.setSelected(true);
                 } else{
                     options.put("closet",false);  closet.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    closet.setSelected(false);
                 }
                 break;
             case R.id.gasrange:
                 if( !options.get("gasrange") ){
                     options.put("gasrange",true);  gasrange.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    gasrange.setSelected(true);
                 } else{
                     options.put("gasrange",false); gasrange.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    gasrange.setSelected(false);
                 }
                 break;
             case R.id.highlight:
                 if( !options.get("highlight") ){
                     options.put("highlight",true);  highlight.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    highlight.setSelected(true);
                 } else{
                     options.put("highlight",false); highlight.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    highlight.setSelected(false);
                 }
                 break;
             case R.id.convenience_store:
                 if( !options.get("convenience_store") ){
                     options.put("convenience_store",true); convenience_store.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    convenience_store.setSelected(true);
                 } else{
                     options.put("convenience_store",false); convenience_store.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    convenience_store.setSelected(false);
                 }
                 break;
             case R.id.subway:
                 if( !options.get("subway") ){
                     options.put("subway",true); subway.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    subway.setSelected(true);
                 } else{
                     options.put("subway",false); subway.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    subway.setSelected(false);
                 }
                 break;
             case R.id.parking:
                 if( !options.get("parking") ){
                     options.put("parking",true); parking.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    parking.setSelected(true);
                 } else{
                     options.put("parking",false); parking.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    parking.setSelected(false);
                 }
                 break;
 

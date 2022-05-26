@@ -16,13 +16,24 @@
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/item_chatting.xml" value="0.24583333333333332" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/multi_image_item.xml" value="0.24583333333333332" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/maptest_round_corner.xml" value="0.2395" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/purchase_page_edit_text.xml" value="0.2245" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/sale_purchase_color_round15.xml" value="0.2185" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/sale_purchase_color_round6.xml" value="0.2185" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/sale_purchase_white.xml" value="0.2185" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/sale_purchase_white_round15.xml" value="0.2185" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/sale_purchase_white_round5.xml" value="0.2185" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/sale_purchase_white_round6.xml" value="0.2185" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/salepage_inputborder.xml" value="0.2185" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/salepage_inputborder_isclick.xml" value="0.2185" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/salepage_intupborder.xml" value="0.2245" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_main.xml" value="0.153125" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_map_test.xml" value="0.19157608695652173" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_purchase_page.xml" value="0.33" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_purchase_list.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_purchase_page.xml" value="0.25" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_purchase_product_page.xml" value="0.4218077474892396" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_recommend_page.xml" value="0.3302083333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_list.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_page.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_page.xml" value="0.33" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_product_page.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sign_in.xml" value="0.2" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sign_up.xml" value="0.19157608695652173" />

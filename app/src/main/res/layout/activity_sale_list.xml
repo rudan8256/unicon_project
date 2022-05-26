@@ -7,6 +7,46 @@
     android:orientation="vertical"
     tools:context=".Pages.SaleList">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#eee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/layout"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="@drawable/maptest_round_corner"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/spinner_filter"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:entries="@array/filter_array"
+                app:layout_constraintBottom_toTopOf="@id/map"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/et_autocomplete"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="end">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/search_icon" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_board"
         android:layout_width="match_parent"

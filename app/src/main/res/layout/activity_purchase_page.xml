@@ -100,6 +100,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="전세"/>
                 </LinearLayout>
                 <LinearLayout
@@ -114,6 +116,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="월세"/>
                 </LinearLayout>
 
@@ -129,6 +133,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="가격 협상 가능"/>
                 </LinearLayout>
 
@@ -381,6 +387,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="전기세"/>
                 </LinearLayout>
 
@@ -395,6 +403,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="가스"/>
                 </LinearLayout>
 
@@ -409,6 +419,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="수도"/>
                 </LinearLayout>
 
@@ -423,6 +435,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="인터넷"/>
                 </LinearLayout>
             </LinearLayout>
@@ -574,6 +588,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="전기보일러" />
                 </LinearLayout>
                 <LinearLayout
@@ -587,6 +604,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="가스보일러"/>
                 </LinearLayout>
                 <LinearLayout
@@ -600,6 +620,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="인덕션"/>
                 </LinearLayout>
 
@@ -622,6 +645,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="에어컨"/>
                 </LinearLayout>
                 <LinearLayout
@@ -635,6 +661,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="세탁기"/>
                 </LinearLayout>
                 <LinearLayout
@@ -648,6 +677,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="냉장고"/>
                 </LinearLayout>
 
@@ -671,6 +703,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="옷장" />
                 </LinearLayout>
 
@@ -686,6 +721,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/selector_textpress"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
                         android:text="가스레인지" />
                 </LinearLayout>
 
@@ -701,6 +739,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="하이라이트" />
                 </LinearLayout>
 
@@ -722,6 +763,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="편세권"/>
                 </LinearLayout>
                 <LinearLayout
@@ -735,6 +779,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="역세권"/>
                 </LinearLayout>
                 <LinearLayout
@@ -748,6 +795,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:duplicateParentState="true"
+                        android:textColor="@color/selector_textpress"
                         android:text="주차가능"/>
                 </LinearLayout>
 

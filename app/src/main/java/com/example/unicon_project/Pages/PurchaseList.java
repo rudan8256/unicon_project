@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import com.example.unicon_project.Adapters.PurchaseProductAdapter;
 import com.example.unicon_project.Classes.PurchaseProduct;
@@ -30,6 +32,9 @@ public class PurchaseList extends AppCompatActivity {
     private List<PurchaseProduct> mDatas;
     PurchaseProductAdapter purchaseProductAdapter;
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+
+    private String filter = "";
+    private Spinner filterSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,19 @@ public class PurchaseList extends AppCompatActivity {
                 }
             });
         }
+
+        filterSpinner = findViewById(R.id.spinner_filter);
+        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                filter = adapterView.getItemAtPosition(i).toString();
+                Log.e("###", filter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
     }
     public void updateDatas() {
         mDatas = new ArrayList<>();//
