@@ -29,8 +29,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,12 +107,16 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     private ImageView iv_center;
     private ImageView iv_detail;
     private List<Address> addressList= Collections.emptyList();
-    private EditText et_auto;
+    private LinearLayout et_auto;
     private int Boundary=2000;
     private LocationRequest locationRequest;
     private String productId;
     private LatLng currentCameraPosition;
     private Geocoder geocoder;
+
+    private String filter = "";
+    private Spinner filterSpinner;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,8 +169,18 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         iv_detail.setVisibility(View.GONE);
         iv_detail.setOnClickListener(this);
 
+        filterSpinner = findViewById(R.id.spinner_filter);
+        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                filter = adapterView.getItemAtPosition(i).toString();
+                Log.e("###", filter);
+            }
 
-
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         Places.initialize(getApplicationContext(),"AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA",Locale.KOREAN);
 
