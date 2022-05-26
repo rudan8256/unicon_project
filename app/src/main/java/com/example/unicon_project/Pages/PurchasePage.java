@@ -131,135 +131,135 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.deposit:
                 if( !newProduct.getDeposit() ){
-                    newProduct.setDeposit(true); deposit.setBackgroundColor(Color.BLUE); }
+                    newProduct.setDeposit(true); deposit.setBackgroundResource(R.drawable.sale_purchase_color_round15); }
                 else{
-                    newProduct.setDeposit(false);deposit.setBackgroundColor(Color.WHITE); }
+                    newProduct.setDeposit(false);deposit.setBackgroundResource(R.drawable.sale_purchase_white_round15); }
                 break;
             case R.id.month_rent:
                 if( !newProduct.getMonth_rent() ){
-                    newProduct.setMonth_rent(true);month_rent.setBackgroundColor(Color.BLUE); }
+                    newProduct.setMonth_rent(true);month_rent.setBackgroundResource(R.drawable.sale_purchase_color_round15); }
                 else{
-                    newProduct.setMonth_rent(false);month_rent.setBackgroundColor(Color.WHITE); }
+                    newProduct.setMonth_rent(false);month_rent.setBackgroundResource(R.drawable.sale_purchase_white_round15); }
                 break;
             case R.id.negotiable:
                 if(!newProduct.getNegotiable()){
-                    newProduct.setNegotiable(true);negotiable.setBackgroundColor(Color.BLUE);  }
+                    newProduct.setNegotiable(true);negotiable.setBackgroundResource(R.drawable.sale_purchase_color_round15);  }
                 else{
-                    newProduct.setNegotiable(false);negotiable.setBackgroundColor(Color.WHITE); }
+                    newProduct.setNegotiable(false);negotiable.setBackgroundResource(R.drawable.sale_purchase_white_round15); }
                 break;
             case R.id.elec_cost:
                 if( !maintains.get("elec_cost") ){
-                    maintains.put("elec_cost",true); elec_cost.setBackgroundColor(Color.BLUE);
+                    maintains.put("elec_cost",true); elec_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    maintains.put("elec_cost",false);elec_cost.setBackgroundColor(Color.WHITE);
+                    maintains.put("elec_cost",false);elec_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.gas_cost:
                 if( !maintains.get("gas_cost") ){
-                    maintains.put("gas_cost",true); gas_cost.setBackgroundColor(Color.BLUE);
+                    maintains.put("gas_cost",true); gas_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    maintains.put("gas_cost",false);gas_cost.setBackgroundColor(Color.WHITE);
+                    maintains.put("gas_cost",false);gas_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.water_cost:
                 if( !maintains.get("water_cost") ){
-                    maintains.put("water_cost",true); water_cost.setBackgroundColor(Color.BLUE);
+                    maintains.put("water_cost",true); water_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    maintains.put("water_cost",false); water_cost.setBackgroundColor(Color.WHITE);
+                    maintains.put("water_cost",false); water_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.internet_cost:
                 if( !maintains.get("internet_cost") ){
-                    maintains.put("internet_cost",true); internet_cost.setBackgroundColor(Color.BLUE);
+                    maintains.put("internet_cost",true); internet_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    maintains.put("internet_cost",false); internet_cost.setBackgroundColor(Color.WHITE);
+                    maintains.put("internet_cost",false); internet_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.elec_boiler:
                 if( !options.get("elec_boiler") ){
-                    options.put("elec_boiler",true); elec_boiler.setBackgroundColor(Color.BLUE);
+                    options.put("elec_boiler",true); elec_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("elec_boiler",false);elec_boiler.setBackgroundColor(Color.WHITE);
+                    options.put("elec_boiler",false);elec_boiler.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
 
             case R.id.gas_boiler:
                 if( !options.get("gas_boiler") ){
-                    options.put("gas_boiler",true); gas_boiler.setBackgroundColor(Color.BLUE);
+                    options.put("gas_boiler",true); gas_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("gas_boiler",false); gas_boiler.setBackgroundColor(Color.WHITE);
+                    options.put("gas_boiler",false); gas_boiler.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
 
             case R.id.induction:
                 if( !options.get("induction") ){
-                    options.put("induction",true); induction.setBackgroundColor(Color.BLUE);
+                    options.put("induction",true); induction.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("induction",false); induction.setBackgroundColor(Color.WHITE);
+                    options.put("induction",false); induction.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.aircon:
                 if( !options.get("aircon") ){
-                    options.put("aircon",true); aircon.setBackgroundColor(Color.BLUE);
+                    options.put("aircon",true); aircon.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("aircon",false); aircon.setBackgroundColor(Color.WHITE);
+                    options.put("aircon",false); aircon.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
 
             case R.id.washer:
                 if( !options.get("washer") ){
-                    options.put("washer",true); washer.setBackgroundColor(Color.BLUE);
+                    options.put("washer",true); washer.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("washer",false); washer.setBackgroundColor(Color.WHITE);
+                    options.put("washer",false); washer.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.refrigerator:
                 if( !options.get("refrigerator") ){
-                    options.put("refrigerator",true);  refrigerator.setBackgroundColor(Color.BLUE);
+                    options.put("refrigerator",true);  refrigerator.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("refrigerator",false);  refrigerator.setBackgroundColor(Color.WHITE);
+                    options.put("refrigerator",false);  refrigerator.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.closet:
                 if( !options.get("closet") ){
-                    options.put("closet",true);  closet.setBackgroundColor(Color.BLUE);
+                    options.put("closet",true);  closet.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("closet",false);  closet.setBackgroundColor(Color.WHITE);
+                    options.put("closet",false);  closet.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.gasrange:
                 if( !options.get("gasrange") ){
-                    options.put("gasrange",true);  gasrange.setBackgroundColor(Color.BLUE);
+                    options.put("gasrange",true);  gasrange.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("gasrange",false); gasrange.setBackgroundColor(Color.WHITE);
+                    options.put("gasrange",false); gasrange.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.highlight:
                 if( !options.get("highlight") ){
-                    options.put("highlight",true);  highlight.setBackgroundColor(Color.BLUE);
+                    options.put("highlight",true);  highlight.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("highlight",false); highlight.setBackgroundColor(Color.WHITE);
+                    options.put("highlight",false); highlight.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.convenience_store:
                 if( !options.get("convenience_store") ){
-                    options.put("convenience_store",true); convenience_store.setBackgroundColor(Color.BLUE);
+                    options.put("convenience_store",true); convenience_store.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("convenience_store",false); convenience_store.setBackgroundColor(Color.WHITE);
+                    options.put("convenience_store",false); convenience_store.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.subway:
                 if( !options.get("subway") ){
-                    options.put("subway",true); subway.setBackgroundColor(Color.BLUE);
+                    options.put("subway",true); subway.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("subway",false); subway.setBackgroundColor(Color.WHITE);
+                    options.put("subway",false); subway.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
             case R.id.parking:
                 if( !options.get("parking") ){
-                    options.put("parking",true); parking.setBackgroundColor(Color.BLUE);
+                    options.put("parking",true); parking.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                 } else{
-                    options.put("parking",false); parking.setBackgroundColor(Color.WHITE);
+                    options.put("parking",false); parking.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                 }
                 break;
 

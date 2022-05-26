@@ -16,150 +16,410 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/home_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="집주소"
-                />
+            android:layout_height="wrap_content">
 
             <LinearLayout
+                android:layout_margin="30dp"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/addresssearch"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:text="동네 설정"
+                        />
+
+                    <FrameLayout
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:padding="5dp"
+                        android:background="@drawable/sale_purchase_white_round6">
+                        <EditText
+                            android:id="@+id/home_address"
+                            android:layout_width="220dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="30dp"
+                            android:background="@null"
+                            android:hint="주소"
+                            android:textSize="15sp"
+                            android:layout_gravity="left"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/search_icon"
+                            android:layout_gravity="right"/>
+                    </FrameLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_marginBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D6D6D6"/>
+
+            <TextView
+                android:layout_marginStart="28dp"
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:textStyle="bold"
+                android:text="조건 설정"/>
+            <View
+                android:layout_marginBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
 
                 <LinearLayout
                     android:id="@+id/deposit"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
                         android:text="전세"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginStart="30dp"
+                    android:layout_gravity="bottom"
                     android:id="@+id/month_rent"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
                         android:text="월세"/>
                 </LinearLayout>
+
                 <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginStart="30dp"
+                    android:layout_gravity="bottom"
                     android:id="@+id/negotiable"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="협상가능"/>
+                        android:textSize="15sp"
+                        android:text="가격 협상 가능"/>
                 </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
+            <View
+                android:layout_marginBottom="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="1dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="34dp"
+                android:background="@drawable/sale_purchase_white_round6"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="5dp">
 
                 <EditText
                     android:id="@+id/deposit_price_max"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="보증금 최대 가격 설정"/>
+                    android:layout_marginStart="20dp"
+                    android:background="@null"
+                    android:hint="보증금 최대 가격 설정"
+                    android:textSize="13sp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:text="만원"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/month_price_min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="월세 최소"/>
-
-                <EditText
-                    android:id="@+id/month_price_max"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="월세 최대"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/live_period_start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="입주 첫날"/>
-
-                <EditText
-                    android:id="@+id/live_period_end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="입주 마지막날"/>
-
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/maintenance_cost"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_marginStart="28dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="관리비 최대 가격"/>
+                android:text="월세 범위 설정"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:padding="10dp"
+                    android:background="@drawable/sale_purchase_white_round6"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/month_price_min"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textSize="13sp"
+                        android:hint="월세 최소"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="만원"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="~"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="28dp"
+                    android:padding="10dp"
+                    android:background="@drawable/sale_purchase_white_round6"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/month_price_max"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textSize="13sp"
+                        android:hint="월세 최대"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="만원"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_marginStart="28dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원하는 입주 기간"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/sale_purchase_white_round6"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/live_period_start"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="115dp"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textSize="13sp"
+                        android:hint="입주 원하는 날" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="~"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="30dp"
+                    android:padding="10dp"
+                    android:background="@drawable/sale_purchase_white_round6"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/live_period_end"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="115dp"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textSize="13sp"
+                        android:hint="마지막날"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_marginBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <View
+                android:layout_marginBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D6D6D6"/>
+
+            <TextView
+                android:layout_marginStart="28dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="관리비"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="30dp"
+                android:padding="5dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/sale_purchase_white_round6"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/maintenance_cost"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:textSize="13sp"
+                    android:hint="관리비 최대 가격"/>
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_marginLeft="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="만원"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
                     android:id="@+id/elec_cost"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="78dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="전기세"/>
                 </LinearLayout>
+
                 <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginStart="15dp"
+                    android:layout_gravity="bottom"
                     android:id="@+id/gas_cost"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="78dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="가스"/>
                 </LinearLayout>
+
                 <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginStart="15dp"
+                    android:layout_gravity="bottom"
                     android:id="@+id/water_cost"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="78dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="수도"/>
                 </LinearLayout>
+
                 <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginStart="15dp"
+                    android:layout_gravity="bottom"
                     android:id="@+id/internet_cost"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="78dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -167,55 +427,150 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:layout_marginStart="28dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/room_size_min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="최소 면적"/>
-
-                <EditText
-                    android:id="@+id/room_size_max"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="최대 면적"/>
-
-            </LinearLayout>
+                android:text="면적"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                android:layout_weight="1"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@drawable/sale_purchase_white_round6"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/room_size_min"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textSize="13sp"
+                        android:hint="최소 면적"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="㎡"/>
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="구조"/>
+                    android:layout_marginStart="28dp"
+                    android:text="~"
+                    android:textStyle="bold"/>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:padding="10dp"
+                    android:background="@drawable/sale_purchase_white_round6"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/room_size_max"
+                        android:layout_marginStart="5dp"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:textSize="13sp"
+                        android:hint="최대 면적"/>
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="㎡"/>
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_marginStart="28dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="구조"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="30dp"
+                android:padding="5dp"
+                android:background="@drawable/sale_purchase_white_round6"
+                android:orientation="horizontal">
                 <Spinner
                     android:id="@+id/structure"
                     android:layout_centerHorizontal="true"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:entries="@array/structure_array2"/>
             </LinearLayout>
-
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_marginStart="28dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="옵션"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
 
             <LinearLayout
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:orientation="horizontal">
+
 
                 <LinearLayout
                     android:id="@+id/elec_boiler"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -223,9 +578,12 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/gas_boiler"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:gravity="center"
+                    android:layout_marginStart="28dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -233,9 +591,12 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/induction"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:gravity="center"
+                    android:layout_marginStart="28dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -245,15 +606,19 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/aircon"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -261,9 +626,12 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/washer"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:gravity="center"
+                    android:layout_marginStart="28dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -271,9 +639,12 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/refrigerator"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:gravity="center"
+                    android:layout_marginStart="28dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -281,53 +652,73 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/closet"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:layout_width="90dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:gravity="center">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="옷장"/>
+                        android:text="옷장" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/gasrange"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:layout_width="90dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="28dp"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:gravity="center">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="가스레인지"/>
+                        android:text="가스레인지" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/highlight"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:layout_width="90dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="28dp"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:gravity="center">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="하이라이트"/>
+                        android:text="하이라이트" />
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/convenience_store"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -335,9 +726,12 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/subway"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:gravity="center"
+                    android:layout_marginStart="28dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -345,9 +739,12 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/parking"
-                    android:background="#F2F2F2"
-                    android:layout_width="200px"
-                    android:layout_height="100px">
+                    android:gravity="center"
+                    android:layout_marginStart="28dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/sale_purchase_white_round15"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -355,16 +752,41 @@
                 </LinearLayout>
 
             </LinearLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:text="상세설명"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                />
 
             <EditText
+                android:layout_gravity="center"
+                android:background="@drawable/sale_purchase_white_round6"
                 android:id="@+id/specific"
-                android:layout_width="wrap_content"
-                android:layout_height="300px"
-                android:hint="상세설명"/>
+                android:layout_width="340dp"
+                android:layout_height="100dp"
+                android:hint="상세조건설명"/>
 
-
+            <View
+                android:layout_marginBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
             <Button
                 android:id="@+id/complete_btn"
+                android:layout_marginStart="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="완료"/>
