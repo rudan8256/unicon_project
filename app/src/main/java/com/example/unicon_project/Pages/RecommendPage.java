@@ -247,7 +247,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                 }
 
 
-                saleProductAdapter = new SaleProductAdapter( mDatas);
+                saleProductAdapter = new SaleProductAdapter( mDatas, getApplicationContext());
                 recommend_list.setAdapter(saleProductAdapter);
                 saleProductAdapter.setOnItemClickListener(new SaleProductAdapter.OnItemClickListener() {
                     @Override

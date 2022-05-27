@@ -47,7 +47,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
         mPostRecyclerView = findViewById(R.id.salelist_recy);
         swipeRefreshLayout=findViewById(R.id.refresh_board);
-        saleProductAdapter = new SaleProductAdapter();
+        saleProductAdapter = new SaleProductAdapter(null,getApplicationContext());
         mPostRecyclerView.setAdapter(saleProductAdapter);
         saleProductAdapter.setOnItemClickListener(this);
         mPostRecyclerView.setLayoutManager(new LinearLayoutManager(this));

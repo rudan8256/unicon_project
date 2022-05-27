@@ -176,8 +176,8 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
 
 
-                if ( !deposit_price.equals("") ||  !month_price.equals("") || !home_address.equals("")|| !maintenance_cost.equals("")||
-               ! room_size.equals("")|| !floor.equals("")|| !structure.equals("") ){
+                if ( deposit_price.getText().toString().equals("") ||  month_price.getText().toString().equals("") || home_address.getText().toString().equals("")|| maintenance_cost.getText().toString().equals("")||
+                room_size.getText().toString().equals("") ){
 
                     Toast.makeText(getApplicationContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
 
