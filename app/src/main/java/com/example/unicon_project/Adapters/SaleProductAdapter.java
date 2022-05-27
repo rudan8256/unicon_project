@@ -55,6 +55,8 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
         this.mDatas = mdatas;
     }
 
+    public SaleProductAdapter() {}
+
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -77,6 +79,8 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
+        if(mDatas==null)return 0;
+
         return mDatas.size();
     }
 
@@ -88,4 +92,7 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
         this.mListener = listener ;
     }
 
+    public void setmDatas(List<SaleProduct> mDatas) {
+        this.mDatas = mDatas;
+    }
 }
