@@ -175,6 +175,14 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
             public void onClick(View view) {
 
 
+
+                if ( !deposit_price.equals("") ||  !month_price.equals("") || !home_address.equals("")|| !maintenance_cost.equals("")||
+               ! room_size.equals("")|| !floor.equals("")|| !structure.equals("") ){
+
+                    Toast.makeText(getApplicationContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
+
+                   return;
+                }
                 // Create a new user with a first and last name
                 newproduct.setHome_adress(home_address.getText().toString());
                 newproduct.setMonth_rent_price(month_price.getText().toString());

@@ -53,7 +53,16 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
         mPostRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         filterSpinner = findViewById(R.id.spinner_filter);
         filterSpinner.setOnItemSelectedListener(this);
+
         updateDatas();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateDatas();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
     }
 
