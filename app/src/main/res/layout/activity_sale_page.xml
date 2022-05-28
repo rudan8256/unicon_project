@@ -159,6 +159,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+
                         android:width="100dp"
                         android:background="@null"
                         android:id="@+id/deposit_price"

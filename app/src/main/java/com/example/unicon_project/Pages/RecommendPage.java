@@ -38,8 +38,8 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
     private LinearLayout recommend_condition;
     private RecyclerView recommend_list;
-    private List<SaleProduct> mDatas;
-    private List<Integer> dataScore;
+    private List<SaleProduct> mDatas =new ArrayList<>();
+    private List<Integer> dataScore = new ArrayList<>();
     SaleProductAdapter saleProductAdapter;
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -71,6 +71,8 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
         structure_sel_map.put("투룸",4);
         structure_sel_map.put("쓰리룸",5);
 
+        Log.e("$$$$", String.valueOf(structure_sel_map.get("오픈형 원룸")));
+
         preUserdata = new RecommendCondition();
 
 
@@ -79,6 +81,9 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
         condition_dialog.setCanceledOnTouchOutside(true);
 
         Construter();
+        searchInFB();
+
+
 
         recommend_condition.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +91,6 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                  showDialog();
             }
         });
-
-
-        searchInFB();
-        updateDatas();
 
 
 
@@ -121,8 +122,13 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                                 maintenance_cost.setText(preUserdata.getMaintenance_cost());
                                structure = preUserdata.getStructure();
                                 int cur_seldata_num;
+
+
                                if(structure!="") {
+
                                    cur_seldata_num = structure_sel_map.get(structure);
+
+
 
                                    structureSpinner.setSelection(cur_seldata_num);
                                }
@@ -143,6 +149,10 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                                         month_rent.setBackgroundColor(Color.WHITE); }
 
 
+                                updateDatas();
+                            }
+                            else {
+                                updateDatas();
                             }
                         }
                     });
@@ -150,7 +160,8 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
     }
 
     public void updateDatas() {
-        mDatas = new ArrayList<>();//
+        mDatas.clear();//
+        dataScore.clear();
         mStore.collection("SaleProducts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -163,13 +174,24 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                         int cur_score= Judge(curdata);
                         if(cur_score > 1000) {
 
-                            mDatas.add(curdata);
 
+
+                            Log.e("$$$$", String.valueOf(cur_score));
+
+
+                            mDatas.add(curdata);
+                            dataScore.add(cur_score);
                         }
 
                     }
                 }
 
+                for(int i=0;i<mDatas.size()-1;i++){
+                    for(int j=0;j<mDatas.size()-1;j++){
+                        if(dataScore.get(j)>dataScore.get(j+1))
+                            swap(j,j+1);
+                    }
+                }
 
                 saleProductAdapter = new SaleProductAdapter( mDatas, getApplicationContext());
                 recommend_list.setAdapter(saleProductAdapter);
@@ -185,14 +207,15 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
         });
     }
     private void swap(int v,int e){
-//        SaleProduct temp;
-//        temp=saleList.get(v);
-//        saleList.set(v,saleList.get(e));
-//        saleList.set(e,temp);
-//        Double dtemp;
-//        dtemp=dist.get(v);
-//        dist.set(v,dist.get(e));
-//        dist.set(e,dtemp);
+        SaleProduct temp;
+        temp=mDatas.get(v);
+        mDatas.set(v,mDatas.get(e));
+        mDatas.set(e,temp);
+
+        int score_temp;
+        score_temp=dataScore.get(v);
+        dataScore.set(v,dataScore.get(e));
+        dataScore.set(e,score_temp);
     }
 
 
@@ -200,15 +223,23 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
         int total=0;
 
-        String cur_data_start[] = curdata.getLive_period_start().split("/");
-        String cur_data_end[] = curdata.getLive_period_end().split("/");
-        String pre_data_start[] = preUserdata.getLive_period_start().split("/");
-        String pre_data_end[] =preUserdata.getLive_period_end().split("/");
+        String cur_data_start= curdata.getLive_period_start().replace("/","");
+        String cur_data_end= curdata.getLive_period_end().replace("/","");
+        String pre_data_start = preUserdata.getLive_period_start().replace("/","");
+        String pre_data_end =preUserdata.getLive_period_end().replace("/","");
 
 
+        //완변 조건매물 토탈 4000
 
-        if(  !(preUserdata.getDeposit() == curdata.getDeposit() && preUserdata.getMonth_rent() == curdata.getMonth_rent())){
+
+        if(  !(preUserdata.getDeposit() == curdata.getDeposit() || preUserdata.getMonth_rent() == curdata.getMonth_rent())){
            return -1;
+        }
+        else if(Integer.parseInt(pre_data_start) <=Integer.parseInt(cur_data_start) &&Integer.parseInt(cur_data_end) <= Integer.parseInt(pre_data_end) ){
+            return  -1;
+        }
+        else if( ! preUserdata.getStructure().equals(curdata.getStructure()) && ! preUserdata.getStructure().equals("상관없음")){
+            return  -1;
         }
         else{
 
@@ -221,17 +252,30 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                 total += 1000;
             }
             else if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) < Integer.parseInt(curdata.getMonth_rent_price())){
-                total += Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()) ;
+               if(Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()) <=5){
+                   total += 500 - 100*(Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()));
+               }
             }
             else{
-                total += Integer.parseInt(preUserdata.getMonth_rentprice_max()) - Integer.parseInt(curdata.getMonth_rent_price())  ;
+                if( Integer.parseInt(preUserdata.getMonth_rentprice_max()) - Integer.parseInt(curdata.getMonth_rent_price()) <=5){
+                    total += 500 - 100* (Integer.parseInt(preUserdata.getMonth_rentprice_max()) - Integer.parseInt(curdata.getMonth_rent_price()));
+                }
+            }
+
+            if(preUserdata.getStructure().equals(curdata.getStructure())){
+                total += 1000;
+            }
+
+            if( Integer.parseInt(preUserdata.getRoom_size_min()) <= Integer.parseInt(curdata.getRoom_size()) &&
+                    Integer.parseInt(preUserdata.getRoom_size_max()) >= Integer.parseInt(curdata.getRoom_size())
+            ){
+                total += 1000;
             }
 
 
 
             return total;
         }
-
 
 
 
