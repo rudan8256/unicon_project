@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="30dp"
+    android:background="@drawable/ic_tag"
+    >
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:text=""
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        />
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
+        android:layout_gravity="center"
+        />
+</LinearLayout>
