@@ -1,5 +1,6 @@
 package com.example.unicon_project.Classes;
 
+import com.google.firebase.Timestamp;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class PurchaseProduct implements Serializable {
     private Map<String, Boolean> maintains;
     private Map<String, Boolean> options;
     private String productId;
+    private Timestamp timestamp;
 
     public PurchaseProduct() {
         this.home_address = "";
@@ -38,6 +40,7 @@ public class PurchaseProduct implements Serializable {
         this.deposit = false;
         this.negotiable = false;
         this.productId = "";
+        this.timestamp = null;
 
         //집주인 동의여부 ,  관리비 옵션
         this.maintains.put("elec_cost", false);
@@ -59,6 +62,51 @@ public class PurchaseProduct implements Serializable {
         this.options.put("subway", false);
         this.options.put("parking", false);
 
+    }
+
+    public PurchaseProduct(String home_address, Boolean month_rent, Boolean deposit, Boolean negotiable, String deposit_price_max, String month_price_min, String month_price_max, String live_period_start, String live_period_end, String maintenance_cost, String room_size_min, String room_size_max, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, String productId, Timestamp timestamp) {
+        this.home_address = home_address;
+        this.month_rent = month_rent;
+        this.deposit = deposit;
+        this.negotiable = negotiable;
+        this.deposit_price_max = deposit_price_max;
+        this.month_price_min = month_price_min;
+        this.month_price_max = month_price_max;
+        this.live_period_start = live_period_start;
+        this.live_period_end = live_period_end;
+        this.maintenance_cost = maintenance_cost;
+        this.room_size_min = room_size_min;
+        this.room_size_max = room_size_max;
+        this.structure = structure;
+        this.specific = specific;
+        this.maintains = maintains;
+        this.options = options;
+        this.productId = productId;
+        this.timestamp = timestamp;
+    }
+
+    public String getMonth_price_min() {
+        return month_price_min;
+    }
+
+    public void setMonth_price_min(String month_price_min) {
+        this.month_price_min = month_price_min;
+    }
+
+    public String getMonth_price_max() {
+        return month_price_max;
+    }
+
+    public void setMonth_price_max(String month_price_max) {
+        this.month_price_max = month_price_max;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getHome_address() {

@@ -66,7 +66,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private EditText maintenance_cost, room_size, specific;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private String curdate, floor, structure;
+    private String curdate, floor, structure,home_name;
     private LinearLayout deposit, month_rent, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
     private LinearLayout convenience_store, subway, parking;
@@ -244,6 +244,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                 newproduct.setWriterId(mAuth.getUid());
                 newproduct.setFloor(floor);
                 newproduct.setStructure(structure);
+                newproduct.setHome_name(home_name);
 
                 curdate = String.valueOf(System.currentTimeMillis());
                 newproduct.setProductId(curdate + mAuth.getUid());
@@ -557,6 +558,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 home_address.setText(place.getAddress());
+                home_name = place.getName();
                 //set Address on EditText
                 //Set LocalityName
 

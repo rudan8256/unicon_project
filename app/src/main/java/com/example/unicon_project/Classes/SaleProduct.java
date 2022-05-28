@@ -1,6 +1,7 @@
 package com.example.unicon_project.Classes;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.Timestamp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,7 +44,8 @@ public class SaleProduct implements Serializable {
     private Map<String,String> personal_proposal;
     private String productId;
     private String writerId;
-
+    private String home_name;
+    private Timestamp timestamp;
 
 
     public SaleProduct(){
@@ -65,6 +67,8 @@ public class SaleProduct implements Serializable {
         this.deposit = false;
         this.productId = "";
         this.writerId = "";
+        this.home_name = "";
+        this.timestamp = null;
 
         //집주인 동의여부 ,  관리비 옵션
         this.maintains.put("owner_agree", false);
@@ -93,7 +97,8 @@ public class SaleProduct implements Serializable {
         this.personal_proposal.put("homeowner","");
 
     }
-    public SaleProduct(String home_adress, Boolean month_rent, Boolean deposit, String month_rent_price, String deposit_price, String live_period_start, String live_period_end, ArrayList<String> images_url, String maintenance_cost, String room_size, String floor, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, Map<String, String> personal_proposal, String productId) {
+
+    public SaleProduct(String home_adress, Boolean month_rent, Boolean deposit, String month_rent_price, String deposit_price, String live_period_start, String live_period_end, ArrayList<String> images_url, String maintenance_cost, String room_size, String floor, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, Map<String, String> personal_proposal, String productId, String writerId, String home_name, Timestamp timestamp) {
         this.home_adress = home_adress;
         this.month_rent = month_rent;
         this.deposit = deposit;
@@ -111,9 +116,27 @@ public class SaleProduct implements Serializable {
         this.options = options;
         this.personal_proposal = personal_proposal;
         this.productId = productId;
+        this.writerId = writerId;
+        this.home_name = home_name;
+        this.timestamp = timestamp;
     }
 
 
+    public String getHome_name() {
+        return home_name;
+    }
+
+    public void setHome_name(String home_name) {
+        this.home_name = home_name;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public String getProductId() {
         return productId;
