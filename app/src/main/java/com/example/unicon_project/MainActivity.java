@@ -135,13 +135,8 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onCompleteLogout() {
                             if (mSessionCallback != null) {
-                                Log.e("###", "onCompleteLogout:logout ");
                                 Session.getCurrentSession().removeCallback(mSessionCallback);
-                                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-                                startActivity(intent);
-                                finish();
                             }
-
                         }
                     });
                 }
@@ -154,16 +149,10 @@ public class MainActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<GetTokenResult> task) {
                                         if (task.isSuccessful()) {
                                             String idToken = task.getResult().getToken();
-                                            // Send token to your backend via HTTPS
-                                            // ...
-                                            Log.e("###", "id token: " + idToken);
-                                        } else {
-                                            // Handle error -> task.getException();
                                         }
                                     }
                                 });
                     }
-                    Log.e("###", "getCurrentUser success " + firebaseAuth.getCurrentUser().getIdToken(true));
                     firebaseAuth.signOut();
                     mGoogleSignInClient.revokeAccess();
 

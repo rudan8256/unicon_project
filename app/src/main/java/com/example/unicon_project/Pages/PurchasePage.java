@@ -3,6 +3,7 @@ package com.example.unicon_project.Pages;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,9 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.unicon_project.Classes.PurchaseProduct;
@@ -30,6 +34,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -39,7 +44,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     private static final int FROM_ADDRESS = 100;
     private Button complete_btn;
     private PurchaseProduct newProduct;
-    private EditText home_address, deposit_price_max, month_price_min, month_price_max, live_period_start, live_period_end;
+    private EditText home_address, deposit_price_max, month_price_min, month_price_max;
     private EditText maintenance_cost, room_size_min, room_size_max, specific;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -48,9 +53,11 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
     private LinearLayout convenience_store, subway, parking;
     private Spinner structureSpinner;
-
+    private ImageView day_first, day_last;
     private Map<String, Boolean> maintains, options;
-
+    private DatePickerDialog datePickerDialog;
+    private TextView live_period_start, live_period_end;
+    private String str_live_period_start = "", str_live_period_end = "";
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     StorageReference storageReference;
 
@@ -59,13 +66,15 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase_page);
         Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
+        storageReference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
 
         //새로운 구매글 클래스 생성
         newProduct = new PurchaseProduct();
         maintains = newProduct.getMaintains();
         options = newProduct.getOptions();
 
-        structureSpinner = findViewById(R.id.structure);
+        Construter();
+        set_Clicklistner();
 
         structureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -77,14 +86,49 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-
-        storageReference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
-
-        Construter();
-        set_Clicklistner();
-
         home_address.setFocusable(false);
         home_address.setOnClickListener(this);
+
+        day_first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int mYear = calendar.get(Calendar.YEAR);
+                int mMonth = calendar.get(Calendar.MONTH);
+                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                datePickerDialog = new DatePickerDialog(PurchasePage.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                month = month + 1;
+                                str_live_period_start = year+"/"+month+"/"+day;
+                                live_period_start.setText(str_live_period_start);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
+        day_last.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int mYear = calendar.get(Calendar.YEAR);
+                int mMonth = calendar.get(Calendar.MONTH);
+                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                datePickerDialog = new DatePickerDialog(PurchasePage.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                month = month + 1;
+                                str_live_period_end = year+"/"+month+"/"+day;
+                                live_period_end.setText(str_live_period_end);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
 
         complete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,8 +140,8 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 newProduct.setMonth_rent_price_min(month_price_min.getText().toString());
                 newProduct.setMonth_rent_price_max(month_price_max.getText().toString());
                 newProduct.setDeposit_price_max(deposit_price_max.getText().toString());
-                newProduct.setLive_period_start(live_period_start.getText().toString());
-                newProduct.setLive_period_end(live_period_end.getText().toString());
+                newProduct.setLive_period_start(str_live_period_start);
+                newProduct.setLive_period_end(str_live_period_end);
                 newProduct.setMaintenance_cost(maintenance_cost.getText().toString());
                 newProduct.setRoom_size_min(room_size_min.getText().toString());
                 newProduct.setRoom_size_max(room_size_max.getText().toString());
@@ -112,7 +156,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Log.e("***","업로드 성공");
+                                Log.e("###","업로드 성공");
                                 finish();
                             }
                         });
@@ -318,9 +362,12 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         room_size_max = findViewById(R.id.room_size_max);
         specific = findViewById(R.id.specific);
 
+        structureSpinner = findViewById(R.id.structure);
         deposit = findViewById(R.id.deposit);
         month_rent = findViewById(R.id.month_rent);
         negotiable = findViewById(R.id.negotiable);
+        day_first = findViewById(R.id.day_first);
+        day_last = findViewById(R.id.day_last);
 
         elec_boiler = findViewById(R.id.elec_boiler);
         elec_cost = findViewById(R.id.elec_cost);
@@ -383,6 +430,4 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
-
 }

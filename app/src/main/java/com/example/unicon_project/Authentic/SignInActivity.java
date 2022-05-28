@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -54,14 +55,6 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        updateUI(currentUser);
-        if (currentUser != null) {
-            Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
-            startActivity(intent);
-        }
-
-        Log.e("###", "onStart");
     }
 
     @Override
@@ -88,28 +81,23 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //구글, 앱 로그인 자동로그인
-        if (firebaseAuth.getCurrentUser() != null) {
-            Log.e("###", "firebase automatic log in");
-            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
         //카카오톡 자동로그인
         if (Session.getCurrentSession().checkAndImplicitOpen()) {
             UserManagement.getInstance().me(new MeV2ResponseCallback() {
                 @Override
                 public void onSuccess(MeV2Response result) {
-                    Log.e("###", "kakao automatic log in");
-                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    Log.e("###", "카카오 자동 로그인 성공");
+                    goMainActivity();
                 }
+
                 @Override
                 public void onSessionClosed(ErrorResult errorResult) {
                 }
             });
+        }//구글, 앱 로그인 자동로그인
+        else if (firebaseAuth.getCurrentUser() != null) {
+            Log.e("###", "파이어베이스 자동로그인 성공");
+            goMainActivity();
         }
 
         //회원가입
@@ -144,7 +132,7 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             goMainActivity();
                         } else {
-                            Toast.makeText(SignInActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                            Log.e("###", "앱 로그인 실패");
                         }
                     }
                 });
@@ -171,10 +159,32 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                     @Override
                     public void onSuccess(MeV2Response result) {
                         // 로그인 성공
-                        Log.e("###", "id : "+result.getId());
-                        Intent intent=new Intent(SignInActivity.this,MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        String email = "pjs000131@naver.com";
+                        String pwd = String.valueOf(result.getId());
+                        firebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(
+                                SignInActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.e("###", "카카오 파이어베이스 유저 생성");
+                                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                                            goMainActivity();
+                                        } else {
+                                            // 이미 존재하는 아이디 일때
+                                            Log.e("###", "카카오 파이어베이스 로그인");
+                                            firebaseAuth.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    if (task.isSuccessful()) {
+                                                        goMainActivity();
+                                                    } else {
+                                                        Toast.makeText(SignInActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
                     }
                 });
             }
@@ -201,7 +211,7 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)) {
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
             return;
         }
         if (requestCode == RC_SIGN_IN) {
@@ -220,6 +230,7 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     // [START auth_with_google]
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -243,31 +254,34 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                 });
     }
 
-    private void goMainActivity(){
-        Intent intent = new Intent(SignInActivity.this, SignInActivity.class);
+    private void goMainActivity() {
+        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
+
     private void updateUI(FirebaseUser user) {
 
     }
+
     // 세션 없애기, 로그인 계속 유지 X
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Session.getCurrentSession().removeCallback(mSessionCallback);
     }
+
     // 뒤로가기 버튼 2번 누를 시에 앱 종료
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK) {
-            if(SystemClock.elapsedRealtime() - clickTime < 2000) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (SystemClock.elapsedRealtime() - clickTime < 2000) {
                 finish();
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 return true;
             }
             clickTime = SystemClock.elapsedRealtime();
-            Toast.makeText(getApplication(),"한번 더 클릭하시면 앱을 종료합니다",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), "한번 더 클릭하시면 앱을 종료합니다", Toast.LENGTH_SHORT).show();
         }
         return true;
     }

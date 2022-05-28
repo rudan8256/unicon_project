@@ -215,6 +215,7 @@
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
                         android:text="만원"/>
                 </LinearLayout>
 
@@ -245,6 +246,7 @@
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
                         android:text="만원"/>
                 </LinearLayout>
 
@@ -275,20 +277,29 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="140dp"
                     android:layout_height="40dp"
                     android:background="@drawable/sale_purchase_white_round6"
                     android:orientation="horizontal"
+                    android:gravity="center"
                     android:padding="10dp">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/live_period_start"
                         android:layout_marginStart="5dp"
-                        android:layout_width="115dp"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:textSize="13sp"
                         android:hint="입주 원하는 날" />
+
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="22dp"
+                        android:id="@+id/day_first"
+                        android:src="@drawable/calendar" />
+
 
                 </LinearLayout>
 
@@ -300,21 +311,29 @@
                     android:textStyle="bold"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="140dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="30dp"
                     android:padding="10dp"
+                    android:gravity="center"
                     android:background="@drawable/sale_purchase_white_round6"
                     android:orientation="horizontal">
 
-                    <EditText
+                    <TextView
                         android:id="@+id/live_period_end"
                         android:layout_marginStart="5dp"
-                        android:layout_width="115dp"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:textSize="13sp"
                         android:hint="마지막날"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="22dp"
+                        android:id="@+id/day_last"
+                        android:src="@drawable/calendar"/>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -359,9 +378,10 @@
                     android:hint="관리비 최대 가격"/>
                 <TextView
                     android:textStyle="bold"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="15sp"
                     android:text="만원"/>
             </LinearLayout>
 
@@ -389,6 +409,7 @@
                         android:layout_height="wrap_content"
                         android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
+                        android:textSize="15sp"
                         android:text="전기세"/>
                 </LinearLayout>
 
@@ -405,6 +426,7 @@
                         android:layout_height="wrap_content"
                         android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
+                        android:textSize="15sp"
                         android:text="가스"/>
                 </LinearLayout>
 
@@ -421,6 +443,7 @@
                         android:layout_height="wrap_content"
                         android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
+                        android:textSize="15sp"
                         android:text="수도"/>
                 </LinearLayout>
 
@@ -437,6 +460,7 @@
                         android:layout_height="wrap_content"
                         android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
+                        android:textSize="15sp"
                         android:text="인터넷"/>
                 </LinearLayout>
             </LinearLayout>
@@ -826,6 +850,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/sale_purchase_white_round6"
                 android:id="@+id/specific"
+                android:textSize="15sp"
                 android:layout_width="340dp"
                 android:layout_height="100dp"
                 android:hint="상세조건설명"/>

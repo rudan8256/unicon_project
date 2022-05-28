@@ -15,6 +15,7 @@ import android.widget.Spinner;
 
 import com.example.unicon_project.Adapters.PurchaseProductAdapter;
 import com.example.unicon_project.Classes.PurchaseProduct;
+import com.example.unicon_project.Manager.MyLocationManager;
 import com.example.unicon_project.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,6 +33,7 @@ public class PurchaseList extends AppCompatActivity {
     private List<PurchaseProduct> mDatas;
     PurchaseProductAdapter purchaseProductAdapter;
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+    MyLocationManager myLocationManager = MyLocationManager.getInstance();
 
     private String filter = "";
     private Spinner filterSpinner;
@@ -68,6 +70,14 @@ public class PurchaseList extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateDatas();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
