@@ -87,6 +87,7 @@
                     android:layout_width="80dp"
                     android:layout_height="40dp">
                     <TextView
+                        android:id="@+id/text_deposit"
                         android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
@@ -102,6 +103,7 @@
                     android:layout_width="80dp"
                     android:layout_height="40dp">
                     <TextView
+                        android:id="@+id/text_month_rent"
                         android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
@@ -308,7 +310,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_elec_cost"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -323,7 +327,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_gas_cost"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -338,7 +344,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_water_cost"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -353,7 +361,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_internet_cost"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -452,7 +462,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_elec_boiler"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -466,7 +478,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_gas_boiler"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -480,7 +494,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_induction"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -503,7 +519,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_aircon"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -517,7 +535,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_washer"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -531,7 +551,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_refrigerator"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -555,7 +577,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:gravity="center">
 
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_closet"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -571,7 +595,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:gravity="center">
 
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_gasrange"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -587,7 +613,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:gravity="center">
 
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_highlight"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -610,7 +638,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_convenience_store"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -624,7 +654,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_subway"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -638,7 +670,9 @@
                     android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
                     android:layout_height="40dp">
-                    <TextView android:duplicateParentState="true"
+                    <TextView
+                        android:id="@+id/text_parking"
+                        android:duplicateParentState="true"
                         android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

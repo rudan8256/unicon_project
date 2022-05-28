@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,7 +19,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -47,6 +50,7 @@ import com.gun0912.tedpermission.TedPermission;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -58,7 +62,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private static final int FROM_ADDRESS = 100;
     private Button complete_btn;
     private SaleProduct newproduct;
-    private EditText home_address, deposit_price, month_price, live_period_start, live_period_end;
+    private EditText home_address, deposit_price, month_price;
     private EditText maintenance_cost, room_size, specific;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -67,6 +71,10 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
     private LinearLayout convenience_store, subway, parking;
     private Map<String, Boolean> maintains, options;
+    private ImageView day_first, day_last;
+    private DatePickerDialog datePickerDialog;
+    private TextView live_period_start, live_period_end;
+    private String str_live_period_start = "", str_live_period_end = "";
     private Map<String, String> personal_proposal;
     private Switch owner_switch;
     private Spinner floorSpinner, structureSpinner;
@@ -169,6 +177,47 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
         home_address.setFocusable(false);
         home_address.setOnClickListener(this);
+
+        day_first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int mYear = calendar.get(Calendar.YEAR);
+                int mMonth = calendar.get(Calendar.MONTH);
+                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                datePickerDialog = new DatePickerDialog(SalePage.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                month = month + 1;
+                                str_live_period_start = year+"/"+month+"/"+day;
+                                live_period_start.setText(str_live_period_start);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
+        day_last.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int mYear = calendar.get(Calendar.YEAR);
+                int mMonth = calendar.get(Calendar.MONTH);
+                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                datePickerDialog = new DatePickerDialog(SalePage.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                month = month + 1;
+                                str_live_period_end = year+"/"+month+"/"+day;
+                                live_period_end.setText(str_live_period_end);
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
 
         complete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -445,6 +494,8 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         specific = findViewById(R.id.specific);
 
 
+        day_first = findViewById(R.id.day_first);
+        day_last = findViewById(R.id.day_last);
         deposit = findViewById(R.id.deposit);
         month_rent = findViewById(R.id.month_rent);
         elec_boiler = findViewById(R.id.elec_boiler);
