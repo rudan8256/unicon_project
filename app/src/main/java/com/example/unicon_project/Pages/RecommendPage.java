@@ -10,11 +10,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
-import android.widget.Switch;
+import android.widget.Spinner;
 
 import com.example.unicon_project.Adapters.SaleProductAdapter;
 import com.example.unicon_project.Classes.RecommendCondition;
@@ -23,9 +22,6 @@ import com.example.unicon_project.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,8 +29,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,20 +39,22 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
     private LinearLayout recommend_condition;
     private RecyclerView recommend_list;
     private List<SaleProduct> mDatas;
+    private List<Integer> dataScore;
     SaleProductAdapter saleProductAdapter;
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Dialog condition_dialog;
     RecommendCondition preUserdata;
 
-    private  EditText deposit_price, month_price,live_period_start,live_period_end;
-    private EditText maintenance_cost, room_size;
-    private String curdate;
-    private LinearLayout deposit,month_rent, elec_cost, gas_cost, water_cost, internet_cost;
-    private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange,highlight;
-    private LinearLayout convenience_store, subway, parking;
-    private Map<String, Boolean > maintains,options;
-    private Switch owner_switch;
+    private  EditText deposit_price_max, month_price_min,month_price_max,live_period_start,live_period_end;
+    private EditText maintenance_cost, room_size_min,room_size_max;
+    private String structure;
+    private LinearLayout deposit,month_rent;
+    public Map<String, Integer> structure_sel_map = new HashMap<>();
+    private Spinner structureSpinner;
+
+
+    private boolean search_complete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +64,12 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
         recommend_condition=findViewById(R.id.recommend_condition);
         recommend_list=findViewById(R.id.recommend_list);
 
+        structure_sel_map.put("상관없음",0);
+        structure_sel_map.put("오픈형 원룸",1);
+        structure_sel_map.put("분리형 원룸(방1, 거실)",2);
+        structure_sel_map.put("복층형 원룸",3);
+        structure_sel_map.put("투룸",4);
+        structure_sel_map.put("쓰리룸",5);
 
         preUserdata = new RecommendCondition();
 
@@ -83,8 +87,10 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        updateDatas();
+
         searchInFB();
+        updateDatas();
+
 
 
 
@@ -105,12 +111,25 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                                     preUserdata =document.toObject(RecommendCondition.class);
                                 }
 
-                                month_price.setText(preUserdata.getMonth_rent_price());
-                               deposit_price.setText(preUserdata.getDeposit_price());
-                                live_period_start.setText(preUserdata.getLive_period_start());
+
+                                deposit_price_max.setText(preUserdata.getMonth_rentprice_max());
+                                month_price_max.setText(preUserdata.getMonth_rentprice_max());
+                                month_price_min.setText(preUserdata.getMonth_rentprice_min());
+                               live_period_start.setText(preUserdata.getLive_period_start());
                                 live_period_end.setText(preUserdata.getLive_period_end());
-                               maintenance_cost.setText(preUserdata.getMaintenance_cost());
-                                room_size.setText(preUserdata.getRoom_size());
+
+                                maintenance_cost.setText(preUserdata.getMaintenance_cost());
+                               structure = preUserdata.getStructure();
+                                int cur_seldata_num;
+                               if(structure!="") {
+                                   cur_seldata_num = structure_sel_map.get(structure);
+
+                                   structureSpinner.setSelection(cur_seldata_num);
+                               }
+
+                               room_size_max.setText(preUserdata.getRoom_size_max());
+                                room_size_min.setText(preUserdata.getRoom_size_min());
+
 
                                     if( preUserdata.getDeposit() ){
                                         deposit.setBackgroundColor(Color.BLUE); }
@@ -124,109 +143,9 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                                         month_rent.setBackgroundColor(Color.WHITE); }
 
 
-                                    if( preUserdata.getMaintains().get("elec_cost") ){
-                                       elec_cost.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                        elec_cost.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if(  preUserdata.getMaintains().get("gas_cost") ){
-                                       gas_cost.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                       gas_cost.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if( preUserdata.getMaintains().get("water_cost") ){
-                                         water_cost.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                       water_cost.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if( preUserdata.getMaintains().get("internet_cost") ){
-                                        internet_cost.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                        internet_cost.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if( preUserdata.getOptions().get("elec_boiler") ){
-                                       elec_boiler.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                      elec_boiler.setBackgroundColor(Color.WHITE);
-                                    }
-
-
-                                    if( preUserdata.getOptions().get("gas_boiler") ){
-                                        gas_boiler.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                       gas_boiler.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if( preUserdata.getOptions().get("induction") ){
-                                        induction.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                         induction.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if( preUserdata.getOptions().get("aircon") ){
-                                        aircon.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                        aircon.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if( preUserdata.getOptions().get("washer") ){
-                                        washer.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                         washer.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if( preUserdata.getOptions().get("refrigerator") ){
-                                         refrigerator.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                        ;  refrigerator.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if(  preUserdata.getOptions().get("closet") ){
-                                        closet.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                       closet.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if( preUserdata.getOptions().get("gasrange") ){
-                                        gasrange.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                         gasrange.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if(  preUserdata.getOptions().get("highlight") ){
-                                         highlight.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                         highlight.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if(  preUserdata.getOptions().get("convenience_store") ){
-                                        convenience_store.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                         convenience_store.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if(  preUserdata.getOptions().get("subway") ){
-                                         subway.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                        subway.setBackgroundColor(Color.WHITE);
-                                    }
-
-                                    if(  preUserdata.getOptions().get("parking") ){
-                                         parking.setBackgroundColor(Color.BLUE);
-                                    } else{
-                                         parking.setBackgroundColor(Color.WHITE);
-                                    }
-
-
                             }
-
                         }
                     });
-
 
     }
 
@@ -241,8 +160,13 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                     for(DocumentSnapshot snap : task.getResult().getDocuments()){
 
                         SaleProduct curdata = snap.toObject(SaleProduct.class);
-                        if(Judge(curdata)) {}
-                        mDatas.add(curdata);
+                        int cur_score= Judge(curdata);
+                        if(cur_score > 1000) {
+
+                            mDatas.add(curdata);
+
+                        }
+
                     }
                 }
 
@@ -260,10 +184,57 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+    private void swap(int v,int e){
+//        SaleProduct temp;
+//        temp=saleList.get(v);
+//        saleList.set(v,saleList.get(e));
+//        saleList.set(e,temp);
+//        Double dtemp;
+//        dtemp=dist.get(v);
+//        dist.set(v,dist.get(e));
+//        dist.set(e,dtemp);
+    }
 
-    private boolean Judge(SaleProduct curdata){
 
-        return true;
+    private int Judge(SaleProduct curdata){
+
+        int total=0;
+
+        String cur_data_start[] = curdata.getLive_period_start().split("/");
+        String cur_data_end[] = curdata.getLive_period_end().split("/");
+        String pre_data_start[] = preUserdata.getLive_period_start().split("/");
+        String pre_data_end[] =preUserdata.getLive_period_end().split("/");
+
+
+
+        if(  !(preUserdata.getDeposit() == curdata.getDeposit() && preUserdata.getMonth_rent() == curdata.getMonth_rent())){
+           return -1;
+        }
+        else{
+
+            if( Integer.parseInt(preUserdata.getDeposit_price_max()) >= Integer.parseInt(curdata.getDeposit_price())){
+                total += 1000;
+            }
+
+            if( Integer.parseInt(preUserdata.getMonth_rentprice_max()) >= Integer.parseInt(curdata.getMonth_rent_price()) &&
+                    Integer.parseInt(preUserdata.getMonth_rentprice_min()) <= Integer.parseInt(curdata.getMonth_rent_price()) ){
+                total += 1000;
+            }
+            else if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) < Integer.parseInt(curdata.getMonth_rent_price())){
+                total += Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()) ;
+            }
+            else{
+                total += Integer.parseInt(preUserdata.getMonth_rentprice_max()) - Integer.parseInt(curdata.getMonth_rent_price())  ;
+            }
+
+
+
+            return total;
+        }
+
+
+
+
     }
 
     private void showDialog() {
@@ -272,24 +243,25 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
         set_Clicklistner();
 
-        
-        maintains= preUserdata.getMaintains();
-        options = preUserdata.getOptions();
 
         condition_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 
 
-                preUserdata.setMonth_rent_price(month_price.getText().toString());
-                preUserdata.setDeposit_price(deposit_price.getText().toString());
+                preUserdata.setMonth_rentprice_max(month_price_max.getText().toString());
+                preUserdata.setMonth_rentprice_min(month_price_min.getText().toString());
+                preUserdata.setDeposit_price_max(deposit_price_max.getText().toString());
+
                 preUserdata.setLive_period_start(live_period_start.getText().toString());
                 preUserdata.setLive_period_end(live_period_end.getText().toString());
                 preUserdata.setMaintenance_cost(maintenance_cost.getText().toString());
-                preUserdata.setRoom_size(room_size.getText().toString());
+                preUserdata.setRoom_size_max(room_size_max.getText().toString());
+                preUserdata.setRoom_size_min(room_size_min.getText().toString());
 
+                preUserdata.setStructure(structure);
                 preUserdata.setWriterId(mAuth.getUid());
-                
+
 
 
                 mStore.collection("Usercondition").document(mAuth.getUid())
@@ -324,121 +296,6 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                 else{
                     preUserdata.setMonth_rent(false);month_rent.setBackgroundColor(Color.WHITE); }
                 break;
-            case R.id.elec_cost:
-                if( !maintains.get("elec_cost") ){
-                    maintains.put("elec_cost",true); elec_cost.setBackgroundColor(Color.BLUE);
-                } else{
-                    maintains.put("elec_cost",false);elec_cost.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.gas_cost:
-                if( !maintains.get("gas_cost") ){
-                    maintains.put("gas_cost",true); gas_cost.setBackgroundColor(Color.BLUE);
-                } else{
-                    maintains.put("gas_cost",false);gas_cost.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.water_cost:
-                if( !maintains.get("water_cost") ){
-                    maintains.put("water_cost",true); water_cost.setBackgroundColor(Color.BLUE);
-                } else{
-                    maintains.put("water_cost",false); water_cost.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.internet_cost:
-                if( !maintains.get("internet_cost") ){
-                    maintains.put("internet_cost",true); internet_cost.setBackgroundColor(Color.BLUE);
-                } else{
-                    maintains.put("internet_cost",false); internet_cost.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.elec_boiler:
-                if( !options.get("elec_boiler") ){
-                    options.put("elec_boiler",true); elec_boiler.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("elec_boiler",false);elec_boiler.setBackgroundColor(Color.WHITE);
-                }
-                break;
-
-            case R.id.gas_boiler:
-                if( !options.get("gas_boiler") ){
-                    options.put("gas_boiler",true); gas_boiler.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("gas_boiler",false); gas_boiler.setBackgroundColor(Color.WHITE);
-                }
-                break;
-
-            case R.id.induction:
-                if( !options.get("induction") ){
-                    options.put("induction",true); induction.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("induction",false); induction.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.aircon:
-                if( !options.get("aircon") ){
-                    options.put("aircon",true); aircon.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("aircon",false); aircon.setBackgroundColor(Color.WHITE);
-                }
-                break;
-
-            case R.id.washer:
-                if( !options.get("washer") ){
-                    options.put("washer",true); washer.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("washer",false); washer.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.refrigerator:
-                if( !options.get("refrigerator") ){
-                    options.put("refrigerator",true);  refrigerator.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("refrigerator",false);  refrigerator.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.closet:
-                if( !options.get("closet") ){
-                    options.put("closet",true);  closet.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("closet",false);  closet.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.gasrange:
-                if( !options.get("gasrange") ){
-                    options.put("gasrange",true);  gasrange.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("gasrange",false); gasrange.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.highlight:
-                if( !options.get("highlight") ){
-                    options.put("highlight",true);  highlight.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("highlight",false); highlight.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.convenience_store:
-                if( !options.get("convenience_store") ){
-                    options.put("convenience_store",true); convenience_store.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("convenience_store",false); convenience_store.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.subway:
-                if( !options.get("subway") ){
-                    options.put("subway",true); subway.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("subway",false); subway.setBackgroundColor(Color.WHITE);
-                }
-                break;
-            case R.id.parking:
-                if( !options.get("parking") ){
-                    options.put("parking",true); parking.setBackgroundColor(Color.BLUE);
-                } else{
-                    options.put("parking",false); parking.setBackgroundColor(Color.WHITE);
-                }
-                break;
 
         }
     }
@@ -446,33 +303,36 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
     private void Construter(){
 
 
-        deposit_price = condition_dialog.findViewById(R.id.deposit_price);
-        month_price = condition_dialog.findViewById(R.id.month_price);
-        live_period_start = condition_dialog.findViewById(R.id.live_period_start);
-        live_period_end = condition_dialog.findViewById(R.id.live_period_end);
-        maintenance_cost = condition_dialog.findViewById(R.id.maintenance_cost);
-        room_size = condition_dialog.findViewById(R.id.room_size);
-
         deposit = condition_dialog.findViewById(R.id.deposit);
         month_rent = condition_dialog.findViewById(R.id.month_rent);
-        elec_boiler = condition_dialog.findViewById(R.id.elec_boiler);
-        elec_cost = condition_dialog.findViewById(R.id.elec_cost);
-        gas_cost = condition_dialog.findViewById(R.id.gas_cost);
-        water_cost = condition_dialog.findViewById(R.id.water_cost);
-        internet_cost = condition_dialog.findViewById(R.id.internet_cost);
-        gas_boiler = condition_dialog.findViewById(R.id.gas_boiler);
-        induction = condition_dialog.findViewById(R.id.induction);
-        aircon = condition_dialog.findViewById(R.id.aircon);
-        washer = condition_dialog.findViewById(R.id.washer);
-        refrigerator = condition_dialog.findViewById(R.id.refrigerator);
-        closet =condition_dialog.findViewById(R.id.closet);
-        gasrange = condition_dialog.findViewById(R.id.gasrange);
-        highlight = condition_dialog.findViewById(R.id.highlight);
-        convenience_store =condition_dialog.findViewById(R.id.convenience_store);
-        subway = condition_dialog.findViewById(R.id.subway);
-        parking = condition_dialog.findViewById(R.id.parking);
+        deposit_price_max = condition_dialog.findViewById(R.id.deposit_price_max);
+        month_price_min= condition_dialog.findViewById(R.id.month_price_min);
+        month_price_max = condition_dialog.findViewById(R.id.month_price_max);
 
-        owner_switch=condition_dialog.findViewById(R.id.owner_switch);
+        live_period_start = condition_dialog.findViewById(R.id.live_period_start);
+        live_period_end = condition_dialog.findViewById(R.id.live_period_end);
+
+        maintenance_cost = condition_dialog.findViewById(R.id.maintenance_cost);
+
+        room_size_min = condition_dialog.findViewById(R.id.room_size_min);
+        room_size_max = condition_dialog.findViewById(R.id.room_size_max);
+
+
+
+
+        structureSpinner = condition_dialog.findViewById(R.id.structure);
+
+
+        structureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                structure = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
 
     }
@@ -481,22 +341,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
         deposit.setOnClickListener(this);
         month_rent.setOnClickListener(this);
-        elec_boiler.setOnClickListener(this);
-        elec_cost.setOnClickListener(this);
-        gas_cost.setOnClickListener(this);
-        water_cost.setOnClickListener(this);
-        internet_cost.setOnClickListener(this);
-        gas_boiler.setOnClickListener(this);
-        induction.setOnClickListener(this);
-        aircon.setOnClickListener(this);
-        washer.setOnClickListener(this);
-        refrigerator.setOnClickListener(this);
-        closet.setOnClickListener(this);
-        gasrange.setOnClickListener(this);
-        highlight.setOnClickListener(this);
-        convenience_store.setOnClickListener(this);
-        subway.setOnClickListener(this);
-        parking.setOnClickListener(this);
+
     }
 
 }
