@@ -52,7 +52,7 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
 
             title = itemView.findViewById(R.id.post_title);
             deposit = itemView.findViewById(R.id.post_deposit);
-
+            monthcost = itemView.findViewById(R.id.post_monthcost);
             roomsize = itemView.findViewById(R.id.post_roomsize);
             structure = itemView.findViewById(R.id.post_structure);
             address = itemView.findViewById(R.id.post_address);
@@ -111,12 +111,12 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
         else{ viewHolder.title.setText("전세"); }
 
         viewHolder.deposit.setText(mDatas.get(position).getDeposit_price());
-
+        viewHolder.monthcost.setText(" / "+mDatas.get(position).getMonth_rent_price());
         viewHolder.roomsize.setText(mDatas.get(position).getRoom_size());
         viewHolder.structure.setText(mDatas.get(position).getStructure());
         viewHolder.address.setText(mDatas.get(position).getHome_adress());
         viewHolder.living_start.setText(mDatas.get(position).getLive_period_start());
-        viewHolder.living_end.setText(mDatas.get(position).getLive_period_end());
+        viewHolder.living_end.setText("~"+mDatas.get(position).getLive_period_end());
 
 
         if(mDatas.get(position).getImages_url().size()>0) {

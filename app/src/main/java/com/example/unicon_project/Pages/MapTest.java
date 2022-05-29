@@ -22,6 +22,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -37,6 +38,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.unicon_project.Classes.Item;
 import com.example.unicon_project.R;
 import com.example.unicon_project.Classes.SaleProduct;
@@ -68,6 +70,8 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -101,11 +105,13 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     ArrayList<Item> sampleList = new ArrayList<>();
     private View marker_root_view;
     private TextView tv_marker;
+    private LinearLayout marker_body;
+    private ImageView marker_tail;
     private LocationManager locationManager;
     private UiSettings mUiSettings;
     private TextView tv_search_current_camera_position;
     private ImageView iv_center;
-    private ImageView iv_detail;
+    private LinearLayout iv_detail;
     private List<Address> addressList= Collections.emptyList();
     private LinearLayout et_auto;
     private int Boundary=2000;
@@ -116,6 +122,12 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
     private String filter = "";
     private Spinner filterSpinner;
+
+    private TextView title,deposit,monthcost,roomsize,structure,address,living_start,living_end;
+    private ImageView house_imgview;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
+    private SaleProduct[] saleProduct = {new SaleProduct()};
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -184,6 +196,17 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         Places.initialize(getApplicationContext(),"AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA",Locale.KOREAN);
 
+
+        //마커클릭시 리니어 요소들
+        title =findViewById(R.id.post_title);
+        deposit = findViewById(R.id.post_deposit);
+        monthcost =findViewById(R.id.post_monthcost);
+        roomsize = findViewById(R.id.post_roomsize);
+        structure = findViewById(R.id.post_structure);
+        address = findViewById(R.id.post_address);
+        living_end = findViewById(R.id.post_living_end);
+        living_start=findViewById(R.id.post_living_start);
+        house_imgview=findViewById(R.id.house_imgview);
 
     }
 
@@ -366,6 +389,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     private void setCustomMarkerView(){
         marker_root_view = LayoutInflater.from(this).inflate(R.layout.marker,null);
         tv_marker= marker_root_view.findViewById(R.id.tv_price);
+        marker_body = marker_root_view.findViewById(R.id.marker_body);
+        marker_tail = marker_root_view.findViewById(R.id.marker_tail);
     }
 
     private Bitmap createDrawableFromView(Context context, View view){
@@ -405,11 +430,17 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         if(isSelectedMarker){
             //tv_marker.setBackgroundResource(R.drawable);
-            tv_marker.setTextColor(Color.BLUE);
+            tv_marker.setTextColor(Color.WHITE);
+            tv_marker.setBackground(getDrawable(R.drawable.marker_border_ispick));
+            marker_body.setBackground(getDrawable(R.drawable.marker_border_ispick));
+            marker_tail.setBackground(getDrawable(R.drawable.down_arrow_marker_ispick));
         }
         else{
             //tv_marker.setBackgroundResource(R.drawable);
             tv_marker.setTextColor(Color.BLACK);
+            tv_marker.setBackgroundColor(Color.WHITE);
+            marker_body.setBackground(getDrawable(R.drawable.marker_border));
+            marker_tail.setBackground(getDrawable(R.drawable.down_arrow_marker));
         }
 
         MarkerOptions markerOptions = new MarkerOptions();
@@ -441,8 +472,60 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-        iv_detail.setVisibility(View.VISIBLE);
+
         productId= marker.getSnippet();
+
+        mStore.collection("SaleProducts").whereEqualTo("productId",productId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                saleProduct[0] = task.getResult().getDocuments().get(0).toObject(SaleProduct.class);
+//                it.putExtra("select_data",saleProduct[0]);
+//                startActivity(it);
+
+
+                if(saleProduct[0].getMonth_rent()){  title.setText("월세");}
+                else{ title.setText("전세"); }
+                 deposit.setText(saleProduct[0].getDeposit_price());
+              monthcost.setText(" / "+ saleProduct[0].getMonth_rent_price());
+                roomsize.setText(saleProduct[0].getRoom_size());
+                structure.setText(saleProduct[0].getStructure());
+               address.setText(saleProduct[0].getHome_adress());
+                living_start.setText(saleProduct[0].getLive_period_start());
+               living_end.setText("~"+saleProduct[0].getLive_period_end());
+
+               Log.e("@@@@@", String.valueOf(saleProduct[0].getMonth_rent()));
+                Log.e("@@@@@", String.valueOf(saleProduct[0].getDeposit_price()));
+
+
+                if(saleProduct[0].getImages_url().size()>0) {
+                    String imagedata = saleProduct[0].getImages_url().get(0);
+
+                    house_imgview.setPadding(0,0,0,0);
+
+                    //StorageReference submitImage = storageReference.child("post_image/" + image_url + ".jpg");
+                    storageReference.child("post_image/" + imagedata + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            Glide.with(getApplicationContext())
+                                    .load(uri)
+                                    .into( house_imgview);
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // 실패
+                        }
+                    });
+                }
+
+                iv_detail.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+
         changeSelectedMarker(marker);
         return false;
     }
@@ -588,16 +671,10 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 break;
 
             case R.id.iv_detail:
-                final SaleProduct[] saleProduct = {new SaleProduct()};
+
                 Intent it = new Intent(this, SaleProductPage.class);
-                mStore.collection("SaleProducts").whereEqualTo("productId",productId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        saleProduct[0] = task.getResult().getDocuments().get(0).toObject(SaleProduct.class);
-                        it.putExtra("select_data",saleProduct[0]);
-                        startActivity(it);
-                    }
-                });
+                it.putExtra("select_data",saleProduct[0]);
+                startActivity(it);
                 break;
         }
     }

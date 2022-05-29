@@ -53,11 +53,6 @@
                     android:textSize="20dp"
                     tools:text="Title" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    tools:text="/" />
 
                 <TextView
                     android:id="@+id/post_monthcost"
@@ -108,25 +103,19 @@
 
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_marginRight="10dp"
+
                     android:id="@+id/post_living_start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15dp"
                     tools:text="Title" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    tools:text="~" />
 
                 <TextView
-                    android:layout_marginLeft="10dp"
+
                     android:id="@+id/post_living_end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
