@@ -31,6 +31,7 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.OAuthProvider;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
@@ -233,6 +234,8 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
 
     // [START auth_with_google]
     private void firebaseAuthWithGoogle(String idToken) {
+        OAuthProvider.Builder provider = OAuthProvider.newBuilder("kapi.kakao.com");
+
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

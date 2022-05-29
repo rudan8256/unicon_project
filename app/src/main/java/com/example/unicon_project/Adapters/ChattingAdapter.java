@@ -1,12 +1,16 @@
 package com.example.unicon_project.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
 
 import com.example.unicon_project.Classes.ChattingData;
 import com.example.unicon_project.R;
@@ -15,6 +19,8 @@ import java.util.ArrayList;
 
 public class ChattingAdapter extends BaseAdapter {
     ArrayList<ChattingData> items;
+    CardView cardView;
+    LinearLayout ll_chatting;
     String uid;
     Context context;
 
@@ -51,17 +57,31 @@ public class ChattingAdapter extends BaseAdapter {
         tv_chatting_time.setText(items.get(i).time);
 
         TextView tv_chatting_id = view.findViewById(R.id.tv_chatting_id);
+
+        cardView = view.findViewById(R.id.cv_chatting);
+        ll_chatting = view.findViewById(R.id.ll_chatting);
+
         if(items.get(i).uid.equals(this.uid))
         {
             tv_chatting_id.setText("나");
             tv_chatting_id.setGravity(Gravity.RIGHT);
             tv_chatting_msg.setGravity(Gravity.RIGHT);
             tv_chatting_time.setGravity(Gravity.RIGHT);
+
+            ll_chatting.setGravity(Gravity.RIGHT);
+            cardView.setCardBackgroundColor(Color.BLUE);
+            tv_chatting_msg.setTextColor(Color.WHITE);
+            tv_chatting_time.setTextColor(Color.WHITE);
         }else{
             tv_chatting_id.setText("상대방");
             tv_chatting_id.setGravity(Gravity.LEFT);
             tv_chatting_msg.setGravity(Gravity.LEFT);
             tv_chatting_time.setGravity(Gravity.LEFT);
+
+            ll_chatting.setGravity(Gravity.LEFT);
+            cardView.setCardBackgroundColor(Color.GRAY);
+            tv_chatting_msg.setTextColor(Color.BLACK);
+            tv_chatting_time.setTextColor(Color.BLACK);
         }
 
         return view;
