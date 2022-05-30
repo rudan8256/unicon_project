@@ -31,6 +31,11 @@ public class ChattingManager {
     ArrayList<ChattingListData> items = new ArrayList<>();
     boolean _isChattingListExist;
 
+    public String generateChattingID(String productID, String uid)
+    {
+        return productID + uid;
+    }
+
     public boolean isChattingListExist(String uid, String productID)
     {
         // 해당 uid에 productID 채팅정보가 존재하는지 검사하여 그 값을 반환한다.

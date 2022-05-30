@@ -14,6 +14,7 @@ import android.widget.GridView;
 import com.example.unicon_project.Adapters.ChattingAdapter;
 import com.example.unicon_project.Classes.ChattingData;
 import com.example.unicon_project.Classes.ChattingListData;
+import com.example.unicon_project.Manager.ChattingManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,9 +45,11 @@ public class ChattingActivity extends AppCompatActivity {
     ChattingAdapter adapter;
     ArrayList<ChattingData> items = new ArrayList<>();
 
-    String uid;
+    ChattingManager chattingManager = new ChattingManager();
 
+    String uid;
     String productID, writerID, homeAddress;
+    String chattingID;
 
     boolean _isChattingListExist;
     Boolean Agree1, Agree2;
@@ -77,10 +80,13 @@ public class ChattingActivity extends AppCompatActivity {
         et_myMsg = findViewById(R.id.et_myMsg);
         btn_sendMsg = findViewById(R.id.btn_sendMsg);
 
-        // 자신에게 해당 productID가 있는지 검사하고 추가하기
-        isChattingListExist(uid, productID);
-        // 상대방에게 해당 productID가 있는지 검사하고 추가하기
-        isChattingListExist(writerID, productID);
+        //chattingID 생성
+        chattingID = chattingManager.generateChattingID(productID, uid);
+
+        // 자신에게 해당 chattingID가 있는지 검사하고 추가하기
+        isChattingListExist(uid, chattingID);
+        // 상대방에게 해당 chattingID가 있는지 검사하고 추가하기
+        isChattingListExist(writerID, chattingID);
 
         gv = findViewById(R.id.gv_chatting);
         btn_sendMsg.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +101,7 @@ public class ChattingActivity extends AppCompatActivity {
                         user.getUid()
                 );
 
-                reference.child("storage").child(productID).child("chatting").push().setValue(chattingData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                reference.child("chatting").child(chattingID).push().setValue(chattingData).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
@@ -113,7 +119,7 @@ public class ChattingActivity extends AppCompatActivity {
         getInfo();
     }
 
-    public void isChattingListExist(String uid, String productID)
+    public void isChattingListExist(String uid, String chattingID)
     {
         // 해당 uid에 productID 채팅정보가 존재하는지 검사하여 그 값을 반환한다.
         _isChattingListExist = false;
@@ -129,7 +135,7 @@ public class ChattingActivity extends AppCompatActivity {
                     {
                         ChattingListData gds = data.getValue(ChattingListData.class);
                         Log.e("###", "result = "+gds.getProductID().equals(productID));
-                        if(gds.getProductID().equals(productID))
+                        if(gds.getChattingID().equals(chattingID))
                         {
                             //존재하는 경우 true 처리
                             _isChattingListExist = true;
@@ -137,7 +143,7 @@ public class ChattingActivity extends AppCompatActivity {
                     }
 
                     if(!_isChattingListExist) {
-                        ChattingListData data = new ChattingListData(homeAddress, uid, productID);
+                        ChattingListData data = new ChattingListData(homeAddress, uid, productID, chattingID, 0);
 
                         reference.child("chattingList").child(uid).push().setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -154,7 +160,7 @@ public class ChattingActivity extends AppCompatActivity {
     }
 
     public void getInfo(){
-        reference.child("storage").child(productID).child("chatting").addValueEventListener(new ValueEventListener() {
+        reference.child("chatting").child(chattingID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 items.clear();
