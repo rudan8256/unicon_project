@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.unicon_project.Adapters.ChattingListAdapter;
 import com.example.unicon_project.Authentic.SessionCallBack;
 import com.example.unicon_project.Authentic.SignInActivity;
+import com.example.unicon_project.Classes.ChattingListData;
 import com.example.unicon_project.Pages.ChattingListActivity;
 import com.example.unicon_project.Pages.MapTest;
 import com.example.unicon_project.Pages.PurchaseList;
@@ -29,11 +31,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    // *** [ 장준승 ]채팅기능 관계로 추가 ***
+    private FirebaseAuth mFirebaseAuth;
+    FirebaseDatabase database =FirebaseDatabase.getInstance();
+    DatabaseReference reference = database.getReference();
+    final FirebaseUser user = mFirebaseAuth.getInstance().getCurrentUser();
+    String uid;
+    // *********************************
 
     Button btn_log_out, btn_toChatting;
     FirebaseAuth firebaseAuth;
@@ -187,5 +204,30 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplication(), "한번 더 클릭하시면 앱을 종료합니다", Toast.LENGTH_SHORT).show();
         }
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        btn_toChatting.setBackground(getResources().getDrawable(R.drawable.ic_baseline_chat_bubble_24));
+
+        uid = user.getUid();
+        reference.child("chattingList").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                for (final DataSnapshot data : snapshot.getChildren()) {
+                    ChattingListData gds = data.getValue(ChattingListData.class);
+                    if(gds.getUnread() != 0)
+                        btn_toChatting.setBackground(getResources().getDrawable(R.drawable.ic_baseline_mark_chat_unread_24));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

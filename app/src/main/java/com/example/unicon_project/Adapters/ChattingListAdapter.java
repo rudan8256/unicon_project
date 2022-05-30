@@ -11,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+
 import com.example.unicon_project.ChattingActivity;
 import com.example.unicon_project.Classes.ChattingListData;
 import com.example.unicon_project.R;
@@ -53,6 +55,20 @@ public class ChattingListAdapter extends BaseAdapter {
 
         TextView tv_chattingList_username = view.findViewById(R.id.tv_chattingList_username);
         tv_chattingList_username.setText(items.get(i).getUserName());
+
+        CardView cardView = view.findViewById(R.id.cv_chatting_list);
+        TextView tv_unread = view.findViewById(R.id.tv_chattingList_unread);
+        int unreadValue = items.get(i).getUnread();
+        if(unreadValue == 0) {
+            //unread가 0일때
+            cardView.setVisibility(View.GONE);
+        }
+        else
+        {
+            //unread값이 존재할때
+            cardView.setVisibility(View.VISIBLE);
+            tv_unread.setText(Integer.toString(unreadValue));
+        }
 
         return view;
     }

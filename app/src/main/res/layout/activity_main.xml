@@ -38,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_toChatting"
+        android:background="@drawable/ic_baseline_chat_bubble_24"
         android:text="채팅기능"></Button>
 
     <Button

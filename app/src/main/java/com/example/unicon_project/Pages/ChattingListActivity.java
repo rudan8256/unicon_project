@@ -44,7 +44,6 @@ public class ChattingListActivity extends AppCompatActivity {
 
         gv = findViewById(R.id.gv_chattingList);
 
-        Toast.makeText(getApplicationContext(), "hi", Toast.LENGTH_LONG).show();
         reference.child("chattingList").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot)
@@ -52,7 +51,6 @@ public class ChattingListActivity extends AppCompatActivity {
                 items.clear();
                 for (final DataSnapshot data : snapshot.getChildren()) {
                     ChattingListData gds = data.getValue(ChattingListData.class);
-                    Toast.makeText(getApplicationContext(), "hi"+gds.toString(), Toast.LENGTH_LONG).show();
                     items.add(gds);
                 }
 

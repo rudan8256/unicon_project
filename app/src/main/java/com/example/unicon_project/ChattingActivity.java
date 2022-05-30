@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.unicon_project.Adapters.ChattingAdapter;
 import com.example.unicon_project.Classes.ChattingData;
@@ -50,6 +51,7 @@ public class ChattingActivity extends AppCompatActivity {
     String uid;
     String productID, writerID, homeAddress;
     String chattingID;
+    String there;
 
     boolean _isChattingListExist;
     Boolean Agree1, Agree2;
@@ -90,6 +92,34 @@ public class ChattingActivity extends AppCompatActivity {
         // 상대방에게 해당 chattingID가 있는지 검사하고 추가하기
         isChattingListExist(writerID, chattingID);
 
+
+        //처음 들어왔을시 unread 0으로 초기화
+        reference.child("chattingList").child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    ChattingListData chattingListData = new ChattingListData();
+                    for (final DataSnapshot data : task.getResult().getChildren()) {
+                        chattingListData = data.getValue(ChattingListData.class);
+                    }
+
+                    chattingListData.setUnread(0);
+
+                    reference.child("chattingList").child(uid).child(chattingID).setValue(chattingListData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                //삽입 완료시
+                            }
+                        }
+                    });
+                }
+            }});
+
+
         gv = findViewById(R.id.gv_chatting);
         btn_sendMsg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +140,43 @@ public class ChattingActivity extends AppCompatActivity {
                             //삽입 완료시
                         }
                     }
-
                 });
+
+                Toast.makeText(getApplicationContext(), "Clicked!", Toast.LENGTH_LONG).show();
+
+                //상대방 정보 = there 가져오기
+                if(uid == writerID)
+                    // 현재 들어온 사람이 작성자인 경우
+                    there = chattingID.replaceAll(productID, "");
+                else
+                    // 현재 들어온 사람이 구매자인 경우
+                    there = writerID;
+
+                // unread의 정보를 받아와서 1 증가시키기
+                reference.child("chattingList").child(there).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error getting data", task.getException());
+                        }
+                        else {
+                            ChattingListData chattingListData = new ChattingListData();
+                            for (final DataSnapshot data : task.getResult().getChildren()) {
+                                chattingListData = data.getValue(ChattingListData.class);
+                            }
+
+                            chattingListData.setUnread(chattingListData.getUnread()+1);
+
+                            reference.child("chattingList").child(there).child(chattingID).setValue(chattingListData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        //삽입 완료시
+                                    }
+                                }
+                            });
+                        }
+                    }});
 
                 et_myMsg.setText("");
             }
@@ -146,8 +211,14 @@ public class ChattingActivity extends AppCompatActivity {
 
                     if(!_isChattingListExist) {
                         ChattingListData data = new ChattingListData(homeAddress, uid, productID, _chattingID, 0);
+                        if(uid == writerID)
+                            // 현재 들어온 사람이 작성자인 경우
+                            data.setUserName(_chattingID.replaceAll(productID, ""));
+                        else
+                            // 현재 들어온 사람이 구매자인 경우
+                            data.setUserName(writerID);
 
-                        reference.child("chattingList").child(uid).push().setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        reference.child("chattingList").child(uid).child(_chattingID).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
