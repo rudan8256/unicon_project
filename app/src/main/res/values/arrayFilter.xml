@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="filter_array">
-        <item>상관없음</item>
+        <item>정렬</item>
         <item>가격 낮은 순</item>
         <item>가격 높은 순</item>
         <item>가까운 순</item>

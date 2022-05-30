@@ -9,53 +9,84 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#eee"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/layout"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="25dp"
+            android:textSize="30dp"
+            android:text="판매리스트"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
         android:gravity="center">
 
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
+
+            android:layout_marginRight="8dp"
             android:background="@drawable/maptest_round_corner"
-            android:gravity="center">
+            android:orientation="horizontal"
+            android:id="@+id/et_autocomplete"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            >
 
-            <Spinner
-                android:id="@+id/spinner_filter"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:entries="@array/filter_array"
-                android:background="@drawable/filter_background"
-                app:layout_constraintBottom_toTopOf="@id/map"
-                app:layout_constraintRight_toRightOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/et_autocomplete"
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="20dp"
                 android:layout_height="40dp"
-                android:gravity="end">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/search_icon" />
-            </LinearLayout>
+                android:src="@drawable/ic_settings" />
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="필터 검색"/>
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:src="@drawable/search_icon" />
         </LinearLayout>
+
+        <Spinner
+            android:layout_marginRight="8dp"
+            android:background="@drawable/maptest_round_corner"
+            android:id="@+id/spinner_filter"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:entries="@array/filter_array"
+            >
+        </Spinner>
+
+
 
 
     </LinearLayout>
+
+
     <LinearLayout
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:layout_marginHorizontal="3dp"
             android:id="@+id/tv_emptytag"
+            android:layout_marginHorizontal="3dp"
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:text="+"
@@ -71,7 +102,16 @@
             android:layout_height="30dp"
             android:orientation="horizontal"/>
 
+
     </LinearLayout>
+
+    <View
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="#DADADA"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_board"
