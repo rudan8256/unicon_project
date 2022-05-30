@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.unicon_project.Classes.User;
 import com.example.unicon_project.MainActivity;
 import com.example.unicon_project.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -24,6 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -32,11 +34,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.OAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
+import com.kakao.sdk.user.model.Account;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
+import com.kakao.usermgmt.response.model.Profile;
+import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.exception.KakaoException;
 
 public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
@@ -51,6 +57,8 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
+    private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
+    private User newUser;
     //private SessionCallBack sessionCallback = new SessionCallBack();
 
     @Override
@@ -159,9 +167,12 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(MeV2Response result) {
-                        // 로그인 성공
-                        String email = "pjs000131@naver.com";
+                        // 로그인 성공]
+                        UserAccount kakaoAccount = result.getKakaoAccount();
+                        String email = kakaoAccount.getEmail();
                         String pwd = String.valueOf(result.getId());
+                        Profile profile = kakaoAccount.getProfile();
+                        Log.e("###", "email: "+email+"pwd: "+pwd+"name: "+profile.getNickname());
                         firebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(
                                 SignInActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -169,6 +180,16 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             Log.e("###", "카카오 파이어베이스 유저 생성");
                                             FirebaseUser user = firebaseAuth.getCurrentUser();
+                                            newUser = new User();
+                                            newUser.setUsertoken(user.getUid());
+                                            newUser.setUsername(profile.getNickname());
+                                            mstore.collection("User").document(newUser.getUsertoken())
+                                                    .set(newUser)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+                                                        }
+                                                    });
                                             goMainActivity();
                                         } else {
                                             // 이미 존재하는 아이디 일때
@@ -246,6 +267,16 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                             Log.e("###", "signInWithCredential:success");
                             Log.e("###", "진행 3");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+                            newUser = new User();
+                            newUser.setUsertoken(user.getUid());
+                            newUser.setUsername("");
+                            mstore.collection("User").document(newUser.getUsertoken())
+                                    .set(newUser)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                        }
+                                    });
                             updateUI(user);
                             goMainActivity();
                         } else {

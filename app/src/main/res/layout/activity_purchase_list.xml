@@ -26,9 +26,9 @@
 
             <Spinner
                 android:id="@+id/spinner_filter"
-                android:layout_width="40dp"
+                android:layout_width="27dp"
                 android:layout_height="wrap_content"
-                android:entries="@array/filter_array"
+                android:entries="@array/filter_purchase_array"
                 app:layout_constraintBottom_toTopOf="@id/map"
                 app:layout_constraintRight_toRightOf="parent" />
 
