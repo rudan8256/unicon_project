@@ -75,6 +75,7 @@ public class ChattingListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+                intent.putExtra("chattingID", items.get(i).getChattingID());
                 intent.putExtra("productID", items.get(i).getProductID());
                 intent.putExtra("writerID", items.get(i).getUserName());
                 intent.putExtra("homeAddress", items.get(i).getChattingName());

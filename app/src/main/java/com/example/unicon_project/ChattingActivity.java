@@ -71,6 +71,7 @@ public class ChattingActivity extends AppCompatActivity {
 
 
         Intent it = getIntent();
+        chattingID = it.getExtras().get("chattingID").toString();
         productID = it.getExtras().get("productID").toString();
         writerID = it.getExtras().get("writerID").toString();
         homeAddress = it.getExtras().get("homeAddress").toString();
@@ -81,7 +82,8 @@ public class ChattingActivity extends AppCompatActivity {
         btn_sendMsg = findViewById(R.id.btn_sendMsg);
 
         //chattingID 생성
-        chattingID = chattingManager.generateChattingID(productID, uid);
+        if(chattingID.equals(""))
+            chattingID = chattingManager.generateChattingID(productID, uid);
 
         // 자신에게 해당 chattingID가 있는지 검사하고 추가하기
         isChattingListExist(uid, chattingID);
@@ -119,7 +121,7 @@ public class ChattingActivity extends AppCompatActivity {
         getInfo();
     }
 
-    public void isChattingListExist(String uid, String chattingID)
+    public void isChattingListExist(String uid, String _chattingID)
     {
         // 해당 uid에 productID 채팅정보가 존재하는지 검사하여 그 값을 반환한다.
         _isChattingListExist = false;
@@ -135,7 +137,7 @@ public class ChattingActivity extends AppCompatActivity {
                     {
                         ChattingListData gds = data.getValue(ChattingListData.class);
                         Log.e("###", "result = "+gds.getProductID().equals(productID));
-                        if(gds.getChattingID().equals(chattingID))
+                        if(gds.getChattingID().equals(_chattingID))
                         {
                             //존재하는 경우 true 처리
                             _isChattingListExist = true;
@@ -143,7 +145,7 @@ public class ChattingActivity extends AppCompatActivity {
                     }
 
                     if(!_isChattingListExist) {
-                        ChattingListData data = new ChattingListData(homeAddress, uid, productID, chattingID, 0);
+                        ChattingListData data = new ChattingListData(homeAddress, uid, productID, _chattingID, 0);
 
                         reference.child("chattingList").child(uid).push().setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

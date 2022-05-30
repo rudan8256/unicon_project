@@ -71,6 +71,7 @@ public class SaleProductPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+                intent.putExtra("chattingID", "");
                 intent.putExtra("productID", select_data.getProductId());
                 intent.putExtra("writerID", select_data.getWriterId());
                 intent.putExtra("homeAddress", select_data.getHome_adress());
