@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="filter_map_array">
+        <item>1km</item>
+        <item>3km</item>
+        <item>5km</item>
+        <item>10km</item>
+    </string-array>
+</resources>
