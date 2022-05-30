@@ -191,7 +191,19 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 month = month + 1;
-                                str_live_period_start = year+"/"+month+"/"+day;
+                                if(month<10 && day <10){
+                                    str_live_period_start = year+"/0"+month+"/0"+day;
+                                }
+                                else if(month<10 ){
+                                    str_live_period_start = year+"/0"+month+"/"+day;
+                                }
+                                else if(day<10 ){
+                                    str_live_period_start = year+"/"+month+"/0"+day;
+                                }
+                                else {
+                                    str_live_period_start =year + "/" + month + "/" + day;
+                                }
+
                                 live_period_start.setText(str_live_period_start);
                             }
                         }, mYear, mMonth, mDay);
@@ -211,7 +223,19 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 month = month + 1;
-                                str_live_period_end = year+"/"+month+"/"+day;
+                                if(month<10 && day <10){
+                                    str_live_period_end = year+"/0"+month+"/0"+day;
+                                }
+                                else if(month<10 ){
+                                    str_live_period_end = year+"/0"+month+"/"+day;
+                                }
+                                else if(day<10 ){
+                                    str_live_period_end = year+"/"+month+"/0"+day;
+                                }
+                                else {
+                                    str_live_period_end =year + "/" + month + "/" + day;
+                                }
+
                                 live_period_end.setText(str_live_period_end);
                             }
                         }, mYear, mMonth, mDay);
@@ -651,9 +675,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-    private void checkswitch() {
 
-    }
 
 }
 

@@ -84,7 +84,7 @@
                     android:layout_gravity="bottom"
                     android:id="@+id/deposit"
                     android:background="@drawable/salepage_inputborder"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="40dp">
                     <TextView
                         android:duplicateParentState="true"
@@ -99,7 +99,7 @@
                     android:layout_gravity="bottom"
                     android:id="@+id/month_rent"
                     android:background="@drawable/salepage_inputborder"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="40dp">
                     <TextView
                         android:duplicateParentState="true"
@@ -123,13 +123,14 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:layout_margin="3dp"
                         android:height="60px"
                         android:textSize="40px"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="집주인 동의 여부"/>
                     <Switch
-
+                        android:layout_gravity="center"
                         android:id="@+id/owner_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -151,7 +152,8 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
                     android:padding="5dp"
                     android:background="@drawable/salepage_edittextborder"
                     android:orientation="horizontal"
@@ -159,7 +161,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-
+                        android:layout_weight="1"
                         android:width="100dp"
                         android:background="@null"
                         android:id="@+id/deposit_price"
@@ -173,8 +175,13 @@
                         android:text="만원"/>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="0dp"/>
+
                 <LinearLayout
-                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="20dp"
                     android:padding="5dp"
                     android:background="@drawable/salepage_edittextborder"
                     android:orientation="horizontal"
@@ -182,6 +189,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:layout_weight="1"
                         android:width="100dp"
                         android:background="@null"
                         android:id="@+id/month_price"
@@ -200,6 +208,12 @@
 
 
             </LinearLayout>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:text="입주 가능 기간"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <LinearLayout
                 android:layout_margin="10dp"
@@ -209,7 +223,9 @@
                 android:gravity="center_vertical">
 
                 <LinearLayout
-                    android:layout_width="140dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="160dp"
                     android:layout_height="40dp"
                     android:background="@drawable/sale_purchase_white_round6"
                     android:orientation="horizontal"
@@ -237,14 +253,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
+                   android:layout_marginLeft="15dp"
                     android:text="~"
                     android:textStyle="bold"/>
 
                 <LinearLayout
-                    android:layout_width="140dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="160dp"
                     android:layout_height="40dp"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="15dp"
                     android:padding="10dp"
                     android:gravity="center"
                     android:background="@drawable/sale_purchase_white_round6"
@@ -351,6 +369,7 @@
 
 
                 <LinearLayout
+                    android:layout_weight="1"
                         android:gravity="center"
                         android:layout_marginLeft="30px"
                         android:layout_gravity="bottom"
@@ -366,6 +385,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
@@ -381,6 +401,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:layout_marginLeft="30px"
                     android:layout_gravity="bottom"
@@ -396,8 +417,10 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
                     android:layout_gravity="bottom"
                     android:id="@+id/internet_cost"
                     android:background="@drawable/salepage_inputborder"

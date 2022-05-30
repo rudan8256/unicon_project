@@ -4,20 +4,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.unicon_project.Adapters.SaleProductAdapter;
 import com.example.unicon_project.Classes.RecommendCondition;
 import com.example.unicon_project.Classes.SaleProduct;
+import com.example.unicon_project.MainActivity;
 import com.example.unicon_project.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +35,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +50,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
     SaleProductAdapter saleProductAdapter;
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    Dialog condition_dialog;
+    private Dialog condition_dialog;
     RecommendCondition preUserdata;
 
     private  EditText deposit_price_max, month_price_min,month_price_max,live_period_start,live_period_end;
@@ -53,6 +60,8 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
     public Map<String, Integer> structure_sel_map = new HashMap<>();
     private Spinner structureSpinner;
 
+    private ImageView day_first, day_last;
+    private DatePickerDialog datePickerDialog;
 
     private boolean search_complete;
 
@@ -63,6 +72,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
         recommend_condition=findViewById(R.id.recommend_condition);
         recommend_list=findViewById(R.id.recommend_list);
+
 
         structure_sel_map.put("상관없음",0);
         structure_sel_map.put("오픈형 원룸",1);
@@ -91,6 +101,8 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                  showDialog();
             }
         });
+
+
 
 
 
@@ -202,6 +214,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
     private void swap(int v,int e){
         SaleProduct temp;
         temp=mDatas.get(v);
@@ -214,7 +227,6 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
         dataScore.set(e,score_temp);
     }
 
-
     private int Judge(SaleProduct curdata){
 
         int total=0;
@@ -225,13 +237,13 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
         String pre_data_end =preUserdata.getLive_period_end().replace("/","");
 
 
-        //완변 조건매물 토탈 4000
 
+        //완변 조건매물 토탈 4000
 
         if(  !(preUserdata.getDeposit() == curdata.getDeposit() || preUserdata.getMonth_rent() == curdata.getMonth_rent())){
            return -1;
         }
-        else if(Integer.parseInt(pre_data_start) <=Integer.parseInt(cur_data_start) &&Integer.parseInt(cur_data_end) <= Integer.parseInt(pre_data_end) ){
+        else if(Integer.parseInt(pre_data_end) <Integer.parseInt(cur_data_start) || Integer.parseInt(cur_data_end) < Integer.parseInt(pre_data_start) ){
             return  -1;
         }
         else if( ! preUserdata.getStructure().equals(curdata.getStructure()) && ! preUserdata.getStructure().equals("상관없음")){
@@ -246,19 +258,29 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
             if( Integer.parseInt(preUserdata.getMonth_rentprice_max()) >= Integer.parseInt(curdata.getMonth_rent_price()) &&
                     Integer.parseInt(preUserdata.getMonth_rentprice_min()) <= Integer.parseInt(curdata.getMonth_rent_price()) ){
                 total += 1000;
+
             }
             else if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) < Integer.parseInt(curdata.getMonth_rent_price())){
                if(Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()) <=5){
                    total += 500 - 100*(Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()));
+
                }
+               else{
+                   return -1;
+               }
+
             }
             else{
-                if( Integer.parseInt(preUserdata.getMonth_rentprice_max()) - Integer.parseInt(curdata.getMonth_rent_price()) <=5){
-                    total += 500 - 100* (Integer.parseInt(preUserdata.getMonth_rentprice_max()) - Integer.parseInt(curdata.getMonth_rent_price()));
+                if( Integer.parseInt(preUserdata.getMonth_rentprice_min()) - Integer.parseInt(curdata.getMonth_rent_price()) <=5) {
+                    total += 500 - 100 * (Integer.parseInt(preUserdata.getMonth_rentprice_min()) - Integer.parseInt(curdata.getMonth_rent_price()));
                 }
+                else{
+                    return -1;
+                }
+
             }
 
-            if(preUserdata.getStructure().equals(curdata.getStructure())){
+            if(Integer.parseInt(preUserdata.getMaintenance_cost()) >= Integer.parseInt(curdata.getMaintenance_cost())){
                 total += 1000;
             }
 
@@ -278,7 +300,69 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
     }
 
     private void showDialog() {
-        condition_dialog.show();
+
+
+        Calendar calendar = Calendar.getInstance();
+        int mYear = calendar.get(Calendar.YEAR);
+        int mMonth = calendar.get(Calendar.MONTH);
+        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        month = month + 1;
+                        if(month<10 && day <10){
+                            live_period_start.setText( year+"/0"+month+"/0"+day);
+                        }
+                        else if(month<10 ){
+                            live_period_start.setText( year+"/0"+month+"/"+day);
+                        }
+                        else if(day<10 ){
+                            live_period_start.setText( year+"/"+month+"/0"+day);
+                        }
+                        else {
+                            live_period_start.setText(year + "/" + month + "/" + day);
+                        }
+                    }
+                }, mYear, mMonth, mDay);
+
+        DatePickerDialog datePickerDialog1 = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        month = month + 1;
+                        if(month<10 && day <10){
+                            live_period_end.setText( year+"/0"+month+"/0"+day);
+                        }
+                        else if(month<10 ){
+                            live_period_end.setText( year+"/0"+month+"/"+day);
+                        }
+                        else if(day<10 ){
+                            live_period_end.setText( year+"/"+month+"/0"+day);
+                        }
+                        else {
+                            live_period_end.setText(year + "/" + month + "/" + day);
+                        }
+                    }
+                }, mYear, mMonth, mDay);
+
+        day_first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                datePickerDialog.show();
+            }
+        });
+
+        day_last.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+
+                datePickerDialog1.show();
+            }
+        });
 
 
         set_Clicklistner();
@@ -317,10 +401,15 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
             }
         });
+        condition_dialog.show();
     }
 
 
-    @Override
+
+
+
+
+        @Override
     public void onClick(View view) {
         switch ( view.getId()){
 
@@ -356,6 +445,9 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
         room_size_min = condition_dialog.findViewById(R.id.room_size_min);
         room_size_max = condition_dialog.findViewById(R.id.room_size_max);
+
+        day_first = condition_dialog.findViewById(R.id.day_first);
+        day_last = condition_dialog.findViewById(R.id.day_last);
 
 
 

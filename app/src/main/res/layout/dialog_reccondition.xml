@@ -15,7 +15,6 @@
     android:layout_height="wrap_content">
 
 
-
     <TextView
 
 
@@ -100,7 +99,7 @@
     </LinearLayout>
 
     <TextView
-       android:layout_margin="20dp"
+       android:layout_margin="15dp"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
@@ -110,6 +109,7 @@
 
     <LinearLayout
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -170,7 +170,7 @@
     </LinearLayout>
 
     <TextView
-        android:layout_margin="20dp"
+        android:layout_margin="15dp"
         android:layout_marginLeft="28dp"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -183,7 +183,7 @@
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_marginRight="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -197,25 +197,30 @@
             <EditText
                 android:id="@+id/live_period_start"
                 android:layout_marginLeft="5dp"
-                android:layout_width="115dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:textSize="13sp"
                 android:hint="입주 원하는 날" />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="22dp"
+                android:id="@+id/day_first"
+                android:src="@drawable/calendar"/>
 
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="12dp"
             android:text="~"
             android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="12dp"
             android:padding="10dp"
             android:background="@drawable/sale_purchase_white_round6"
             android:orientation="horizontal">
@@ -223,11 +228,17 @@
             <EditText
                 android:id="@+id/live_period_end"
                 android:layout_marginLeft="5dp"
-                android:layout_width="115dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:textSize="13sp"
                 android:hint="마지막날"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="22dp"
+                android:id="@+id/day_last"
+                android:src="@drawable/calendar"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -239,12 +250,12 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:layout_margin="20dp"
+                android:layout_margin="15dp"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -252,10 +263,9 @@
                 android:text="관리비"/>
 
             <LinearLayout
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginLeft="10dp"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/sale_purchase_white_round6"
                 android:orientation="horizontal">
@@ -263,7 +273,7 @@
                 <EditText
                     android:id="@+id/maintenance_cost"
                     android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:textSize="13sp"
@@ -278,32 +288,33 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
             android:orientation="vertical">
 
             <TextView
-                android:layout_margin="20dp"
-                android:textSize="15sp"
-                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="구조"/>
+                android:layout_margin="15dp"
+                android:text="구조"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
-                android:padding="5dp"
                 android:background="@drawable/sale_purchase_white_round6"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
+
                 <Spinner
                     android:id="@+id/structure"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="150dp"
+                    android:layout_width="125dp"
                     android:layout_height="wrap_content"
-                    android:entries="@array/structure_array2"/>
+                    android:layout_centerHorizontal="true"
+                    android:entries="@array/structure_array2" />
             </LinearLayout>
 
         </LinearLayout>
@@ -314,7 +325,7 @@
 
 
     <TextView
-        android:layout_margin="20dp"
+        android:layout_margin="15dp"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
@@ -322,70 +333,61 @@
         android:text="면적"/>
 
     <LinearLayout
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:background="@drawable/sale_purchase_white_round6"
             android:orientation="horizontal"
             android:padding="10dp">
 
             <EditText
                 android:id="@+id/room_size_min"
-                android:layout_width="105dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:background="@null"
                 android:hint="최소 면적"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
-                android:text="㎡"
-                android:textStyle="bold" />
+                android:background="@null"
+                android:textSize="13sp"
+             />
+
+
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:text="~"
             android:textStyle="bold"/>
 
         <LinearLayout
-            android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginLeft="15dp"
             android:padding="10dp"
             android:background="@drawable/sale_purchase_white_round6"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/room_size_max"
+                android:hint="최대 면적"
                 android:layout_marginLeft="5dp"
-                android:layout_width="105dp"
+                android:layout_width="115dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:textSize="13sp"
-                android:hint="최대 면적"/>
-            <TextView
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="㎡"/>
+              />
         </LinearLayout>
 
-
-
-
     </LinearLayout>
+
 
 
 

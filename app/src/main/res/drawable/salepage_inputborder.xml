@@ -7,7 +7,7 @@
         android:width="1dp"
         android:color="#C4C4C4" /> //선색
     <corners
-        android:radius="15dp" /> // 선 휘는각도
+        android:radius="5dp" /> // 선 휘는각도
 
 
 

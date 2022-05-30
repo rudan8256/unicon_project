@@ -39,7 +39,7 @@
             android:layout_marginRight="8dp"
             android:background="@drawable/maptest_round_corner"
             android:orientation="horizontal"
-            android:id="@+id/et_autocomplete"
+            android:id="@+id/filter_search"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_weight="1"
