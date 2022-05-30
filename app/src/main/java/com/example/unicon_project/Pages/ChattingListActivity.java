@@ -58,8 +58,6 @@ public class ChattingListActivity extends AppCompatActivity {
                 //데이터 업데이트 ( 중복 표시 방지 )
                 adapter.notifyDataSetChanged();
 
-                gv.scrollBy(items.size()-1, 0);
-
                 gv.setAdapter(adapter);
             }
 

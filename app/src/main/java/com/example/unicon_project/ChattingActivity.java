@@ -92,7 +92,7 @@ public class ChattingActivity extends AppCompatActivity {
         // 상대방에게 해당 chattingID가 있는지 검사하고 추가하기
         isChattingListExist(writerID, chattingID);
 
-
+        Toast.makeText(getApplicationContext(), "Current UID is.. "+uid, Toast.LENGTH_LONG).show();
         //처음 들어왔을시 unread 0으로 초기화
         reference.child("chattingList").child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -103,7 +103,11 @@ public class ChattingActivity extends AppCompatActivity {
                 else {
                     ChattingListData chattingListData = new ChattingListData();
                     for (final DataSnapshot data : task.getResult().getChildren()) {
-                        chattingListData = data.getValue(ChattingListData.class);
+                        ChattingListData cld = data.getValue(ChattingListData.class);
+
+                        //chattingID가 똑같은 채팅방을 가져온다
+                        if(cld.getChattingID().equals(chattingID))
+                            chattingListData = cld;
                     }
 
                     chattingListData.setUnread(0);
@@ -165,7 +169,11 @@ public class ChattingActivity extends AppCompatActivity {
                         else {
                             ChattingListData chattingListData = new ChattingListData();
                             for (final DataSnapshot data : task.getResult().getChildren()) {
-                                chattingListData = data.getValue(ChattingListData.class);
+                                ChattingListData cld = data.getValue(ChattingListData.class);
+
+                                //내가 대상으로 되어있는 채팅방을 가져온다.
+                                if(cld.getUserName().equals(uid))
+                                    chattingListData = cld;
                             }
 
                             chattingListData.setUnread(chattingListData.getUnread()+1);
@@ -189,12 +197,13 @@ public class ChattingActivity extends AppCompatActivity {
         getInfo();
     }
 
-    public void isChattingListExist(String uid, String _chattingID)
+    public void isChattingListExist(String _uid, String _chattingID)
     {
         // 해당 uid에 productID 채팅정보가 존재하는지 검사하여 그 값을 반환한다.
+        // input ( _uid, _chattingID )
         _isChattingListExist = false;
 
-        reference.child("chattingList").child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        reference.child("chattingList").child(_uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -213,15 +222,15 @@ public class ChattingActivity extends AppCompatActivity {
                     }
 
                     if(!_isChattingListExist) {
-                        ChattingListData data = new ChattingListData(homeAddress, uid, productID, _chattingID, 0);
-                        if(uid == writerID)
+                        ChattingListData data = new ChattingListData(homeAddress, _uid, productID, _chattingID, 0);
+                        if(_uid == writerID)
                             // 현재 들어온 사람이 작성자인 경우
                             data.setUserName(_chattingID.replaceAll(productID, ""));
                         else
                             // 현재 들어온 사람이 구매자인 경우
                             data.setUserName(writerID);
 
-                        reference.child("chattingList").child(uid).child(_chattingID).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        reference.child("chattingList").child(_uid).child(_chattingID).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
