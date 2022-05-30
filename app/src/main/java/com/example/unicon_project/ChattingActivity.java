@@ -108,14 +108,17 @@ public class ChattingActivity extends AppCompatActivity {
 
                     chattingListData.setUnread(0);
 
-                    reference.child("chattingList").child(uid).child(chattingID).setValue(chattingListData).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                //삽입 완료시
+                    if(chattingListData.getChattingID().length() > 0)
+                    {
+                        reference.child("chattingList").child(uid).child(chattingID).setValue(chattingListData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    //삽입 완료시
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }});
 
@@ -256,8 +259,7 @@ public class ChattingActivity extends AppCompatActivity {
                 //데이터 업데이트 ( 중복 표시 방지 )
                 adapter.notifyDataSetChanged();
 
-                gv.scrollBy(items.size()-1, 0);
-
+                gv.setSelection(adapter.getCount() - 1);
                 gv.setAdapter(adapter);
             }
 
