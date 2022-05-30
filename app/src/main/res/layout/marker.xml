@@ -6,10 +6,11 @@
     android:clickable="true">
 
 
-    <LinearLayout
+    <FrameLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="68dp">
+
 
 
         <LinearLayout
@@ -35,9 +36,11 @@
             android:background="@drawable/down_arrow_marker"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center_horizontal|bottom"/>
 
-    </LinearLayout>
+
+
+    </FrameLayout>
 
 
 
