@@ -439,13 +439,13 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                 showTagDialog();
                 break;
             case R.id.deposit:
-                if( deposit_bool ){
+                if( !deposit_bool ){
                     deposit_bool=true; deposit.setBackgroundColor(Color.BLUE); }
                 else{
                     deposit_bool=false;deposit.setBackgroundColor(Color.WHITE); }
                 break;
             case R.id.month_rent:
-                if( month_bool ){
+                if( !month_bool ){
                     month_bool=true;month_rent.setBackgroundColor(Color.BLUE); }
                 else{
                     month_bool=false;month_rent.setBackgroundColor(Color.WHITE); }
