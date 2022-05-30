@@ -283,10 +283,14 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                 Log.e("@@@@@", String.valueOf(mDatas.size()));
 
                 for(SaleProduct item : mDatas){
-                    if(Judge(item) > 1) {
-                        Log.e("@@@@@", String.valueOf(Judge(item)));
-                        filter_datas.add(item);
+
+                    if(deposit_bool== item.getDeposit() || month_bool == item.getMonth_rent()) {
+                        if(Judge(item) > 1) {
+                            Log.e("@@@@@", String.valueOf(Judge(item)));
+                            filter_datas.add(item);
+                        }
                     }
+
                 }
                 saleProductAdapter.setmDatas(filter_datas);
                 saleProductAdapter.notifyDataSetChanged();
@@ -315,11 +319,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
         //완변 조건매물 토탈 4000
 
-        if(deposit_bool || month_bool) {
-            if (!(deposit_bool == curdata.getDeposit() && month_bool == curdata.getMonth_rent())) {
-                return -1;
-            }
-        }
+
         if( ! cur_data_end.equals("") && !cur_data_start.equals("") && !pre_data_end.equals("") && !pre_data_start.equals("")) {
             if (Integer.parseInt(pre_data_end) < Integer.parseInt(cur_data_start) || Integer.parseInt(cur_data_end) < Integer.parseInt(pre_data_start)) {
                 return -1;
@@ -356,8 +356,6 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                 return -1;
             }
         }
-
-
 
 
             return 100;
