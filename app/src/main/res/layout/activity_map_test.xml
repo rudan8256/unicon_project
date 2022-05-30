@@ -134,7 +134,7 @@
     <LinearLayout
         android:id="@+id/iv_detail"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="130dp"
         android:layout_margin="20dp"
         android:background="@drawable/maptest_picker_clickitem"
         app:layout_constraintBottom_toBottomOf="@id/map"
@@ -144,6 +144,7 @@
 
 
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/house_imgview"
             android:elevation="2dp"
             android:background="@drawable/default_houseimg"

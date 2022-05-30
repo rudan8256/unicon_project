@@ -101,57 +101,51 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
 
             mStore.collection("Usercondition")
-                    .whereIn("writerId", Collections.singletonList(mAuth.getUid()))
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    .whereEqualTo("writerId",mAuth.getUid()).get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    preUserdata =document.toObject(RecommendCondition.class);
-                                }
-
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                preUserdata =document.toObject(RecommendCondition.class);
+                                Log.e("@@@@@@","들어옴?");
 
                                 deposit_price_max.setText(preUserdata.getMonth_rentprice_max());
                                 month_price_max.setText(preUserdata.getMonth_rentprice_max());
                                 month_price_min.setText(preUserdata.getMonth_rentprice_min());
-                               live_period_start.setText(preUserdata.getLive_period_start());
+                                live_period_start.setText(preUserdata.getLive_period_start());
                                 live_period_end.setText(preUserdata.getLive_period_end());
 
                                 maintenance_cost.setText(preUserdata.getMaintenance_cost());
-                               structure = preUserdata.getStructure();
+                                structure = preUserdata.getStructure();
                                 int cur_seldata_num;
 
 
-                               if(structure!="") {
+                                if (structure != "") {
 
-                                   cur_seldata_num = structure_sel_map.get(structure);
+                                    cur_seldata_num = structure_sel_map.get(structure);
 
 
+                                    structureSpinner.setSelection(cur_seldata_num);
+                                }
 
-                                   structureSpinner.setSelection(cur_seldata_num);
-                               }
-
-                               room_size_max.setText(preUserdata.getRoom_size_max());
+                                room_size_max.setText(preUserdata.getRoom_size_max());
                                 room_size_min.setText(preUserdata.getRoom_size_min());
 
 
-                                    if( preUserdata.getDeposit() ){
-                                        deposit.setBackgroundColor(Color.BLUE); }
-                                    else{
-                                        deposit.setBackgroundColor(Color.WHITE); }
+                                if (preUserdata.getDeposit()) {
+                                    deposit.setBackgroundColor(Color.BLUE);
+                                } else {
+                                    deposit.setBackgroundColor(Color.WHITE);
+                                }
 
 
-                                    if(  preUserdata.getMonth_rent() ){
-                                        month_rent.setBackgroundColor(Color.BLUE); }
-                                    else{
-                                        month_rent.setBackgroundColor(Color.WHITE); }
+                                if (preUserdata.getMonth_rent()) {
+                                    month_rent.setBackgroundColor(Color.BLUE);
+                                } else {
+                                    month_rent.setBackgroundColor(Color.WHITE);
+                                }
 
 
-                                updateDatas();
-                            }
-                            else {
                                 updateDatas();
                             }
                         }
@@ -171,6 +165,8 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                     for(DocumentSnapshot snap : task.getResult().getDocuments()){
 
                         SaleProduct curdata = snap.toObject(SaleProduct.class);
+
+
                         int cur_score= Judge(curdata);
                         if(cur_score > 1000) {
 

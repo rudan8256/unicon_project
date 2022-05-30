@@ -61,6 +61,7 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
             house_imgview=itemView.findViewById(R.id.house_imgview);
 
 
+            house_imgview.setClipToOutline(true);
 
 
            itemView.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +115,7 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
         viewHolder.monthcost.setText(" / "+mDatas.get(position).getMonth_rent_price());
         viewHolder.roomsize.setText(mDatas.get(position).getRoom_size());
         viewHolder.structure.setText(mDatas.get(position).getStructure());
-        viewHolder.address.setText(mDatas.get(position).getHome_adress());
+        viewHolder.address.setText(mDatas.get(position).getHome_name());
         viewHolder.living_start.setText(mDatas.get(position).getLive_period_start());
         viewHolder.living_end.setText("~"+mDatas.get(position).getLive_period_end());
 

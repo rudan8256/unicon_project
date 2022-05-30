@@ -9,24 +9,41 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/custom_thumb.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/custom_track.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/default_houseimg.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/maptest_round_corner.xml" value="0.2355" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/down_arrow_marker.xml" value="0.15092592592592594" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/down_arrow_marker_ispick.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/maptest_picker_clickitem.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/maptest_round_corner.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/marker_border.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/marker_border_ispick.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/market_border.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/sale_purchase_white_round15.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/salepage_edittextborder.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/salepage_inputborder.xml" value="0.10555555555555556" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/salepage_inputborder_isclick.xml" value="0.10555555555555556" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/salepage_intupborder.xml" value="0.26979166666666665" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_purchase_list.xml" value="0.12228260869565218" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_purchase_page.xml" value="0.5" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_purchase_product_page.xml" value="0.33" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_chatting_list.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_image_viewpager.xml" value="0.19157608695652173" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_map_test.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_purchase_page.xml" value="0.29375" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_recommend_page.xml" value="0.2084942084942085" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_list.xml" value="0.15767634854771784" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_list.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_page.xml" value="0.35294117647058826" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_product_page.xml" value="0.2390625" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/adapter_purchaseproduct.xml" value="0.2390625" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/adapter_recommendproduct.xml" value="0.2390625" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/adapter_saleproduct.xml" value="0.1" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/dialog_reccondition.xml" value="0.2390625" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/adapter_saleproduct.xml" value="0.4" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/dialog_reccondition.xml" value="0.264" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/dialog_tag.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/item_chatting.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/item_emptytag.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/item_tag.xml" value="0.4" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/marker.xml" value="0.264" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/multi_image_item.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

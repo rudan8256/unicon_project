@@ -208,6 +208,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         living_start=findViewById(R.id.post_living_start);
         house_imgview=findViewById(R.id.house_imgview);
 
+        house_imgview.setClipToOutline(true);
+
     }
 
 
@@ -426,7 +428,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         int price =Integer.parseInt(saleProduct.getMonth_rent_price());
         String formatted = NumberFormat.getCurrencyInstance().format(price);
         Log.e(TAG,"addMarker"+formatted);
-        tv_marker.setText(formatted);
+        tv_marker.setText(price+"0,000원");
 
         if(isSelectedMarker){
             //tv_marker.setBackgroundResource(R.drawable);
@@ -489,7 +491,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
               monthcost.setText(" / "+ saleProduct[0].getMonth_rent_price());
                 roomsize.setText(saleProduct[0].getRoom_size());
                 structure.setText(saleProduct[0].getStructure());
-               address.setText(saleProduct[0].getHome_adress());
+               address.setText(saleProduct[0].getHome_name());
                 living_start.setText(saleProduct[0].getLive_period_start());
                living_end.setText("~"+saleProduct[0].getLive_period_end());
 

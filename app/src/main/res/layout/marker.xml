@@ -16,8 +16,8 @@
             android:id="@+id/marker_body"
             android:gravity="center"
             android:background="@drawable/marker_border"
-            android:layout_width="150dp"
-            android:layout_height="60dp">
+            android:layout_width="110dp"
+            android:layout_height="50dp">
 
             <TextView
                 android:id="@+id/tv_price"
