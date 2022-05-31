@@ -64,6 +64,7 @@
 
 
             <TextView
+                android:layout_marginLeft="10dp"
                 android:textSize="60px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,7 +81,7 @@
                 <LinearLayout
 
                     android:gravity="center"
-                    android:layout_marginLeft="30px"
+                    android:layout_marginLeft="10dp"
                     android:layout_gravity="bottom"
                     android:id="@+id/deposit"
                     android:background="@drawable/salepage_inputborder"
@@ -94,23 +95,25 @@
                         android:layout_height="wrap_content"
                         android:text="전세"/>
                 </LinearLayout>
+
+
                 <LinearLayout
-                    android:gravity="center"
-                    android:layout_marginLeft="30px"
-                    android:layout_gravity="bottom"
                     android:id="@+id/month_rent"
-                    android:background="@drawable/salepage_inputborder"
                     android:layout_width="80dp"
-                    android:layout_height="40dp">
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/salepage_inputborder"
+                    android:gravity="center">
+
                     <TextView
                         android:id="@+id/text_month_rent"
-                        android:duplicateParentState="true"
-                        android:textColor="@color/selector_textpress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="월세"/>
+                        android:duplicateParentState="true"
+                        android:text="월세"
+                        android:textColor="@color/selector_textpress" />
                 </LinearLayout>
-
 
                 <View
                     android:layout_width="0dp"
@@ -230,6 +233,8 @@
 
 
             <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -241,21 +246,35 @@
                     android:layout_height="wrap_content"/>
 
 
-                <TextView
-                    android:id="@+id/post_gallery"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/ic_baseline_image_24"
-                    android:gravity="center" />
+                <LinearLayout
+                    android:id="@+id/pre_picture_shape"
+                    android:layout_margin="20dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/salepage_pictureborder"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/post_gallery"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+
+                        android:layout_margin="10dp"
+                        android:background="@drawable/picture"
+                       />
+                    <TextView
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="사진 미등록"/>
+                </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_margin="20dp"
                     android:id="@+id/photo_list"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3.5"
-                    android:layout_marginTop="24dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     />
 

@@ -79,6 +79,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private Switch owner_switch;
     private Spinner floorSpinner, structureSpinner;
 
+
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     StorageReference storageReference;
 
@@ -86,7 +87,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private ArrayList<Uri> uriList = new ArrayList<>();
     MultiImageAdapter photoadapter;
     private RecyclerView photo_list;
-    private TextView post_gallery;
+    private LinearLayout post_gallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +100,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         maintains = newproduct.getMaintains();
         options = newproduct.getOptions();
         personal_proposal = newproduct.getPersonal_proposal();
-        post_gallery = findViewById(R.id.post_gallery);
+        post_gallery = findViewById(R.id.pre_picture_shape);
         photo_list = findViewById(R.id.photo_list);
         owner_switch = findViewById(R.id.owner_switch);
 
@@ -595,7 +596,9 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
             uriList.clear(); // 초기화한번해주고
             if (data == null) {   // 어떤 이미지도 선택하지 않은 경우
                 Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+                post_gallery.setVisibility(View.VISIBLE);
             } else {   // 이미지를 하나라도 선택한 경우
+                post_gallery.setVisibility(View.GONE);
                 if (data.getClipData() == null) {     // 이미지를 하나만 선택한 경우
                     Log.e("single choice: ", String.valueOf(data.getData()));
                     Uri imageUri = data.getData();

@@ -150,8 +150,6 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
 
 
 
-
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)

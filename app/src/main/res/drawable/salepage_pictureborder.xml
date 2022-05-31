@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="#5EF8F8F8" /> //배경색
+
+    <stroke
+        android:dashWidth="10dp"
+        android:dashGap="10dp"
+        android:width="1dp"
+        android:color="#D5D5D5" /> //선색
+    <corners
+        android:radius="3dp"
+       /> // 선 휘는각도
+
+
+
+</shape>

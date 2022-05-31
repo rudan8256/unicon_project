@@ -37,6 +37,8 @@ public class MultiImageAdapter extends RecyclerView.Adapter<MultiImageAdapter.Vi
             // 뷰 객체에 대한 참조.
             image = itemView.findViewById(R.id.image);
 
+            image.setClipToOutline(true);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
