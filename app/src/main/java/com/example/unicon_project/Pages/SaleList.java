@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -176,6 +177,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                             boolean isContain =false;
                             for(String tag : mTagList) {
                                 isContain = mDatas.get(mDatas.size() - 1).getHome_adress().contains(tag);
+                                if(isContain)break;
                             }
                             if(!isContain)mDatas.remove(mDatas.size()-1);
                         }
@@ -452,7 +454,12 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
     }
 
     public void showTagDialog(){
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(tagDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         tagDialog.show();
+        tagDialog.getWindow().setAttributes(lp);
         CheckBox [][] checkBoxes = new CheckBox[8][17];
         TextView tv_done = tagDialog.findViewById(R.id.tv_done);
 
@@ -576,10 +583,11 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
 
 
+                updateDatas();
+
                 tagDialog.dismiss();
                 tagAdapter.setmDatas(mTagList);
                 tagAdapter.notifyDataSetChanged();
-                updateDatas();
             }
         });
     }
