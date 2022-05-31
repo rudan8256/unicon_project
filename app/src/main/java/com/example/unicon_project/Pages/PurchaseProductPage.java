@@ -6,10 +6,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.unicon_project.ChattingActivity;
 import com.example.unicon_project.Classes.PurchaseProduct;
 import com.example.unicon_project.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +35,8 @@ public class PurchaseProductPage extends AppCompatActivity {
 
     private ArrayList<String> image_urllist;
 
+    private Button btn_purchase_chatting;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,19 @@ public class PurchaseProductPage extends AppCompatActivity {
 
         Construter();
         WritingData();
+
+        btn_purchase_chatting = findViewById(R.id.btn_purchase_chatting);
+        btn_purchase_chatting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+                intent.putExtra("chattingID", "");
+                intent.putExtra("productID", select_data.getProductId());
+                intent.putExtra("writerID", select_data.getWriterId());
+                intent.putExtra("homeAddress", select_data.getHome_address());
+                startActivity(intent);
+            }
+        });
     }
 
     private void Construter() {

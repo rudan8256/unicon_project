@@ -69,7 +69,7 @@ public class ChattingAdapter extends BaseAdapter {
             tv_chatting_time.setGravity(Gravity.RIGHT);
 
             ll_chatting.setGravity(Gravity.RIGHT);
-            cardView.setCardBackgroundColor(Color.BLUE);
+            cardView.setCardBackgroundColor(Color.parseColor("#231FFF"));
             tv_chatting_msg.setTextColor(Color.WHITE);
             tv_chatting_time.setTextColor(Color.WHITE);
         }else{
@@ -79,7 +79,7 @@ public class ChattingAdapter extends BaseAdapter {
             tv_chatting_time.setGravity(Gravity.LEFT);
 
             ll_chatting.setGravity(Gravity.LEFT);
-            cardView.setCardBackgroundColor(Color.GRAY);
+            cardView.setCardBackgroundColor(Color.parseColor("#EEF3FC"));
             tv_chatting_msg.setTextColor(Color.BLACK);
             tv_chatting_time.setTextColor(Color.BLACK);
         }
