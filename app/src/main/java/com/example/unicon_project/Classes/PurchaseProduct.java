@@ -20,6 +20,8 @@ public class PurchaseProduct implements Serializable {
     private Map<String, Boolean> maintains;
     private Map<String, Boolean> options;
     private String productId;
+    private String writerId;
+    private String home_name;
     private Timestamp timestamp;
 
     public PurchaseProduct() {
@@ -40,6 +42,8 @@ public class PurchaseProduct implements Serializable {
         this.deposit = false;
         this.negotiable = false;
         this.productId = "";
+        this.writerId="";
+        this.home_name = "";
         this.timestamp = null;
 
         //집주인 동의여부 ,  관리비 옵션
@@ -64,7 +68,7 @@ public class PurchaseProduct implements Serializable {
 
     }
 
-    public PurchaseProduct(String home_address, Boolean month_rent, Boolean deposit, Boolean negotiable, String deposit_price_max, String month_price_min, String month_price_max, String live_period_start, String live_period_end, String maintenance_cost, String room_size_min, String room_size_max, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, String productId, Timestamp timestamp) {
+    public PurchaseProduct(String home_address, Boolean month_rent, Boolean deposit, Boolean negotiable, String deposit_price_max, String month_price_min, String month_price_max, String live_period_start, String live_period_end, String maintenance_cost, String room_size_min, String room_size_max, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, String productId, String writerId, String home_name, Timestamp timestamp) {
         this.home_address = home_address;
         this.month_rent = month_rent;
         this.deposit = deposit;
@@ -82,7 +86,25 @@ public class PurchaseProduct implements Serializable {
         this.maintains = maintains;
         this.options = options;
         this.productId = productId;
+        this.writerId = writerId;
+        this.home_name = home_name;
         this.timestamp = timestamp;
+    }
+
+    public String getWriterId() {
+        return writerId;
+    }
+
+    public void setWriterId(String writerId) {
+        this.writerId = writerId;
+    }
+
+    public String getHome_name() {
+        return home_name;
+    }
+
+    public void setHome_name(String home_name) {
+        this.home_name = home_name;
     }
 
     public String getMonth_price_min() {

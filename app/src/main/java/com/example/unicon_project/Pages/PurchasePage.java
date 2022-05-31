@@ -48,7 +48,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     private EditText maintenance_cost, room_size_min, room_size_max, specific;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private String curDate, structure;
+    private String curDate, structure, home_name;
     private LinearLayout deposit, month_rent, negotiable, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
     private LinearLayout convenience_store, subway, parking;
@@ -145,8 +145,10 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 newProduct.setMaintenance_cost(maintenance_cost.getText().toString());
                 newProduct.setRoom_size_min(room_size_min.getText().toString());
                 newProduct.setRoom_size_max(room_size_max.getText().toString());
+                newProduct.setWriterId(mAuth.getUid());
                 newProduct.setSpecific(specific.getText().toString());
                 newProduct.setStructure(structure);
+                newProduct.setHome_name(home_name);
 
                 curDate = String.valueOf(System.currentTimeMillis());
                 newProduct.setProductId(curDate + mAuth.getUid());
@@ -420,6 +422,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
 
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 home_address.setText(place.getAddress());
+                home_name = place.getName();
                 //set Address on EditText
                 //Set LocalityName
 
