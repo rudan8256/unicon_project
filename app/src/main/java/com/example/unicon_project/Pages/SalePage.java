@@ -78,6 +78,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private Map<String, String> personal_proposal;
     private Switch owner_switch;
     private Spinner floorSpinner, structureSpinner;
+    private ImageView back_activity;
 
 
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
@@ -106,6 +107,15 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
         floorSpinner = findViewById(R.id.floor);
         structureSpinner = findViewById(R.id.structure);
+        back_activity = findViewById(R.id.back_acticity);
+
+
+        back_activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         floorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

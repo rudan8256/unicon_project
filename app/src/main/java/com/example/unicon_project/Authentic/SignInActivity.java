@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,11 +47,11 @@ import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.exception.KakaoException;
 
 public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
-    TextView text_register;
+   LinearLayout text_register;
     TextView text_email, text_password;
-    Button btn_log_in;
+   TextView  btn_log_in;
     FirebaseAuth firebaseAuth;
-    SignInButton btn_google;
+    LinearLayout btn_google;
 
     private SessionCallBack mSessionCallback;
     private long clickTime = 0;
