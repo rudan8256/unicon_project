@@ -67,6 +67,16 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
+                <Button
+                    android:textColor="@color/white"
+                    android:background="@drawable/salepage_complete"
+                    android:id="@+id/reccomend_page"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="rec">
+
+                </Button>
+
 
             </LinearLayout>
         </ScrollView>

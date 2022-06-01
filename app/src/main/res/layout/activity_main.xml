@@ -8,10 +8,10 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,6 +39,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/btn_toChatting"
                     android:src="@drawable/chatting_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
@@ -54,6 +55,7 @@
                 android:orientation="vertical">
 
                <LinearLayout
+                   android:id="@+id/to_SalePage"
                    android:layout_weight="5"
                    android:gravity="center"
                     android:layout_width="match_parent"
@@ -64,6 +66,7 @@
                        android:layout_width="30dp"
                        android:layout_height="30dp"/>
                    <TextView
+                       android:layout_marginLeft="5dp"
                        android:textColor="@color/black"
                        android:textStyle="bold"
                        android:textSize="23sp"
@@ -81,15 +84,27 @@
 
 
                 <LinearLayout
+                    android:gravity="center"
                     android:layout_weight="2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/to_PurchasePage"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="0dp">
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="원하는방 올리기"
+                            android:layout_width="wrap_content"
+                            />
+                    </LinearLayout>
+
 
                     <View
                         android:layout_marginBottom="10dp"
@@ -97,35 +112,97 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="#EFEFEF"/>
-                    <TextView
+
+                    <LinearLayout
+                        android:id="@+id/setting_topage"
+                        android:gravity="center"
+                        android:layout_height="30dp"
                         android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="0dp">
+
+                        <TextView
+                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="설정"
+                            android:layout_width="wrap_content"
+                            />
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
 
             </LinearLayout>
 
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+         >
+
+            <LinearLayout
+                android:id="@+id/to_PurchaseList"
+                android:gravity="center"
+               android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="5dp"
+                android:elevation="2dp"
+                android:background="@drawable/main_item_border"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:orientation="horizontal">
 
 
-        <Button
-            android:id="@+id/to_SalePage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="판매글쓰기"></Button>
-        <Button
-            android:id="@+id/to_PurchasePage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="구매글쓰기"></Button>
+                <ImageView
+                    android:src="@drawable/list_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:text="구매리스트"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_toChatting"
-            android:background="@drawable/ic_baseline_chat_bubble_24"
-            android:text="채팅기능"></Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/to_SaleList"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:elevation="2dp"
+                android:background="@drawable/main_item_border"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:src="@drawable/list_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:text="판매리스트"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
 
         <Button
             android:layout_width="wrap_content"
@@ -133,24 +210,71 @@
             android:id="@+id/btn_log_out"
             android:text="LOG OUT"></Button>
 
-        <Button
-            android:id="@+id/to_SaleList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="판매글 리스트"></Button>
-        <Button
-            android:id="@+id/to_PurchaseList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="구매글 리스트"></Button>
-        <Button
-            android:id="@+id/to_RecommendePage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="추천 매물"></Button>
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:textSize="60px"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="추천 매물"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:id="@+id/recommend_condition"
+                        android:layout_margin="10dp"
+                        android:background="@color/purple_500"
+                        android:layout_width="match_parent"
+                        android:layout_height="200px">
+
+                        <TextView
+                            android:text="검색조건 설정하기"
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                 </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="false"
+                android:id="@+id/recommend_list"
+                android:layout_width="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_height="match_parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
 
         </LinearLayout>
-    </ScrollView>
+
+
+
+    </androidx.core.widget.NestedScrollView>
 
 
     <Button
@@ -162,6 +286,8 @@
         android:text="지도로 찾기">
 
     </Button>
+
+
 
 
 </LinearLayout>

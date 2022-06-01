@@ -1,0 +1,71 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_margin="20dp"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="회원정보가 필요한 페이지입니다"/>
+
+
+
+
+        <TextView
+            android:layout_margin="20dp"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="로그인 페이지로 이동하시겠습니까?"/>
+
+        <LinearLayout
+            android:layout_margin="20dp"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textSize="15sp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:id="@+id/dialog_canclebtn"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="취소"/>
+
+            <Button
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/salepage_inputborder_isclick"
+                android:id="@+id/complete_btn"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="이동"/>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-     <solid android:color="#231FFF" />
+     <solid android:color="#4945E3" />
 
     <stroke
         android:width="1dp"
-        android:color="#231FFF" /> //선색
+        android:color="#4945E3" /> //선색
     <corners
         android:radius="5dp" /> // 선 휘는각도
 

@@ -2,10 +2,10 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <solid
-        android:color="#0050FF"/>
+        android:color="#4945E3"/>
     <stroke
         android:width="2dp"
-        android:color="#0050FF" /> //선색
+        android:color="#4945E3" /> //선색
     <corners android:radius="5dp"/>
 
 </shape>

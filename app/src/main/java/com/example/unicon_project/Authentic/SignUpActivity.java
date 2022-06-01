@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.unicon_project.Classes.User;
@@ -36,7 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     EditText mEmailText, mPasswordText, mPasswordCheckText, mName;
-    Button mRegisterBtn;
+   TextView mRegisterBtn;
     Button btn_cancel;
 
     private FirebaseAuth firebaseAuth;
@@ -52,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
         mPasswordText = findViewById(R.id.text_password);
         mPasswordCheckText = findViewById(R.id.text_password_check);
         mRegisterBtn = findViewById(R.id.btn_register);
-        btn_cancel = findViewById(R.id.btn_cancel);
+
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -120,14 +121,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+
     }
 
     public boolean onSupportNavigateUp(){
