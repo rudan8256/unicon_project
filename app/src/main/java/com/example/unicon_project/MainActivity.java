@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -144,8 +145,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ToMapTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MapTest.class);
+                Intent intent = new Intent(MainActivity.this, MapTest.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_up,R.anim.not_move);
+
             }
         });
 

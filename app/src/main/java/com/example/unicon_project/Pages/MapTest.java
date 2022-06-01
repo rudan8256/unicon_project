@@ -724,6 +724,10 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     }
 
 
-
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.not_move,R.anim.slide_out_down);
+    }
 }
