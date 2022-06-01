@@ -70,8 +70,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    LinearLayout ToSalePage, ToPurchasePage, ToSaleList, ToPurchaseList;
-    Button  ToMapTest, btn_log_out;
+    LinearLayout ToSalePage, ToPurchasePage, ToSaleList, ToPurchaseList,Tomypage,ToMapTest,ToRecoPage;
     ImageView  btn_toChatting;
     FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -87,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
     private long clickTime = 0;
-    private SessionCallBack mSessionCallback = new SessionCallBack();
-    private GoogleSignInClient mGoogleSignInClient;
     Dialog login_dialog;
 
     private LinearLayout recommend_condition;
@@ -122,10 +119,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ToSaleList = findViewById(R.id.to_SaleList);
         ToPurchaseList = findViewById(R.id.to_PurchaseList);
         btn_toChatting = findViewById(R.id.btn_toChatting);
+        Tomypage = findViewById(R.id.to_mypage);
+        ToRecoPage = findViewById(R.id.To_reccoPage);
 
 
+        if(firebaseAuth.getCurrentUser() != null) {
+            reccommend_start();
 
-        reccommend_start();
+        }
+        else{
+
+        }
+
 
         ToSalePage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,60 +172,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        // 앱에 필요한 사용자 데이터를 요청하도록 로그인 옵션을 설정한다.
-        // DEFAULT_SIGN_IN parameter는 유저의 ID와 기본적인 프로필 정보를 요청하는데 사용된다.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id1))
-                .requestEmail() // email addresses도 요청함
-                .build();
-
-        // 위에서 만든 GoogleSignInOptions을 사용해 GoogleSignInClient 객체를 만듬
-        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-
-        btn_log_out = findViewById(R.id.btn_log_out);
-        btn_log_out.setOnClickListener(new View.OnClickListener() {
+        Tomypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Session.getCurrentSession().checkAndImplicitOpen()) {
-                    UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
-                        @Override
-                        public void onSessionClosed(ErrorResult errorResult) {
-                            super.onSessionClosed(errorResult);
-                            Log.e("###", "onSessionClosed: " + errorResult.getErrorMessage());
-
-                        }
-
-                        @Override
-                        public void onCompleteLogout() {
-                            if (mSessionCallback != null) {
-                                Session.getCurrentSession().removeCallback(mSessionCallback);
-                            }
-                        }
-                    });
-                }
-                if (firebaseAuth.getCurrentUser() != null) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    if (user != null) {
-                        Log.e("###", "user UID: " + user.getUid());
-                        user.getIdToken(true)
-                                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
-                                    public void onComplete(@NonNull Task<GetTokenResult> task) {
-                                        if (task.isSuccessful()) {
-                                            String idToken = task.getResult().getToken();
-                                        }
-                                    }
-                                });
-                    }
-                    firebaseAuth.signOut();
-                    mGoogleSignInClient.revokeAccess();
-
-                    Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                Intent intent =  new Intent(getApplicationContext(), MyPage.class);
+                startActivity(intent);
             }
-
         });
+
+
 
         //다이얼로그 생성
         login_dialog= new Dialog(this);
@@ -256,6 +216,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 }
             });
+
+        ToRecoPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(firebaseAuth.getCurrentUser() != null) {
+                    Intent intent = new Intent(MainActivity.this, RecommendPage.class);
+                    startActivity(intent);
+                }
+                else{
+                    login_dialog.show();
+                }
+
+            }
+        });
 
 
 

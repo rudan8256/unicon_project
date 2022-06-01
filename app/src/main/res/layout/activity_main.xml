@@ -21,8 +21,8 @@
             <LinearLayout
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="60dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -114,7 +114,7 @@
                         android:background="#EFEFEF"/>
 
                     <LinearLayout
-                        android:id="@+id/setting_topage"
+                        android:id="@+id/to_mypage"
                         android:gravity="center"
                         android:layout_height="30dp"
                         android:layout_weight="1"
@@ -123,7 +123,7 @@
                         <TextView
                             android:gravity="center"
                             android:layout_height="wrap_content"
-                            android:text="설정"
+                            android:text="마이페이지"
                             android:layout_width="wrap_content"
                             />
                     </LinearLayout>
@@ -201,36 +201,51 @@
         </LinearLayout>
 
 
-
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_log_out"
-            android:text="LOG OUT"></Button>
-
-
-
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical" >
 
                 <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:textSize="60px"
+
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="추천 매물"/>
+                        android:text="나에게 맞는 매물"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                   <LinearLayout
+                       android:id="@+id/To_reccoPage"
+                       android:gravity="center"
+                       android:elevation="2dp"
+                       android:background="@drawable/more_1"
+                       android:layout_width="75dp"
+                       android:layout_height="33dp"
+                       android:orientation="vertical">
+
+                       <TextView
+                           android:textColor="@color/white"
+                           android:textSize="12sp"
+                          android:layout_marginRight="12dp"
+                           android:layout_gravity="right"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="더보기"/>
+                   </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -241,14 +256,18 @@
 
                     <LinearLayout
                         android:id="@+id/recommend_condition"
-                        android:layout_margin="10dp"
-                        android:background="@color/purple_500"
+                        android:layout_margin="20dp"
+                        android:background="@drawable/reccomend_back"
                         android:layout_width="match_parent"
-                        android:layout_height="200px">
+                        android:layout_height="120dp">
 
                         <TextView
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="20dp"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
                             android:text="검색조건 설정하기"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -260,14 +279,13 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:nestedScrollingEnabled="false"
                 android:id="@+id/recommend_list"
                 android:layout_width="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
             </androidx.recyclerview.widget.RecyclerView>
-
 
 
         </LinearLayout>
@@ -277,15 +295,36 @@
     </androidx.core.widget.NestedScrollView>
 
 
-    <Button
-        android:textColor="@color/white"
+
+    <LinearLayout
+        android:gravity="center"
         android:background="@drawable/salepage_complete"
         android:id="@+id/to_MapTest"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="지도로 찾기">
+        android:layout_height="50dp">
 
-    </Button>
+
+        <ImageView
+            android:layout_marginRight="15dp"
+            android:src="@drawable/pin"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            />
+
+        <TextView
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="지도 펼치기">
+
+        </TextView>
+    </LinearLayout>
+
+
+
 
 
 
