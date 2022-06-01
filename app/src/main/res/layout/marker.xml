@@ -9,7 +9,7 @@
     <FrameLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="68dp">
+        android:layout_height="58dp">
 
 
 
@@ -17,8 +17,8 @@
             android:id="@+id/marker_body"
             android:gravity="center"
             android:background="@drawable/marker_border"
-            android:layout_width="110dp"
-            android:layout_height="50dp">
+            android:layout_width="90dp"
+            android:layout_height="40dp">
 
             <TextView
                 android:id="@+id/tv_price"
@@ -27,7 +27,7 @@
                 android:background="@color/white"
                 android:textColor="@color/black"
                 android:text="준승이는 187cm"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 />
         </LinearLayout>
 
