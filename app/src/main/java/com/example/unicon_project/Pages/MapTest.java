@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -184,7 +185,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         tv_search_current_camera_position.setOnClickListener(this);
 
         iv_detail = findViewById(R.id.iv_detail);
-        iv_detail.setVisibility(View.GONE);
+
         iv_detail.setOnClickListener(this);
 
         filterSpinner = findViewById(R.id.spinner_filter);
@@ -227,6 +228,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         house_imgview=findViewById(R.id.house_imgview);
 
         house_imgview.setClipToOutline(true);
+
 
     }
 
@@ -278,6 +280,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 10));
             }
         }
+
     }
 
 
@@ -342,6 +345,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         //mMap.setOnCameraMoveStartedListener(this);
 
+        setDetailPosDown();
+        Log.e(TAG,"리쥼왜안내려갈까");
     }
 
 
@@ -540,7 +545,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                     });
                 }
 
-                iv_detail.setVisibility(View.VISIBLE);
+                setDetailPosUp();
 
             }
         });
@@ -561,13 +566,6 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         }
     }
 
-
-    public boolean onMyLocationButtonClick() {
-        currentCameraPosition = currentPosition = mMap.getCameraPosition().target;
-        iv_center.setVisibility(View.GONE);
-        Log.e(TAG,"onMyLocationButtonClick : "+currentPosition);
-        return false;
-    }
 
     void getCurrentCameraPosition(){
         currentCameraPosition=mMap.getCameraPosition().target;
@@ -633,7 +631,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         if(selectedMarker!=null) {
             if (!cmpLatLng(currentCameraPosition, selectedMarker.getPosition())) {
-                iv_detail.setVisibility(View.GONE);
+                setDetailPosDown();
                 addMarker(selectedMarker,false);
                 selectedMarker.remove();
             }
@@ -708,6 +706,22 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         }
     }
 
+    void setDetailPosUp(){
+
+        Log.e(TAG,"setDetailPostUp : 실행");
+        iv_detail.animate().translationY(0);
+        tv_search_current_camera_position.animate().translationY(0);
+    }
+    void setDetailPosDown(){
+        ViewGroup vg = findViewById(R.id.map);
+        Log.e(TAG,"setDetailPostDonw : 실행"+iv_detail.getHeight()+"\n"+vg.getBottom()+'\n'+iv_detail.getBottom());
+
+        int gap = iv_detail.getHeight()+vg.getBottom()-iv_detail.getBottom();
+        iv_detail.animate().translationY(gap);
+        tv_search_current_camera_position.animate().translationY(gap);
+
+
+    }
 
 
 
