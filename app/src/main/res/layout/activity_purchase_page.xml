@@ -9,24 +9,49 @@
 
 
     <ScrollView
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="0dp">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_margin="30dp"
+                android:elevation="2dp"
+                android:background="@drawable/salepage_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
-                    android:layout_marginEnd="20dp"
+                    android:id="@+id/back_acticity"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/icon_back"/>
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="22dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="원하는 집 내놓기"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="60px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginRight="60px"
                     android:src="@drawable/addresssearch"
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"/>
+                    android:layout_width="200px"
+                    android:layout_height="200px"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

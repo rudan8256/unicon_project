@@ -1,5 +1,6 @@
 package com.example.unicon_project.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -32,21 +33,19 @@ public class PurchaseProductAdapter extends RecyclerView.Adapter<PurchaseProduct
     private Context mContext = null;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView title, deposit, monthCostMin, monthCostMax, roomSizeMin, roomSizeMax, structure, address, living_start, living_end;
+        private TextView title, deposit, monthCost, roomSize, structure, address, living, negotiable;
 
         ViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.post_title);
             deposit = itemView.findViewById(R.id.post_deposit);
-            monthCostMin = itemView.findViewById(R.id.post_month_cost_min);
-            monthCostMax = itemView.findViewById(R.id.post_month_cost_max);
-            roomSizeMin = itemView.findViewById(R.id.post_roomSize_min);
-            roomSizeMax = itemView.findViewById(R.id.post_roomSize_max);
+            monthCost = itemView.findViewById(R.id.post_month_cost);
+            roomSize = itemView.findViewById(R.id.post_roomSize);
             structure = itemView.findViewById(R.id.post_structure);
             address = itemView.findViewById(R.id.post_address);
-            living_end = itemView.findViewById(R.id.post_living_end);
-            living_start = itemView.findViewById(R.id.post_living_start);
+            living = itemView.findViewById(R.id.post_living);
+            negotiable = itemView.findViewById(R.id.post_negotiable);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,6 +77,7 @@ public class PurchaseProductAdapter extends RecyclerView.Adapter<PurchaseProduct
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
@@ -87,15 +87,17 @@ public class PurchaseProductAdapter extends RecyclerView.Adapter<PurchaseProduct
             viewHolder.title.setText("월세");
         } else if (mDatas.get(position).getDeposit()) {
             viewHolder.title.setText("전세");
-        } else viewHolder.title.setText("가격협상가능");
+        }
+        if (!mDatas.get(position).getNegotiable()) {
+            viewHolder.negotiable.setVisibility(View.GONE);
+        }
 
-        viewHolder.deposit.setText(mDatas.get(position).getDeposit_price_max());
-        viewHolder.roomSizeMin.setText(mDatas.get(position).getRoom_size_min());
-        viewHolder.roomSizeMax.setText(mDatas.get(position).getRoom_size_max());
+        viewHolder.deposit.setText(mDatas.get(position).getDeposit_price_max() + "/");
+        viewHolder.monthCost.setText(mDatas.get(position).getMonth_price_min() + "~" + mDatas.get(position).getMonth_price_max());
+        viewHolder.roomSize.setText(mDatas.get(position).getRoom_size_min() + "㎡~" + mDatas.get(position).getRoom_size_max() + "㎡");
         viewHolder.structure.setText(mDatas.get(position).getStructure());
         viewHolder.address.setText(mDatas.get(position).getHome_address());
-        viewHolder.living_start.setText(mDatas.get(position).getLive_period_start());
-        viewHolder.living_end.setText(mDatas.get(position).getLive_period_end());
+        viewHolder.living.setText(mDatas.get(position).getLive_period_start() + " ~ " + mDatas.get(position).getLive_period_end());
     }
 
     @Override

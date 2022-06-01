@@ -60,6 +60,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     private String str_live_period_start = "", str_live_period_end = "";
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     StorageReference storageReference;
+    private ImageView back_activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,15 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_purchase_page);
         Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
         storageReference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
+        back_activity = findViewById(R.id.back_acticity);
 
+
+        back_activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //새로운 구매글 클래스 생성
         newProduct = new PurchaseProduct();
         maintains = newProduct.getMaintains();
