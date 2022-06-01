@@ -1,6 +1,7 @@
 package com.example.unicon_project.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.unicon_project.ImageViewpager;
 import com.example.unicon_project.R;
 
 import java.util.ArrayList;
