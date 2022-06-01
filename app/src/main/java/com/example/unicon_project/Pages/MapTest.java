@@ -13,7 +13,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -25,6 +27,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,6 +77,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,7 +119,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     private LinearLayout iv_detail;
     private List<Address> addressList= Collections.emptyList();
     private LinearLayout et_auto;
-    private int Boundary=2000;
+    private int Boundary=1000;
     private LocationRequest locationRequest;
     private String productId;
     private LatLng currentCameraPosition;
@@ -135,6 +140,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_test);
         //
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -185,8 +191,20 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i==0){
+                    Boundary=1000;
+                }
+                else if(i==1){
+                    Boundary = 3000;
+                }
+                else if(i==2){
+                    Boundary = 5000;
+                }
+                else if(i==3){
+                    Boundary = 10000;
+                }
                 filter = adapterView.getItemAtPosition(i).toString();
-                Log.e("###", filter);
+                Log.e("###", String.valueOf(Boundary));
             }
 
             @Override
@@ -587,6 +605,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     public void onCameraIdle() {
 
         currentCameraPosition=mMap.getCameraPosition().target;
+        if(currentPosition==null)currentPosition=currentCameraPosition;
         Log.e(TAG,"cameraPosition : "+ currentCameraPosition);
         Log.e(TAG,"currentPosition : "+ currentPosition);
 
@@ -646,6 +665,10 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 break;
 
             case R.id.tv_search_current_camera_position:
+                if(currentCameraPosition==null){
+                    Toast.makeText(getApplicationContext(),"잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 mMap.clear();
                 mDatas.clear();
                 getCurrentCameraPosition();
@@ -665,6 +688,10 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                                 addMarker(temp,false);
 
                             }
+                            if(mDatas.isEmpty()||mDatas==null){
+                                Log.e(TAG, "쿼리 : 비었음");
+
+                            }
                             Log.e(TAG, "쿼리 : " +mDatas.get(0).getProductId());
 
                         }
@@ -680,4 +707,9 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 break;
         }
     }
+
+
+
+
+
 }

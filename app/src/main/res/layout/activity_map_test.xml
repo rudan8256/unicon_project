@@ -7,6 +7,7 @@
     tools:context=".Pages.MapTest">
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -81,14 +82,19 @@
             android:layout_height="40dp"
             android:orientation="horizontal"
             android:background="@drawable/maptest_round_corner"
-            android:gravity="center">
+            >
 
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_maptest_spinner"
+                android:scaleType="fitCenter"
+                />
             <Spinner
                 android:id="@+id/spinner_filter"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
                 android:entries="@array/filter_map_array"
-                android:background="@drawable/filter_background"
                 app:layout_constraintBottom_toTopOf="@id/map"
                 app:layout_constraintRight_toRightOf="parent" />
 
@@ -108,17 +114,22 @@
     </LinearLayout>
 
 
-
-
-
     <TextView
         android:id="@+id/tv_search_current_camera_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:text="현재 위치\n 검색"
-        android:background="@color/quantum_grey"
+        android:background="@drawable/ic_round_square_white_main"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp"
+        android:text="현재 위치 검색"
+        android:textAlignment="center"
+        android:textColor="#524FD5"
+        android:textSize="15dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="@+id/map"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/map" />
 
     <ImageView
@@ -136,7 +147,7 @@
         android:id="@+id/iv_detail"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_margin="20dp"
+        android:layout_margin="15dp"
         android:background="@drawable/maptest_picker_clickitem"
         app:layout_constraintBottom_toBottomOf="@id/map"
         app:layout_constraintEnd_toEndOf="parent"
@@ -220,6 +231,8 @@
                     android:id="@+id/post_structure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textSize="15dp"
                     tools:text="Title" />
 
