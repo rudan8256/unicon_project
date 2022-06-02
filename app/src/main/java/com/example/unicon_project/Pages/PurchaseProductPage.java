@@ -146,69 +146,69 @@ public class PurchaseProductPage extends AppCompatActivity {
 
 
         if (select_data.getMaintains().get("elec_cost")) {
-            elec_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            elec_cost.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_elec_cost.setTextColor(Color.WHITE);
         }
 
         if (select_data.getMaintains().get("gas_cost")) {
-            gas_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            gas_cost.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_gas_cost.setTextColor(Color.WHITE);
         }
         if (select_data.getMaintains().get("water_cost")) {
-            water_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            water_cost.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_water_cost.setTextColor(Color.WHITE);
         }
         if (select_data.getMaintains().get("internet_cost")) {
-            internet_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            internet_cost.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_internet_cost.setTextColor(Color.WHITE);
         }
 
         if (select_data.getOptions().get("gas_boiler")) {
-            gas_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            gas_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_gas_boiler.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("induction")) {
-            induction.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            induction.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_induction.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("aircon")) {
-            aircon.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            aircon.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_aircon.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("washer")) {
-            washer.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            washer.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_washer.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("refrigerator")) {
-            refrigerator.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            refrigerator.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_refrigerator.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("closet")) {
-            closet.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            closet.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_closet.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("gasrange")) {
-            gasrange.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            gasrange.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_gasrange.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("highlight")) {
-            highlight.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            highlight.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_highlight.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("convenience_store")) {
-            convenience_store.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            convenience_store.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_convenience_store.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("subway")) {
-            subway.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            subway.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_subway.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("parking")) {
-            parking.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            parking.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_parking.setTextColor(Color.WHITE);
         }
         if (select_data.getOptions().get("elec_boiler")) {
-            elec_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+            elec_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_elec_boiler.setTextColor(Color.WHITE);
         }
     }

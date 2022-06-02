@@ -136,10 +136,10 @@
                     android:id="@+id/btn_google"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:background="@drawable/google_icon"
                     android:clickable="true"
-                    android:onClick="GoogleLogIn"
-                    android:translationZ="100dp">
+                    android:background="@drawable/google_icon"
+                    android:translationZ="100dp"
+                    android:orientation="horizontal">
 
                 </LinearLayout>
 
