@@ -8,8 +8,31 @@
     tools:context=".Pages.RecommendPage">
 
 
+    <LinearLayout
+        android:elevation="2dp"
+        android:background="@drawable/salepage_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ScrollView
+        <ImageView
+            android:id="@+id/back_acticity"
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/icon_back"/>
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="추천 매물"/>
+    </LinearLayout>
+
+
+    <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -18,46 +41,38 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical" >
 
+
+
+
                 <LinearLayout
+                    android:id="@+id/recommend_condition"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/reccomend_back"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="120dp">
 
                     <TextView
-                        android:textSize="60px"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
                         android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="추천 매물"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:text="나의 매물 찾기"
+                        android:textSize="20sp"
+                        android:text="검색조건 설정하기"
+                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
-                    <LinearLayout
-                        android:id="@+id/recommend_condition"
-                        android:layout_margin="50px"
-                        android:background="@color/purple_500"
-                        android:layout_width="match_parent"
-                        android:layout_height="200px">
-
-                        <TextView
-                            android:text="검색조건 설정하기"
-                            android:textColor="@color/white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
                 </LinearLayout>
 
 
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="내 추천 매물"
+                   android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recommend_list"
@@ -67,15 +82,7 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
-                <Button
-                    android:textColor="@color/white"
-                    android:background="@drawable/salepage_complete"
-                    android:id="@+id/reccomend_page"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="rec">
 
-                </Button>
 
 
             </LinearLayout>

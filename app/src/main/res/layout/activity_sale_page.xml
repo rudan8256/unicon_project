@@ -7,6 +7,28 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:elevation="2dp"
+        android:background="@drawable/salepage_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back_acticity"
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/icon_back"/>
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="집 내놓기"/>
+    </LinearLayout>
 
     <ScrollView
         android:layout_weight="1"
@@ -19,28 +41,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:elevation="2dp"
-                android:background="@drawable/salepage_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/back_acticity"
-                    android:layout_marginLeft="15dp"
-                    android:layout_gravity="center"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/icon_back"/>
-                <TextView
-                    android:layout_marginLeft="15dp"
-               android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="22dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="집 내놓기"/>
-            </LinearLayout>
 
 
             <LinearLayout
@@ -84,245 +84,265 @@
                 android:layout_height="1dp"
                 android:background="#EFEFEF"/>
 
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="상세정보"/>
-
-
 
             <LinearLayout
+                android:elevation="2dp"
+                android:background="@color/white"
                 android:layout_marginBottom="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <LinearLayout
-
-                    android:gravity="center"
+                <TextView
                     android:layout_marginLeft="20dp"
-                    android:layout_gravity="bottom"
-                    android:id="@+id/deposit"
-                    android:background="@drawable/salepage_inputborder"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp">
-                    <TextView
-                        android:duplicateParentState="true"
-                        android:textColor="@color/selector_textpress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="전세"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="bottom"
-                    android:id="@+id/month_rent"
-                    android:background="@drawable/salepage_inputborder"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp">
-                    <TextView
-                        android:duplicateParentState="true"
-                        android:textColor="@color/selector_textpress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="월세"/>
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    />
-
-                <LinearLayout
-                    android:layout_marginRight="60px"
-                    android:orientation="vertical"
+                    android:layout_marginTop="5dp"
+                    android:textSize="20sp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:text="상세정보"/>
 
-                    <TextView
-                        android:layout_margin="3dp"
-                        android:height="60px"
-                        android:textSize="40px"
+
+
+                <LinearLayout
+                    android:layout_marginBottom="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+
+                        android:gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/deposit"
+                        android:background="@drawable/salepage_inputborder"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp">
+                        <TextView
+                            android:duplicateParentState="true"
+                            android:textColor="@color/selector_textpress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="전세"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/month_rent"
+                        android:background="@drawable/salepage_inputborder"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp">
+                        <TextView
+                            android:duplicateParentState="true"
+                            android:textColor="@color/selector_textpress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="월세"/>
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        />
+
+                    <LinearLayout
+                        android:layout_marginRight="60px"
+                        android:orientation="vertical"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="집주인 동의 여부"/>
-                    <Switch
-                        android:layout_gravity="center"
-                        android:id="@+id/owner_switch"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_margin="3dp"
+                            android:height="60px"
+                            android:textSize="40px"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="집주인 동의 여부"/>
+                        <Switch
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:id="@+id/owner_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:showText="true"
+                            android:textOff="비동의"
+                            android:textOn="동의"
+                            android:thumb="@drawable/custom_thumb"
+                            android:track="@drawable/custom_track" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_marginBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="20dp"
+                        android:padding="5dp"
+                        android:background="@drawable/salepage_edittextborder"
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
+                        android:layout_height="40dp">
+
+                        <EditText
+                            android:layout_weight="1"
+                            android:width="100dp"
+                            android:background="@null"
+                            android:id="@+id/deposit_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="보증금"/>
+                        <TextView
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="만원"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="40dp"
+                        android:layout_height="0dp"/>
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
                         android:layout_height="40dp"
-                        android:layout_centerInParent="true"
-                        android:showText="true"
-                        android:textOff="비동의"
-                        android:textOn="동의"
-                        android:thumb="@drawable/custom_thumb"
-                        android:track="@drawable/custom_track" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginBottom="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="20dp"
-                    android:padding="5dp"
-                    android:background="@drawable/salepage_edittextborder"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp">
-
-                    <EditText
                         android:layout_weight="1"
-                        android:width="100dp"
-                        android:background="@null"
-                        android:id="@+id/deposit_price"
+                        android:layout_marginRight="20dp"
+                        android:padding="5dp"
+                        android:background="@drawable/salepage_edittextborder"
+                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="보증금"/>
-                    <TextView
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="만원"/>
-                </LinearLayout>
+                        >
 
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="0dp"/>
-
-                <LinearLayout
-                    android:gravity="center_vertical"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:layout_marginRight="20dp"
-                    android:padding="5dp"
-                    android:background="@drawable/salepage_edittextborder"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                 >
-
-                    <EditText
-                        android:layout_weight="1"
-                        android:width="100dp"
-                        android:background="@null"
-                        android:id="@+id/month_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="월세"/>
-                    <TextView
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="만원"/>
-                </LinearLayout>
+                        <EditText
+                            android:layout_weight="1"
+                            android:width="100dp"
+                            android:background="@null"
+                            android:id="@+id/month_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="월세"/>
+                        <TextView
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="만원"/>
+                    </LinearLayout>
 
 
 
-
-
-            </LinearLayout>
-            <TextView
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="15dp"
-                android:text="입주 가능 기간"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="160dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/sale_purchase_white_round6"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/live_period_start"
-                        android:layout_marginStart="5dp"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:textSize="13sp"
-                        android:hint="입주 원하는 날" />
-
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="22dp"
-                        android:id="@+id/day_first"
-                        android:src="@drawable/calendar" />
 
 
                 </LinearLayout>
                 <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:text="입주 가능 기간"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                   android:layout_marginLeft="15dp"
-                    android:text="~"
-                    android:textStyle="bold"/>
+                    android:layout_height="wrap_content"/>
 
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
-                    android:layout_width="160dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="15dp"
-                    android:padding="10dp"
-                    android:gravity="center"
-                    android:background="@drawable/sale_purchase_white_round6"
-                    android:orientation="horizontal">
 
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/sale_purchase_white_round6"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/live_period_start"
+                            android:layout_marginStart="5dp"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:textSize="13sp"
+                            android:hint="입주 원하는 날" />
+
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="22dp"
+                            android:id="@+id/day_first"
+                            android:src="@drawable/calendar" />
+
+
+                    </LinearLayout>
                     <TextView
-                        android:id="@+id/live_period_end"
-                        android:layout_marginStart="5dp"
-                        android:layout_width="90dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:textSize="13sp"
-                        android:hint="마지막날"/>
+                        android:layout_marginLeft="15dp"
+                        android:text="~"
+                        android:textStyle="bold"/>
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="22dp"
-                        android:id="@+id/day_last"
-                        android:src="@drawable/calendar"/>
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="15dp"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:background="@drawable/sale_purchase_white_round6"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/live_period_end"
+                            android:layout_marginStart="5dp"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:textSize="13sp"
+                            android:hint="마지막날"/>
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="22dp"
+                            android:id="@+id/day_last"
+                            android:src="@drawable/calendar"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <View
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
+
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#EFEFEF"/>
+               />
 
+
+        <LinearLayout
+            android:elevation="2dp"
+            android:background="@color/white"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_marginTop="5dp"
@@ -372,6 +392,8 @@
                     />
 
             </LinearLayout>
+
+        </LinearLayout>
 
             <View
                 android:layout_marginTop="40dp"

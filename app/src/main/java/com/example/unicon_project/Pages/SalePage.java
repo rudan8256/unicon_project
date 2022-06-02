@@ -143,6 +143,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     maintains.put("owner_agree", true);
+                    owner_switch.setTextColor(Color.WHITE);
                 } else {
                     maintains.put("owner_agree", false);
                 }

@@ -17,7 +17,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/layout"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -68,50 +68,86 @@
     </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#eee"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/ic_round_square_white_main"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/layout"
-        android:gravity="center">
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_maptest_spinner" />
+
+        <Spinner
+            android:background="@drawable/ic_round_square_white_main"
+            android:id="@+id/spinner_filter"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:entries="@array/filter_map_array"
+            app:layout_constraintBottom_toTopOf="@id/map"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </LinearLayout>
+
+
 
         <LinearLayout
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal"
             android:background="@drawable/maptest_round_corner"
             >
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_maptest_spinner"
-                android:scaleType="fitCenter"
-                />
-            <Spinner
-                android:id="@+id/spinner_filter"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:entries="@array/filter_map_array"
-                app:layout_constraintBottom_toTopOf="@id/map"
-                app:layout_constraintRight_toRightOf="parent" />
+
 
             <LinearLayout
+                android:layout_weight="1"
                 android:id="@+id/et_autocomplete"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:gravity="end">
+                android:gravity="left">
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="40dp"
-                    android:background="@android:color/holo_orange_dark"
-                    android:src="@drawable/ic_baseline_search_24" />
+                    android:layout_gravity="center"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/search_icon" />
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="#878787"
+                    android:text="건물 검색하기"/>
             </LinearLayout>
 
+            <View
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#D5D5D5"/>
+
+            <ImageView
+                android:id="@+id/filter_search_map"
+                android:paddingLeft="15dp"
+                android:paddingRight="5dp"
+                android:layout_gravity="center"
+                android:layout_width="45dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_settings"/>
+
         </LinearLayout>
-    </LinearLayout>
+
 
 
     <TextView
@@ -147,10 +183,12 @@
         android:id="@+id/iv_detail"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_margin="15dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/maptest_picker_clickitem"
         android:animateLayoutChanges="true"
-        app:layout_constraintBottom_toBottomOf="@id/map"
+
+        app:layout_constraintTop_toBottomOf="@id/map"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:orientation="horizontal">

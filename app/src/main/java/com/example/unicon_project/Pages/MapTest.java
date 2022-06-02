@@ -12,6 +12,8 @@ import android.Manifest;
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -35,6 +37,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -83,9 +86,12 @@ import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class MapTest extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraIdleListener,  View.OnClickListener {
 
@@ -135,12 +141,25 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     StorageReference storageReference = storage.getReference();
     private SaleProduct[] saleProduct = {new SaleProduct()};
 
+    private ImageView day_first, day_last;
+    private EditText deposit_price_max, month_price_min,month_price_max,live_period_start,live_period_end;
+    private EditText maintenance_cost, room_size_min,room_size_max;
+    private ImageView filter_search;
+    private String filter_structure;
+    private LinearLayout filter_deposit,month_rent;
+    public Map<String, Integer> structure_sel_map = new HashMap<>();
+    private Spinner structureSpinner;
+    private Dialog condition_dialog;
+    private String Month_rentprice_max, Month_rentprice_min, Deposit_price_max ,Live_period_start="" ,Live_period_end="" ,Maintenance_cost,
+            Room_size_max , Room_size_min;
+    private boolean deposit_bool=false,month_bool=false;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_test);
-        //
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -229,6 +248,23 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         house_imgview.setClipToOutline(true);
 
+
+        //필터 클릭시
+        filter_search = findViewById(R.id.filter_search_map);
+
+        //condition dialog constructer
+        condition_dialog= new Dialog(this);
+        condition_dialog.setContentView(R.layout.dialog_reccondition);
+        condition_dialog.setCanceledOnTouchOutside(true);
+
+        Construter();
+
+        filter_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
 
     }
 
@@ -345,8 +381,6 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         //mMap.setOnCameraMoveStartedListener(this);
 
-        setDetailPosDown();
-        Log.e(TAG,"리쥼왜안내려갈까");
     }
 
 
@@ -690,7 +724,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                                 Log.e(TAG, "쿼리 : 비었음");
 
                             }
-                            Log.e(TAG, "쿼리 : " +mDatas.get(0).getProductId());
+
 
                         }
                     }
@@ -703,20 +737,35 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 it.putExtra("select_data",saleProduct[0]);
                 startActivity(it);
                 break;
+
+            case R.id.deposit:
+                if( !deposit_bool ){
+                    deposit_bool=true; deposit.setBackgroundColor(Color.BLUE); }
+                else{
+                    deposit_bool=false;deposit.setBackgroundColor(Color.WHITE); }
+                break;
+            case R.id.month_rent:
+                if( !month_bool ){
+                    month_bool=true;month_rent.setBackgroundColor(Color.BLUE); }
+                else{
+                    month_bool=false;month_rent.setBackgroundColor(Color.WHITE); }
+                break;
         }
     }
 
-    void setDetailPosUp(){
+    void setDetailPosDown(){
 
-        Log.e(TAG,"setDetailPostUp : 실행");
+        Log.e(TAG,"setDetailPostDown : 실행");
         iv_detail.animate().translationY(0);
         tv_search_current_camera_position.animate().translationY(0);
-    }
-    void setDetailPosDown(){
-        ViewGroup vg = findViewById(R.id.map);
-        Log.e(TAG,"setDetailPostDonw : 실행"+iv_detail.getHeight()+"\n"+vg.getBottom()+'\n'+iv_detail.getBottom());
 
-        int gap = iv_detail.getHeight()+vg.getBottom()-iv_detail.getBottom();
+    }
+    void setDetailPosUp(){
+        ViewGroup vg = findViewById(R.id.map);
+        int gap = tv_search_current_camera_position.getBottom()-iv_detail.getBottom();
+        Log.e(TAG,"setDetailPostUp : 실행"+(gap));
+
+
         iv_detail.animate().translationY(gap);
         tv_search_current_camera_position.animate().translationY(gap);
 
@@ -730,4 +779,258 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         finish();
         overridePendingTransition(R.anim.not_move,R.anim.slide_out_down);
     }
+
+    private void showDialog() {
+
+
+        Calendar calendar = Calendar.getInstance();
+        int mYear = calendar.get(Calendar.YEAR);
+        int mMonth = calendar.get(Calendar.MONTH);
+        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        month = month + 1;
+                        if(month<10 && day <10){
+                            live_period_start.setText( year+"/0"+month+"/0"+day);
+                        }
+                        else if(month<10 ){
+                            live_period_start.setText( year+"/0"+month+"/"+day);
+                        }
+                        else if(day<10 ){
+                            live_period_start.setText( year+"/"+month+"/0"+day);
+                        }
+                        else {
+                            live_period_start.setText(year + "/" + month + "/" + day);
+                        }
+                    }
+                }, mYear, mMonth, mDay);
+
+        DatePickerDialog datePickerDialog1 = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        month = month + 1;
+                        if(month<10 && day <10){
+                            live_period_end.setText( year+"/0"+month+"/0"+day);
+                        }
+                        else if(month<10 ){
+                            live_period_end.setText( year+"/0"+month+"/"+day);
+                        }
+                        else if(day<10 ){
+                            live_period_end.setText( year+"/"+month+"/0"+day);
+                        }
+                        else {
+                            live_period_end.setText(year + "/" + month + "/" + day);
+                        }
+                    }
+                }, mYear, mMonth, mDay);
+
+        day_first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                datePickerDialog.show();
+            }
+        });
+
+        day_last.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+
+                datePickerDialog1.show();
+            }
+        });
+
+
+        set_Clicklistner();
+
+
+        condition_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Month_rentprice_max=month_price_max.getText().toString();
+                Month_rentprice_min=month_price_min.getText().toString();
+                Deposit_price_max=deposit_price_max.getText().toString();
+
+                Live_period_start=live_period_start.getText().toString();
+                Live_period_end=live_period_end.getText().toString();
+                Maintenance_cost=maintenance_cost.getText().toString();
+                Room_size_max=room_size_max.getText().toString();
+                Room_size_min=room_size_min.getText().toString();
+
+
+                List<SaleProduct> filter_datas = new ArrayList<>();
+                Log.e("@@@@@@", String.valueOf(mDatas.size()));
+
+                for(SaleProduct item : mDatas){
+
+                    if(deposit_bool== item.getDeposit() || month_bool == item.getMonth_rent()) {
+                        Log.e("@@@@@@", "포문 진입 확인");
+
+                        if(Judge(item) > 1) {
+                            Log.e("@@@@@", String.valueOf(Judge(item)));
+                            filter_datas.add(item);
+
+                        }
+                    }
+                }
+
+                mDatas.clear();
+                mMap.clear();
+                mDatas=filter_datas;
+
+                Log.e("@@@@@@", "aa"+String.valueOf(filter_datas.size()));
+
+                for (SaleProduct snap : mDatas) {
+                    SaleProduct temp = snap;
+                    LatLng latlng=getLatLng(temp.getHome_adress());
+
+                    if(getDist(currentCameraPosition,latlng)>Boundary)continue;
+
+
+                    addMarker(temp,false);
+
+                }
+                if(mDatas.isEmpty()||mDatas==null){
+                    Log.e(TAG, "쿼리 : 비었음");
+
+                }
+
+
+                condition_dialog.dismiss();
+
+
+            }
+        });
+        condition_dialog.show();
+    }
+
+    private int Judge(SaleProduct curdata){
+
+        int total=0;
+
+        String cur_data_start= curdata.getLive_period_start().replace("/","");
+        String cur_data_end= curdata.getLive_period_end().replace("/","");
+        String pre_data_start =Live_period_start.replace("/","");
+        String pre_data_end =Live_period_end.replace("/","");
+
+
+
+//        Log.e("@@@@@",cur_data_end+' '+cur_data_start);
+
+        //완변 조건매물 토탈 4000
+
+
+        if( ! cur_data_end.equals("") && !cur_data_start.equals("") && !pre_data_end.equals("") && !pre_data_start.equals("")) {
+            if (Integer.parseInt(pre_data_end) < Integer.parseInt(cur_data_start) || Integer.parseInt(cur_data_end) < Integer.parseInt(pre_data_start)) {
+                Log.e("@@@@@@", "날짜 ㅇ빠꾸");
+
+                return -1;
+            }
+        }
+        if(! filter_structure.equals("")) {
+            if (!filter_structure.equals(curdata.getStructure()) && !filter_structure.equals("상관없음")) {
+
+                Log.e("@@@@@@", "구조바꾸");
+                Log.e("@@@@@@", filter_structure);
+
+                return -1;
+            }
+        }
+
+        if(! Deposit_price_max.equals("")) {
+            if (!(Integer.parseInt(Deposit_price_max) >= Integer.parseInt(curdata.getDeposit_price()))) {
+                Log.e("@@@@@@", "보증금바꾸");
+                return -1;
+            }
+        }
+
+        if ( ! Month_rentprice_max.equals("") &&! Month_rentprice_min.equals("")) {
+            if (!(Integer.parseInt(Month_rentprice_max) >= Integer.parseInt(curdata.getMonth_rent_price()) &&
+                    Integer.parseInt(Month_rentprice_min) <= Integer.parseInt(curdata.getMonth_rent_price()))) {
+
+                Log.e("@@@@@@", "월세");
+                Log.e("@@@@@@", "1"+Month_rentprice_max);
+                Log.e("@@@@@@", "2"+Month_rentprice_min);
+                Log.e("@@@@@@", "3"+curdata.getMonth_rent_price());
+                return -1;
+            }
+        }
+
+        if(! Maintenance_cost.equals("")) {
+            if(Integer.parseInt(Maintenance_cost) < Integer.parseInt(curdata.getMaintenance_cost())){
+                Log.e("@@@@@@", "관리비");
+                return -1;
+            }
+        }
+        if(! Room_size_max.equals("") &&!Room_size_min.equals("")) {
+            if (!(Integer.parseInt(Room_size_min) <= Integer.parseInt(curdata.getRoom_size()) &&
+                    Integer.parseInt(Room_size_max) >= Integer.parseInt(curdata.getRoom_size()))
+            ) {
+                Log.e("@@@@@@", "방사이즈");
+                return -1;
+            }
+        }
+
+
+        return 100;
+
+
+
+    }
+
+    private void set_Clicklistner(){
+
+        deposit.setOnClickListener(this);
+        month_rent.setOnClickListener(this);
+
+    }
+
+    private void Construter(){
+
+
+        filter_deposit = condition_dialog.findViewById(R.id.deposit);
+        month_rent = condition_dialog.findViewById(R.id.month_rent);
+        deposit_price_max = condition_dialog.findViewById(R.id.deposit_price_max);
+        month_price_min= condition_dialog.findViewById(R.id.month_price_min);
+        month_price_max = condition_dialog.findViewById(R.id.month_price_max);
+
+        live_period_start = condition_dialog.findViewById(R.id.live_period_start);
+        live_period_end = condition_dialog.findViewById(R.id.live_period_end);
+
+        maintenance_cost = condition_dialog.findViewById(R.id.maintenance_cost);
+
+        room_size_min = condition_dialog.findViewById(R.id.room_size_min);
+        room_size_max = condition_dialog.findViewById(R.id.room_size_max);
+
+        day_first = condition_dialog.findViewById(R.id.day_first);
+        day_last = condition_dialog.findViewById(R.id.day_last);
+
+
+
+
+        structureSpinner = condition_dialog.findViewById(R.id.structure);
+
+
+        structureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                filter_structure = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+
+    }
+
+
 }
