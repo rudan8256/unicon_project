@@ -305,19 +305,4 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
         super.onDestroy();
         Session.getCurrentSession().removeCallback(mSessionCallback);
     }
-
-    // 뒤로가기 버튼 2번 누를 시에 앱 종료
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (SystemClock.elapsedRealtime() - clickTime < 2000) {
-                finish();
-                overridePendingTransition(0, 0);
-                return true;
-            }
-            clickTime = SystemClock.elapsedRealtime();
-            Toast.makeText(getApplication(), "한번 더 클릭하시면 앱을 종료합니다", Toast.LENGTH_SHORT).show();
-        }
-        return true;
-    }
 }

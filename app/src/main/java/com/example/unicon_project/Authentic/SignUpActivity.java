@@ -60,11 +60,21 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 //가입 정보 가져오기
+                String nickName = mName.getText().toString().trim();
                 String email = mEmailText.getText().toString().trim();
                 String pwd = mPasswordText.getText().toString().trim();
                 String pwdCheck = mPasswordCheckText.getText().toString().trim();
 
-                if(pwd.equals(pwdCheck)) {
+                if(email.equals("")){
+                    Toast.makeText(SignUpActivity.this, "이메일을 입력해 주십시오", Toast.LENGTH_SHORT).show();
+                }
+                else if(pwd.equals("")){
+                    Toast.makeText(SignUpActivity.this, "패스워드를 입력해 주십시오", Toast.LENGTH_SHORT).show();
+                }
+                else if(pwdCheck.equals("")){
+                    Toast.makeText(SignUpActivity.this, "2차 패스워드를 입력해 주십시오", Toast.LENGTH_SHORT).show();
+                }
+                else if(pwd.equals(pwdCheck)) {
                     Log.e("###", "등록 버튼 " + email + " , " + pwd);
                     final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
                     mDialog.setMessage("가입중입니다...");
@@ -96,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         FirebaseUser user = firebaseAuth.getCurrentUser();
                                         newUser = new User();
                                         newUser.setUsertoken(user.getUid());
-                                        newUser.setUsername(mName.getText().toString().trim());
+                                        newUser.setUsername(nickName);
                                         String email = user.getEmail();
 
                                         mstore.collection("User").document(newUser.getUsertoken())
@@ -106,6 +116,9 @@ public class SignUpActivity extends AppCompatActivity {
                                                     public void onSuccess(Void unused) {
                                                     }
                                                 });
+                                        if(nickName.equals("")){
+                                            Toast.makeText(SignUpActivity.this, "회원가입에 성공하셨습니다.\n마이페이지에서 이름을 변경해 주세요", Toast.LENGTH_SHORT).show();
+                                        }
                                         Toast.makeText(SignUpActivity.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
 
                                         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
