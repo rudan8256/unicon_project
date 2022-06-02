@@ -288,33 +288,48 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
-            <TextView
-                android:id="@+id/more_item_text"
-                android:layout_marginTop="20dp"
+
+            <LinearLayout
+                android:id="@+id/more_item_layout"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="매물 더보기"
-                android:textSize="20sp"/>
+                >
+                <TextView
+                    android:id="@+id/more_item_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="매물 더보기"
+                    android:textSize="20sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=" >"
+                    android:textStyle="bold"
+                    android:textSize="30sp"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/no_recitem"
-                android:layout_margin="20dp"
-                android:elevation="2dp"
-                android:background="@drawable/main_item_border"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 >
 
                 <ImageView
                     android:layout_margin="10dp"
                   android:layout_gravity="center"
-                    android:layout_width="100dp"
-                    android:layout_height="90dp"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
                     android:src="@drawable/noitem_rec"/>
 
                 <TextView
@@ -323,7 +338,7 @@
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="맞는 매물이 없어요"/>
+                    android:text="맞는 매물이 없어요 \n조건을 다시 설정해 보세요"/>
             </LinearLayout>
 
 

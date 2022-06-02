@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.unicon_project.Adapters.MultiImageAdapter;
 import com.example.unicon_project.Classes.Image_zoom;
+import com.example.unicon_project.ImageViewpager;
 import com.example.unicon_project.R;
 import com.example.unicon_project.Classes.SaleProduct;
 import com.google.android.gms.common.api.Status;
@@ -69,7 +70,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private String curdate, floor, structure,home_name;
     private LinearLayout deposit, month_rent, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
-    private LinearLayout convenience_store, subway, parking;
+    private LinearLayout convenience_store, subway, parking,month_area,deposit_area;
     private Map<String, Boolean> maintains, options;
     private ImageView day_first, day_last;
     private DatePickerDialog datePickerDialog;
@@ -79,6 +80,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private Switch owner_switch;
     private Spinner floorSpinner, structureSpinner;
     private ImageView back_activity;
+    boolean deposit_btn=false,month_btn=false;
 
 
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
@@ -108,6 +110,9 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         floorSpinner = findViewById(R.id.floor);
         structureSpinner = findViewById(R.id.structure);
         back_activity = findViewById(R.id.back_acticity);
+
+        month_area= findViewById(R.id.month_area);
+        deposit_area = findViewById(R.id.deposit_area);
 
 
         back_activity.setOnClickListener(new View.OnClickListener() {
@@ -315,13 +320,26 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.deposit:
                 if (!newproduct.getDeposit()) {
+
                     newproduct.setDeposit(true);
                     deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
                     deposit.setSelected(true);
+
+                    if (newproduct.getMonth_rent()) {
+                        newproduct.setMonth_rent(false);
+                        month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        month_rent.setSelected(false);
+
+                    }
+                    month_area.setVisibility(View.INVISIBLE);
+
                 } else {
                     newproduct.setDeposit(false);
                     deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
                     deposit.setSelected(false);
+
+
+                    month_area.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.month_rent:
@@ -329,10 +347,19 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                     newproduct.setMonth_rent(true);
                     month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
                     month_rent.setSelected(true);
+
+
+                    if (newproduct.getDeposit()) {
+                        newproduct.setDeposit(false);
+                        deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        deposit.setSelected(false);
+                    }
+
                 } else {
                     newproduct.setMonth_rent(false);
                     month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
                     month_rent.setSelected(false);
+
                 }
                 break;
             case R.id.elec_cost:
@@ -644,8 +671,10 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                     @Override
                     public void onItemClick(View v, int pos) {
 
-                        Intent intent = new Intent(getApplicationContext(), Image_zoom.class);
-                        intent.putExtra("uri", uriList.get(pos));
+
+                        Intent intent = new Intent(getApplicationContext(), ImageViewpager.class);
+                        intent.putExtra("uri", uriList);
+                        intent.putExtra("uri_Num",String.valueOf(pos));
                         startActivity(intent);
                     }
                 });

@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class RecommendPage extends AppCompatActivity implements View.OnClickListener {
 
-    private LinearLayout recommend_condition;
+    private LinearLayout recommend_condition, month_area;
     private RecyclerView recommend_list;
     private List<SaleProduct> mDatas =new ArrayList<>();
     private List<Integer> dataScore = new ArrayList<>();
@@ -121,7 +121,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                                 preUserdata =document.toObject(RecommendCondition.class);
                                 Log.e("@@@@@@","들어옴?");
 
-                                deposit_price_max.setText(preUserdata.getMonth_rentprice_max());
+                                deposit_price_max.setText(preUserdata.getDeposit_price_max());
                                 month_price_max.setText(preUserdata.getMonth_rentprice_max());
                                 month_price_min.setText(preUserdata.getMonth_rentprice_min());
                                 live_period_start.setText(preUserdata.getLive_period_start());
@@ -145,18 +145,16 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
 
                                 if (preUserdata.getDeposit()) {
-                                    deposit.setBackgroundColor(Color.BLUE);
+                                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
                                 } else {
-                                    deposit.setBackgroundColor(Color.WHITE);
+                                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
                                 }
-
 
                                 if (preUserdata.getMonth_rent()) {
-                                    month_rent.setBackgroundColor(Color.BLUE);
+                                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
                                 } else {
-                                    month_rent.setBackgroundColor(Color.WHITE);
+                                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
                                 }
-
 
                                 updateDatas();
                             }
@@ -180,12 +178,9 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
 
                         int cur_score= Judge(curdata);
-                        if(cur_score > 1000) {
 
-
-
-                            Log.e("$$$$", String.valueOf(cur_score));
-
+                        Log.e("@@@@@@@","탐색시작"+cur_score);
+                        if(cur_score >= 1000) {
 
                             mDatas.add(curdata);
                             dataScore.add(cur_score);
@@ -236,67 +231,83 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
         String pre_data_start = preUserdata.getLive_period_start().replace("/","");
         String pre_data_end =preUserdata.getLive_period_end().replace("/","");
 
-
-
         //완변 조건매물 토탈 4000
 
+
+        //전세 월세여부
         if(  !(preUserdata.getDeposit() == curdata.getDeposit() || preUserdata.getMonth_rent() == curdata.getMonth_rent())){
            return -1;
         }
-        else if(Integer.parseInt(pre_data_end) <Integer.parseInt(cur_data_start) || Integer.parseInt(cur_data_end) < Integer.parseInt(pre_data_start) ){
-            return  -1;
-        }
-        else if( ! preUserdata.getStructure().equals(curdata.getStructure()) && ! preUserdata.getStructure().equals("상관없음")){
-            return  -1;
-        }
-        else{
-
-            if( Integer.parseInt(preUserdata.getDeposit_price_max()) >= Integer.parseInt(curdata.getDeposit_price())){
-                total += 1000;
-            }
-
-            if( Integer.parseInt(preUserdata.getMonth_rentprice_max()) >= Integer.parseInt(curdata.getMonth_rent_price()) &&
-                    Integer.parseInt(preUserdata.getMonth_rentprice_min()) <= Integer.parseInt(curdata.getMonth_rent_price()) ){
-                total += 1000;
-
-            }
-            else if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) < Integer.parseInt(curdata.getMonth_rent_price())){
-               if(Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()) <=5){
-                   total += 500 - 100*(Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()));
-
+        //날짜
+        else if( ! cur_data_end.equals("") && !cur_data_start.equals("") && !pre_data_end.equals("") && !pre_data_start.equals("")) {
+               if(Integer.parseInt(pre_data_end) <Integer.parseInt(cur_data_start) || Integer.parseInt(cur_data_end) < Integer.parseInt(pre_data_start) ) {
+                return -1;
                }
                else{
-                   return -1;
+                   total  +=1000;
                }
+        }
+        //구조
+        else  if(! preUserdata.getStructure().equals("")) {
+            if( ! preUserdata.getStructure().equals(curdata.getStructure()) && ! preUserdata.getStructure().equals("상관없음")) {
 
+                return -1;
             }
             else{
-                if( Integer.parseInt(preUserdata.getMonth_rentprice_min()) - Integer.parseInt(curdata.getMonth_rent_price()) <=5) {
-                    total += 500 - 100 * (Integer.parseInt(preUserdata.getMonth_rentprice_min()) - Integer.parseInt(curdata.getMonth_rent_price()));
-                }
-                else{
-                    return -1;
-                }
-
+                total  +=1000;
             }
-
-            if(Integer.parseInt(preUserdata.getMaintenance_cost()) >= Integer.parseInt(curdata.getMaintenance_cost())){
-                total += 1000;
-            }
-
-            if( Integer.parseInt(preUserdata.getRoom_size_min()) <= Integer.parseInt(curdata.getRoom_size()) &&
-                    Integer.parseInt(preUserdata.getRoom_size_max()) >= Integer.parseInt(curdata.getRoom_size())
-            ){
-                total += 1000;
-            }
-
-
-
-            return total;
         }
+        else {
 
+            //전세금
+            if (!preUserdata.getDeposit_price_max().equals("")) {
+                if (Integer.parseInt(preUserdata.getDeposit_price_max()) >= Integer.parseInt(curdata.getDeposit_price())) {
+                    total += 1000;
+                }
+            }
 
+            //월세
+            if (!preUserdata.getMonth_rentprice_max().equals("") && !preUserdata.getMonth_rentprice_min().equals("")) {
 
+                if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) >= Integer.parseInt(curdata.getMonth_rent_price()) &&
+                        Integer.parseInt(preUserdata.getMonth_rentprice_min()) <= Integer.parseInt(curdata.getMonth_rent_price())) {
+                    total += 1000;
+
+                } else if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) < Integer.parseInt(curdata.getMonth_rent_price())) {
+                    if (Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()) <= 5) {
+                        total += 500 - 100 * (Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()));
+
+                    } else {
+                        return -1;
+                    }
+
+                } else {
+                    if (Integer.parseInt(preUserdata.getMonth_rentprice_min()) - Integer.parseInt(curdata.getMonth_rent_price()) <= 5) {
+                        total += 500 - 100 * (Integer.parseInt(preUserdata.getMonth_rentprice_min()) - Integer.parseInt(curdata.getMonth_rent_price()));
+                    } else {
+                        return -1;
+                    }
+
+                }
+            }
+
+            //관리비
+            if (!preUserdata.getMaintenance_cost().equals("")) {
+                if (Integer.parseInt(preUserdata.getMaintenance_cost()) >= Integer.parseInt(curdata.getMaintenance_cost())) {
+                    total += 1000;
+                }
+            }
+
+            //방사이즈
+            if (!preUserdata.getRoom_size_max().equals("") && !preUserdata.getRoom_size_min().equals("")) {
+                if (Integer.parseInt(preUserdata.getRoom_size_min()) <= Integer.parseInt(curdata.getRoom_size()) &&
+                        Integer.parseInt(preUserdata.getRoom_size_max()) >= Integer.parseInt(curdata.getRoom_size())
+                ) {
+                    total += 1000;
+                }
+            }
+        }
+        return total;
     }
 
     private void showDialog() {
@@ -395,6 +406,8 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                             public void onSuccess(Void unused) {
                                 Log.e("*****","업로드 성공");
                                condition_dialog.dismiss();
+
+                               searchInFB();
                             }
                         });
 
@@ -405,25 +418,50 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
     }
 
 
-
-
-
-
         @Override
     public void onClick(View view) {
         switch ( view.getId()){
 
             case R.id.deposit:
                 if( !preUserdata.getDeposit() ){
-                    preUserdata.setDeposit(true); deposit.setBackgroundColor(Color.BLUE); }
+                    preUserdata.setDeposit(true);
+                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    deposit.setSelected(true);
+
+                    if (preUserdata.getMonth_rent()) {
+                        preUserdata.setMonth_rent(false);
+                        month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        month_rent.setSelected(false);
+
+                    }
+                    month_area.setVisibility(View.INVISIBLE);
+                }
                 else{
-                    preUserdata.setDeposit(false);deposit.setBackgroundColor(Color.WHITE); }
+                    preUserdata.setDeposit(false);
+                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    deposit.setSelected(false);
+
+                    month_area.setVisibility(View.VISIBLE); }
                 break;
             case R.id.month_rent:
                 if( !preUserdata.getMonth_rent() ){
-                    preUserdata.setMonth_rent(true);month_rent.setBackgroundColor(Color.BLUE); }
+
+                    preUserdata.setMonth_rent(true);
+                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    month_rent.setSelected(true);
+
+                    if (preUserdata.getDeposit()) {
+                        preUserdata.setDeposit(false);
+                        deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        deposit.setSelected(false);
+                    }
+
+                }
                 else{
-                    preUserdata.setMonth_rent(false);month_rent.setBackgroundColor(Color.WHITE); }
+                    preUserdata.setMonth_rent(false);
+                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    month_rent.setSelected(false);
+                }
                 break;
 
         }
@@ -448,7 +486,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
         day_first = condition_dialog.findViewById(R.id.day_first);
         day_last = condition_dialog.findViewById(R.id.day_last);
-
+        month_area = condition_dialog.findViewById(R.id.month_area);
 
 
 

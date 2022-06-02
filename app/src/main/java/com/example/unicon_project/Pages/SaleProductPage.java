@@ -33,6 +33,7 @@ import com.example.unicon_project.ImageViewpager;
 import com.example.unicon_project.MainActivity;
 import com.example.unicon_project.R;
 import com.example.unicon_project.Classes.SaleProduct;
+import com.example.unicon_project.ViewpagerImageAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -227,7 +228,7 @@ public class SaleProductPage extends AppCompatActivity {
         Log.e("&&&&", String.valueOf(images.size()));
 
         sliderViewPager.setOffscreenPageLimit(1);
-        sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));
+        sliderViewPager.setAdapter(new ViewpagerImageAdapter(this, images));
 
         sliderViewPager.setCurrentItem(curnumImage);
         setCurrentIndicator(curnumImage);
@@ -249,9 +250,6 @@ public class SaleProductPage extends AppCompatActivity {
 //                return false;
 //            }
 //        });
-        Log.e("anjsh","ansjh");
-
-
 
 
         setupIndicators(images.size());

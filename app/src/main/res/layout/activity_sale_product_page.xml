@@ -43,6 +43,15 @@
                     android:text="주소"/>
             </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:elevation="2dp"
+            android:background="@color/white"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/sliderViewPager"
                 android:layout_width="match_parent"
@@ -100,12 +109,18 @@
                 </LinearLayout>
 
             </LinearLayout>
+        </LinearLayout>
 
-            <View
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EFEFEF"/>
+
+        <LinearLayout
+            android:elevation="2dp"
+            android:background="@color/white"
+            android:layout_marginBottom="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_marginLeft="20dp"
@@ -336,17 +351,17 @@
                 </LinearLayout>
 
             </LinearLayout>
+        </LinearLayout>
 
-            <View
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EFEFEF"/>
-
-
+        <LinearLayout
+            android:elevation="2dp"
+            android:background="@color/white"
+            android:layout_marginBottom="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_marginTop="5dp"
                 android:orientation="vertical"
@@ -395,15 +410,17 @@
                     />
 
             </LinearLayout>
+        </LinearLayout>
 
-            <View
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EFEFEF"/>
+        <LinearLayout
+            android:elevation="2dp"
+            android:background="@color/white"
+            android:layout_marginBottom="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_marginLeft= "20dp"
@@ -545,15 +562,17 @@
 
 
             </LinearLayout>
+        </LinearLayout>
 
-            <View
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EFEFEF"/>
+        <LinearLayout
+            android:elevation="2dp"
+            android:background="@color/white"
+            android:layout_marginBottom="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_marginLeft="20dp"
@@ -671,15 +690,17 @@
 
                 </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
 
-            <View
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EFEFEF"/>
+        <LinearLayout
+            android:elevation="2dp"
+            android:background="@color/white"
+            android:layout_marginBottom="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_margin="10dp"
@@ -927,15 +948,17 @@
 
 
             </LinearLayout>
+        </LinearLayout>
 
-            <View
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EFEFEF"/>
+        <LinearLayout
+            android:elevation="2dp"
+            android:background="@color/white"
+            android:layout_marginBottom="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_margin="15dp"
@@ -953,6 +976,7 @@
                 android:layout_height="100dp"
                 android:hint="상세설명"/>
         </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
     <LinearLayout
@@ -967,7 +991,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="#411FCC"
-            app:cardCornerRadius="18dp"
+            app:cardCornerRadius="15dp"
             app:cardElevation="0dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true"
@@ -992,7 +1016,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="#411FCC"
-            app:cardCornerRadius="18dp"
+            app:cardCornerRadius="15dp"
             app:cardElevation="0dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true"

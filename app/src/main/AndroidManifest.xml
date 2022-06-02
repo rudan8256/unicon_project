@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Unicon_project">
+
         <activity
             android:name=".MyPage"
             android:exported="true" />
@@ -62,7 +63,7 @@
             android:exported="false" />
         <activity
             android:name=".Authentic.SignInActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
