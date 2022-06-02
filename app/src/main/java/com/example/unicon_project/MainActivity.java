@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.unicon_project.Adapters.ChattingListAdapter;
@@ -87,8 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
     private long clickTime = 0;
     Dialog login_dialog;
+    private TextView more_item_click;
 
-    private LinearLayout recommend_condition;
+    private LinearLayout recommend_condition, noitem_layout;
     private RecyclerView recommend_list;
     private List<SaleProduct> mDatas =new ArrayList<>();
     private List<Integer> dataScore = new ArrayList<>();
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageView day_first, day_last;
     private DatePickerDialog datePickerDialog;
-
+    private List<SaleProduct> sublist= new ArrayList<>(mDatas);
 
 
     @Override
@@ -121,29 +123,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_toChatting = findViewById(R.id.btn_toChatting);
         Tomypage = findViewById(R.id.to_mypage);
         ToRecoPage = findViewById(R.id.To_reccoPage);
+        noitem_layout = findViewById(R.id.no_recitem);
+        more_item_click = findViewById(R.id.more_item_text);
+
+
+        more_item_click.setVisibility(View.GONE);
+        more_item_click.setVisibility(View.GONE);
+
+        //다이얼로그 생성
+        login_dialog= new Dialog(this);
+        login_dialog.setContentView(R.layout.dialog_yologinpage);
+        login_dialog.setCanceledOnTouchOutside(true);
+        login_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                startActivity(intent);
+            }
+        });
+        login_dialog.findViewById(R.id.dialog_canclebtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login_dialog.dismiss();
+            }
+        });
 
 
         if(firebaseAuth.getCurrentUser() != null) {
             reccommend_start();
-
         }
         else{
-
+            login_dialog.show();
         }
 
 
         ToSalePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SalePage.class);
-                startActivity(intent);
+
+                if(firebaseAuth.getCurrentUser() != null) {
+                    Intent intent = new Intent(getApplicationContext(), SalePage.class);
+                    startActivity(intent);
+                }
+                else{
+                    login_dialog.show();
+                }
+
             }
         });
         ToPurchasePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
-                startActivity(intent);
+
+                if(firebaseAuth.getCurrentUser() != null) {
+                    Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
+                    startActivity(intent);
+                }
+                else{
+                    login_dialog.show();
+                }
+
             }
         });
 
@@ -179,27 +218,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
-
-
-
-        //다이얼로그 생성
-        login_dialog= new Dialog(this);
-        login_dialog.setContentView(R.layout.dialog_yologinpage);
-        login_dialog.setCanceledOnTouchOutside(true);
-        login_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-                startActivity(intent);
-            }
-        });
-        login_dialog.findViewById(R.id.dialog_canclebtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login_dialog.dismiss();
-            }
-        });
-
 
 
 
@@ -405,13 +423,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
 
-                saleProductAdapter = new SaleProductAdapter( mDatas, getApplicationContext());
+               sublist= new ArrayList<>(mDatas);
+
+                int datasize=mDatas.size();
+                if(datasize==0){
+                    noitem_layout.setVisibility(View.VISIBLE);
+                }
+                if(datasize>5){
+                   sublist= mDatas.subList(0,4);
+                    more_item_click.setVisibility(View.VISIBLE);
+                    more_item_click.setText((datasize-4)+"개의 매물이더있습니다");
+
+                    more_item_click.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(MainActivity.this, RecommendPage.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
+
+                saleProductAdapter = new SaleProductAdapter(sublist, getApplicationContext());
                 recommend_list.setAdapter(saleProductAdapter);
                 saleProductAdapter.setOnItemClickListener(new SaleProductAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
                         Intent intent = new Intent(getApplicationContext(), SaleProductPage.class);
-                        intent.putExtra("select_data", mDatas.get(position));
+                        intent.putExtra("select_data", sublist.get(position));
                         startActivity(intent);
                     }
                 });
@@ -607,7 +645,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         condition_dialog.show();
     }
-
 
     @Override
     public void onClick(View view) {
