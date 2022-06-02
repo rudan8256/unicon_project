@@ -232,6 +232,9 @@ public class MyPage extends AppCompatActivity {
                             }
                         });
                 firebaseAuth.getCurrentUser().delete();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

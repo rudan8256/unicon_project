@@ -136,69 +136,176 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layout_liked"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical">
 
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_mypage_heart"/>
             <TextView
+                android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="찜 목록"/>
 
+            <View
+                android:layout_weight="1"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:id="@+id/layout_liked"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginRight="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mypage_next"/>
+            </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/layout_notify"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical">
 
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_mypage_notify"/>
             <TextView
+                android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="공지사항"/>
+            <View
+                android:layout_weight="1"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
 
+            <LinearLayout
+                android:id="@+id/layout_notify"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginRight="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mypage_next"/>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/layout_ask"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical">
 
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_mypage_ask"/>
             <TextView
+                android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="문의사항"/>
+            <View
+                android:layout_weight="1"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
 
+            <LinearLayout
+                android:id="@+id/layout_ask"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginRight="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mypage_next"/>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/layout_logout"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_mypage_logout"/>
 
             <TextView
+                android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="로그아웃"/>
+            <View
+                android:layout_weight="1"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
 
+            <LinearLayout
+                android:id="@+id/layout_logout"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginRight="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mypage_next"/>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/layout_delete"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_mypage_delete"/>
 
             <TextView
+                android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="회원탈퇴"/>
+            <View
+                android:layout_weight="1"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
 
+            <LinearLayout
+                android:id="@+id/layout_delete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginRight="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_mypage_next"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

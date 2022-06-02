@@ -189,6 +189,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:background="@null"
+                        android:inputType="number"
                         android:hint="보증금 최대 가격 설정"
                         android:textSize="13sp" />
 
@@ -236,6 +237,7 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:hint="월세 최소"
+                        android:inputType="number"
                         android:textSize="13sp" />
 
                     <TextView
@@ -272,6 +274,7 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:hint="월세 최대"
+                        android:inputType="number"
                         android:textSize="13sp" />
 
                     <TextView
@@ -400,6 +403,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
+                    android:inputType="number"
                     android:hint="관리비 최대 가격" />
 
                 <TextView
@@ -555,6 +559,7 @@
                         android:layout_marginStart="5dp"
                         android:background="@null"
                         android:hint="최소 면적"
+                        android:inputType="number"
                         android:textSize="13sp" />
 
                     <TextView
@@ -589,6 +594,7 @@
                         android:layout_marginStart="5dp"
                         android:background="@null"
                         android:hint="최대 면적"
+                        android:inputType="number"
                         android:textSize="13sp" />
 
                     <TextView

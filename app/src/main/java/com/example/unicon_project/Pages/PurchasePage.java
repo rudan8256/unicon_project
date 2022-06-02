@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class PurchasePage extends AppCompatActivity implements View.OnClickListener{
+public class PurchasePage extends AppCompatActivity implements View.OnClickListener {
 
     private static final int FROM_ADDRESS = 100;
     private Button complete_btn;
@@ -67,7 +67,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase_page);
         Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
-        storageReference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
+        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
         back_activity = findViewById(R.id.back_acticity);
 
 
@@ -88,7 +88,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         structureSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                structure=adapterView.getItemAtPosition(i).toString();
+                structure = adapterView.getItemAtPosition(i).toString();
             }
 
             @Override
@@ -111,7 +111,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 month = month + 1;
-                                str_live_period_start = year+"/"+month+"/"+day;
+                                str_live_period_start = year + "/" + month + "/" + day;
                                 live_period_start.setText(str_live_period_start);
                             }
                         }, mYear, mMonth, mDay);
@@ -131,7 +131,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 month = month + 1;
-                                str_live_period_end = year+"/"+month+"/"+day;
+                                str_live_period_end = year + "/" + month + "/" + day;
                                 live_period_end.setText(str_live_period_end);
                             }
                         }, mYear, mMonth, mDay);
@@ -142,6 +142,23 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         complete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (home_address.getText().toString().equals("") || month_price_min.getText().toString().equals("") || month_price_max.getText().toString().equals("")
+                        || deposit_price_max.getText().toString().equals("") || str_live_period_start.equals("") || str_live_period_end.equals("")) {
+                    Toast.makeText(getApplicationContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (Integer.parseInt(str_live_period_start.replace("/", "")) > Integer.parseInt(str_live_period_end.replace("/", ""))) {
+                    Toast.makeText(getApplicationContext(), "올바른 입주기간을 입력하세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(Integer.parseInt(month_price_min.getText().toString())>Integer.parseInt(month_price_max.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "올바른 월세범위를 입력하세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(!room_size_min.getText().toString().equals("")&&!room_size_max.getText().toString().equals("")){
+                    if(Integer.parseInt(room_size_min.getText().toString())>Integer.parseInt(room_size_max.getText().toString())){
+                        Toast.makeText(getApplicationContext(), "올바른 면적범위를 입력하세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
 
 
                 // Create a new user with a first and last name
@@ -167,7 +184,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Log.e("###","업로드 성공");
+                                Log.e("###", "업로드 성공");
                                 finish();
                             }
                         });
@@ -176,8 +193,8 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View view){
-        switch (view.getId()){
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.home_address:
                 List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
 
@@ -185,173 +202,214 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 startActivityForResult(intent, 100);
                 break;
             case R.id.deposit:
-                if( !newProduct.getDeposit() ){
-                    newProduct.setDeposit(true); deposit.setBackgroundResource(R.drawable.sale_purchase_color_round15);
-                    deposit.setSelected(true);}
-                else{
-                    newProduct.setDeposit(false);deposit.setBackgroundResource(R.drawable.sale_purchase_white_round15);
-                    deposit.setSelected(false);}
+                if (!newProduct.getDeposit()) {
+                    newProduct.setDeposit(true);
+                    deposit.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    deposit.setSelected(true);
+                } else {
+                    newProduct.setDeposit(false);
+                    deposit.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    deposit.setSelected(false);
+                }
                 break;
             case R.id.month_rent:
-                if( !newProduct.getMonth_rent() ){
-                    newProduct.setMonth_rent(true);month_rent.setBackgroundResource(R.drawable.sale_purchase_color_round15);
-                    month_rent.setSelected(true);}
-                else{
-                    newProduct.setMonth_rent(false);month_rent.setBackgroundResource(R.drawable.sale_purchase_white_round15);
-                    month_rent.setSelected(false);}
+                if (!newProduct.getMonth_rent()) {
+                    newProduct.setMonth_rent(true);
+                    month_rent.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    month_rent.setSelected(true);
+                } else {
+                    newProduct.setMonth_rent(false);
+                    month_rent.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    month_rent.setSelected(false);
+                }
                 break;
             case R.id.negotiable:
-                if(!newProduct.getNegotiable()){
-                    newProduct.setNegotiable(true);negotiable.setBackgroundResource(R.drawable.sale_purchase_color_round15);
-                    negotiable.setSelected(true);}
-                else{
-                    newProduct.setNegotiable(false);negotiable.setBackgroundResource(R.drawable.sale_purchase_white_round15);
-                    negotiable.setSelected(false);}
+                if (!newProduct.getNegotiable()) {
+                    newProduct.setNegotiable(true);
+                    negotiable.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    negotiable.setSelected(true);
+                } else {
+                    newProduct.setNegotiable(false);
+                    negotiable.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    negotiable.setSelected(false);
+                }
                 break;
             case R.id.elec_cost:
-                if( !maintains.get("elec_cost") ){
-                    maintains.put("elec_cost",true); elec_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!maintains.get("elec_cost")) {
+                    maintains.put("elec_cost", true);
+                    elec_cost.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     elec_cost.setSelected(true);
-                } else{
-                    maintains.put("elec_cost",false);elec_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    maintains.put("elec_cost", false);
+                    elec_cost.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     elec_cost.setSelected(false);
                 }
                 break;
             case R.id.gas_cost:
-                if( !maintains.get("gas_cost") ){
-                    maintains.put("gas_cost",true); gas_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!maintains.get("gas_cost")) {
+                    maintains.put("gas_cost", true);
+                    gas_cost.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     gas_cost.setSelected(true);
-                } else{
-                    maintains.put("gas_cost",false);gas_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    maintains.put("gas_cost", false);
+                    gas_cost.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     gas_cost.setSelected(false);
                 }
                 break;
             case R.id.water_cost:
-                if( !maintains.get("water_cost") ){
-                    maintains.put("water_cost",true); water_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!maintains.get("water_cost")) {
+                    maintains.put("water_cost", true);
+                    water_cost.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     water_cost.setSelected(true);
-                } else{
-                    maintains.put("water_cost",false); water_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    maintains.put("water_cost", false);
+                    water_cost.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     water_cost.setSelected(false);
                 }
                 break;
             case R.id.internet_cost:
-                if( !maintains.get("internet_cost") ){
-                    maintains.put("internet_cost",true); internet_cost.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!maintains.get("internet_cost")) {
+                    maintains.put("internet_cost", true);
+                    internet_cost.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     internet_cost.setSelected(true);
-                } else{
-                    maintains.put("internet_cost",false); internet_cost.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    maintains.put("internet_cost", false);
+                    internet_cost.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     internet_cost.setSelected(false);
                 }
                 break;
             case R.id.elec_boiler:
-                if( !options.get("elec_boiler") ){
-                    options.put("elec_boiler",true); elec_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("elec_boiler")) {
+                    options.put("elec_boiler", true);
+                    elec_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     elec_boiler.setSelected(true);
-                } else{
-                    options.put("elec_boiler",false);elec_boiler.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("elec_boiler", false);
+                    elec_boiler.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     elec_boiler.setSelected(false);
                 }
                 break;
 
             case R.id.gas_boiler:
-                if( !options.get("gas_boiler") ){
-                    options.put("gas_boiler",true); gas_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("gas_boiler")) {
+                    options.put("gas_boiler", true);
+                    gas_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     gas_boiler.setSelected(true);
-                } else{
-                    options.put("gas_boiler",false); gas_boiler.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("gas_boiler", false);
+                    gas_boiler.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     gas_boiler.setSelected(false);
                 }
                 break;
 
             case R.id.induction:
-                if( !options.get("induction") ){
-                    options.put("induction",true); induction.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("induction")) {
+                    options.put("induction", true);
+                    induction.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     induction.setSelected(true);
-                } else{
-                    options.put("induction",false); induction.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("induction", false);
+                    induction.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     induction.setSelected(false);
                 }
                 break;
             case R.id.aircon:
-                if( !options.get("aircon") ){
-                    options.put("aircon",true); aircon.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("aircon")) {
+                    options.put("aircon", true);
+                    aircon.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     aircon.setSelected(true);
-                } else{
-                    options.put("aircon",false); aircon.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("aircon", false);
+                    aircon.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     aircon.setSelected(false);
                 }
                 break;
 
             case R.id.washer:
-                if( !options.get("washer") ){
-                    options.put("washer",true); washer.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("washer")) {
+                    options.put("washer", true);
+                    washer.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     washer.setSelected(true);
-                } else{
-                    options.put("washer",false); washer.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("washer", false);
+                    washer.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     washer.setSelected(false);
                 }
                 break;
             case R.id.refrigerator:
-                if( !options.get("refrigerator") ){
-                    options.put("refrigerator",true);  refrigerator.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("refrigerator")) {
+                    options.put("refrigerator", true);
+                    refrigerator.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     refrigerator.setSelected(true);
-                } else{
-                    options.put("refrigerator",false);  refrigerator.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("refrigerator", false);
+                    refrigerator.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     refrigerator.setSelected(false);
                 }
                 break;
             case R.id.closet:
-                if( !options.get("closet") ){
-                    options.put("closet",true);  closet.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("closet")) {
+                    options.put("closet", true);
+                    closet.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     closet.setSelected(true);
-                } else{
-                    options.put("closet",false);  closet.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("closet", false);
+                    closet.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     closet.setSelected(false);
                 }
                 break;
             case R.id.gasrange:
-                if( !options.get("gasrange") ){
-                    options.put("gasrange",true);  gasrange.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("gasrange")) {
+                    options.put("gasrange", true);
+                    gasrange.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     gasrange.setSelected(true);
-                } else{
-                    options.put("gasrange",false); gasrange.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("gasrange", false);
+                    gasrange.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     gasrange.setSelected(false);
                 }
                 break;
             case R.id.highlight:
-                if( !options.get("highlight") ){
-                    options.put("highlight",true);  highlight.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("highlight")) {
+                    options.put("highlight", true);
+                    highlight.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     highlight.setSelected(true);
-                } else{
-                    options.put("highlight",false); highlight.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("highlight", false);
+                    highlight.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     highlight.setSelected(false);
                 }
                 break;
             case R.id.convenience_store:
-                if( !options.get("convenience_store") ){
-                    options.put("convenience_store",true); convenience_store.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("convenience_store")) {
+                    options.put("convenience_store", true);
+                    convenience_store.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     convenience_store.setSelected(true);
-                } else{
-                    options.put("convenience_store",false); convenience_store.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("convenience_store", false);
+                    convenience_store.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     convenience_store.setSelected(false);
                 }
                 break;
             case R.id.subway:
-                if( !options.get("subway") ){
-                    options.put("subway",true); subway.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("subway")) {
+                    options.put("subway", true);
+                    subway.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     subway.setSelected(true);
-                } else{
-                    options.put("subway",false); subway.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("subway", false);
+                    subway.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     subway.setSelected(false);
                 }
                 break;
             case R.id.parking:
-                if( !options.get("parking") ){
-                    options.put("parking",true); parking.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                if (!options.get("parking")) {
+                    options.put("parking", true);
+                    parking.setBackgroundResource(R.drawable.sale_purchase_color_round6);
                     parking.setSelected(true);
-                } else{
-                    options.put("parking",false); parking.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                } else {
+                    options.put("parking", false);
+                    parking.setBackgroundResource(R.drawable.sale_purchase_white_round6);
                     parking.setSelected(false);
                 }
                 break;
@@ -360,7 +418,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void Construter(){
+    public void Construter() {
         complete_btn = findViewById(R.id.complete_btn);
         home_address = findViewById(R.id.home_address);
         deposit_price_max = findViewById(R.id.deposit_price_max);
@@ -390,15 +448,15 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         aircon = findViewById(R.id.aircon);
         washer = findViewById(R.id.washer);
         refrigerator = findViewById(R.id.refrigerator);
-        closet =findViewById(R.id.closet);
+        closet = findViewById(R.id.closet);
         gasrange = findViewById(R.id.gasrange);
         highlight = findViewById(R.id.highlight);
-        convenience_store =findViewById(R.id.convenience_store);
+        convenience_store = findViewById(R.id.convenience_store);
         subway = findViewById(R.id.subway);
         parking = findViewById(R.id.parking);
     }
 
-    public void set_Clicklistner(){
+    public void set_Clicklistner() {
 
         deposit.setOnClickListener(this);
         month_rent.setOnClickListener(this);

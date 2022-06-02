@@ -14,7 +14,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+        <TextView
+            android:layout_margin="20dp"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="이름 변경"/>
 
         <EditText
             android:id="@+id/text_nickname"
@@ -23,7 +29,7 @@
             android:textSize="15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="바꾸실 닉네임을 입력해주십시오."/>
+            android:hint="바꾸실 닉네임을 \n 입력해주십시오."/>
 
 
         <LinearLayout
