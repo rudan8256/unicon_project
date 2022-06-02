@@ -381,8 +381,6 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         //mMap.setOnCameraMoveStartedListener(this);
 
-        setDetailPosDown();
-        Log.e(TAG,"리쥼왜안내려갈까");
     }
 
 
@@ -755,17 +753,19 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         }
     }
 
-    void setDetailPosUp(){
+    void setDetailPosDown(){
 
-        Log.e(TAG,"setDetailPostUp : 실행");
+        Log.e(TAG,"setDetailPostDown : 실행");
         iv_detail.animate().translationY(0);
         tv_search_current_camera_position.animate().translationY(0);
-    }
-    void setDetailPosDown(){
-        ViewGroup vg = findViewById(R.id.map);
-        Log.e(TAG,"setDetailPostDonw : 실행"+iv_detail.getHeight()+"\n"+vg.getBottom()+'\n'+iv_detail.getBottom());
 
-        int gap = iv_detail.getHeight()+vg.getBottom()-iv_detail.getBottom();
+    }
+    void setDetailPosUp(){
+        ViewGroup vg = findViewById(R.id.map);
+        int gap = tv_search_current_camera_position.getBottom()-iv_detail.getBottom();
+        Log.e(TAG,"setDetailPostUp : 실행"+(gap));
+
+
         iv_detail.animate().translationY(gap);
         tv_search_current_camera_position.animate().translationY(gap);
 
