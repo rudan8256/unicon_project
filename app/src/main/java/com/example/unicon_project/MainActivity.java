@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(firebaseAuth.getCurrentUser() != null) {
 
-            btn_toChatting.setBackground(getResources().getDrawable(R.drawable.ic_baseline_chat_bubble_24));
+            btn_toChatting.setBackground(getResources().getDrawable(R.drawable.chatting_icon));
 
             uid = user.getUid();
             reference.child("chattingList").child(uid).addValueEventListener(new ValueEventListener() {
@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     for (final DataSnapshot data : snapshot.getChildren()) {
                         ChattingListData gds = data.getValue(ChattingListData.class);
                         if (gds.getUnread() != 0)
-                            btn_toChatting.setBackground(getResources().getDrawable(R.drawable.ic_baseline_mark_chat_unread_24));
+                            btn_toChatting.setBackground(getResources().getDrawable(R.drawable.chatting_unread_icon));
                     }
                 }
 

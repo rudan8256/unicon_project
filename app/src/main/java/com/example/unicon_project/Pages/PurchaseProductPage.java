@@ -1,8 +1,10 @@
 package com.example.unicon_project.Pages;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.unicon_project.Authentic.SignInActivity;
 import com.example.unicon_project.ChattingActivity;
 import com.example.unicon_project.Classes.PurchaseProduct;
 import com.example.unicon_project.R;
@@ -20,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class PurchaseProductPage extends AppCompatActivity {
+    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
 
     PurchaseProduct select_data;
     private TextView home_address, deposit_price_max, month_price_min, month_price_max, live_period_start, live_period_end;
@@ -34,8 +39,9 @@ public class PurchaseProductPage extends AppCompatActivity {
     private TextView text_convenience_store, text_subway, text_parking;
 
     private ArrayList<String> image_urllist;
+    private CardView btn_purchase_chatting;
 
-    private Button btn_purchase_chatting;
+    Dialog login_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +53,44 @@ public class PurchaseProductPage extends AppCompatActivity {
 
         Construter();
         WritingData();
+        Dialog_Load();
 
         btn_purchase_chatting = findViewById(R.id.btn_purchase_chatting);
         btn_purchase_chatting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
-                intent.putExtra("chattingID", "");
-                intent.putExtra("productID", select_data.getProductId());
-                intent.putExtra("writerID", select_data.getWriterId());
-                intent.putExtra("homeAddress", select_data.getHome_address());
+                if(firebaseAuth.getCurrentUser() != null) {
+                    Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+                    intent.putExtra("chattingID", "");
+                    intent.putExtra("productID", select_data.getProductId());
+                    intent.putExtra("writerID", select_data.getWriterId());
+                    intent.putExtra("homeAddress", select_data.getHome_address());
+                    startActivity(intent);
+                }
+                else{
+                    login_dialog.show();
+                }
+            }
+        });
+    }
+
+    private void Dialog_Load()
+    {
+        //다이얼로그 생성
+        login_dialog= new Dialog(this);
+        login_dialog.setContentView(R.layout.dialog_yologinpage);
+        login_dialog.setCanceledOnTouchOutside(true);
+        login_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
                 startActivity(intent);
+            }
+        });
+        login_dialog.findViewById(R.id.dialog_canclebtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login_dialog.dismiss();
             }
         });
     }

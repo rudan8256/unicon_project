@@ -5,13 +5,15 @@
       <map>
         <entry key="..\:/Unicorn/unicon_project/app/src/main/res/layout/activity_map_test.xml" value="0.2814814814814815" />
         <entry key="..\:/Users/FUCK/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_chatting.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/FUCK/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/FUCK/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/FUCK/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_purchase_product_page.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/FUCK/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_list.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/FUCK/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_page.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/FUCK/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_product_page.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/FUCK/AndroidStudioProjects/unicon_project/app/src/main/res/layout/item_chatting.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable-v24/salepage_edittextborder.xml" value="0.33645833333333336" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/custom_thumb.xml" value="0.33645833333333336" />
-        <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/custom_thumb_main.xml" value="0.35625" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/custom_track.xml" value="0.33645833333333336" />
-        <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/custom_track_main.xml" value="0.35625" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/default_houseimg.xml" value="0.35625" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_baseline_chat_bubble_24.xml" value="0.33645833333333336" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.3296875" />
@@ -29,14 +31,11 @@
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/salepage_inputborder_isclick.xml" value="0.35625" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/salepage_pictureborder.xml" value="0.33229166666666665" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/salepage_top.xml" value="0.33229166666666665" />
-        <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_image_viewpager.xml" value="0.33559782608695654" />
-        <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_image_zoom.xml" value="0.33559782608695654" />
-        <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_recommend_page.xml" value="0.33469202898550726" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_list.xml" value="0.33" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_page.xml" value="0.33" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sale_product_page.xml" value="0.24583333333333332" />
-        <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_setting.xml" value="0.3359375" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sign_in.xml" value="0.33" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/activity_sign_up.xml" value="0.3359375" />
         <entry key="..\:/Users/ruddd/AndroidStudioProjects/unicon_project/app/src/main/res/layout/adapter_purchaseproduct.xml" value="0.3359375" />

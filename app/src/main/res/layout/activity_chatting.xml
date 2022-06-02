@@ -19,22 +19,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10sp"
+        android:layout_marginLeft="10sp">
 
-        <EditText
-            android:id="@+id/et_myMsg"
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:cardBackgroundColor="#ececec"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
             android:layout_weight="30"
-            />
+            >
+
+            <EditText
+                android:id="@+id/et_myMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:backgroundTint="#ececec"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
 
         <Button
             android:id="@+id/btn_sendMsg"
-            android:layout_width="60sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_gravity="center"
+            android:layout_marginRight="10sp"
+            android:layout_marginLeft="10sp"
             android:textColor="@color/white"
-            android:text="전송"
+            android:background="@drawable/chatting_send_msg"
             />
     </LinearLayout>
 

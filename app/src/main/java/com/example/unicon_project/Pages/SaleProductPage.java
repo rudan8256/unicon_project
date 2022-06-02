@@ -2,12 +2,14 @@ package com.example.unicon_project.Pages;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -24,13 +26,19 @@ import android.widget.TextView;
 
 import com.example.unicon_project.Adapters.ImageSliderAdapter;
 import com.example.unicon_project.Adapters.MultiImageAdapter;
+import com.example.unicon_project.Authentic.SignInActivity;
 import com.example.unicon_project.ChattingActivity;
+import com.example.unicon_project.Classes.ChattingListData;
 import com.example.unicon_project.ImageViewpager;
+import com.example.unicon_project.MainActivity;
 import com.example.unicon_project.R;
 import com.example.unicon_project.Classes.SaleProduct;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -38,9 +46,12 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 public class SaleProductPage extends AppCompatActivity {
+    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
 
     SaleProduct select_data;
-    private Button complete_btn, btn_sale_chatting;
+    private Button complete_btn;
+    CardView btn_sale_chatting;
     private TextView home_address, deposit_price, month_price, live_period_start, live_period_end,title_page;
     private TextView maintenance_cost, room_size, specific, floor, structure;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
@@ -65,6 +76,7 @@ public class SaleProductPage extends AppCompatActivity {
 
     GestureDetector detector;
 
+    Dialog login_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +93,26 @@ public class SaleProductPage extends AppCompatActivity {
         Construter();
         WritingData();
         Image_Load();
+        Dialog_Load();
+
+        btn_sale_chatting = findViewById(R.id.btn_sale_chatting);
+        btn_sale_chatting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(firebaseAuth.getCurrentUser() != null) {
+                    Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+                    intent.putExtra("chattingID", "");
+                    intent.putExtra("productID", select_data.getProductId());
+                    intent.putExtra("writerID", select_data.getWriterId());
+                    intent.putExtra("homeAddress", select_data.getHome_adress());
+                    startActivity(intent);
+                }
+                else{
+                    login_dialog.show();
+                }
+            }
+        });
+
 
         detector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
 
@@ -125,19 +157,25 @@ public class SaleProductPage extends AppCompatActivity {
             }
         });
 
+    }
 
-
-        // 채팅버튼 눌렀을 때
-        btn_sale_chatting = findViewById(R.id.btn_sale_chatting);
-        btn_sale_chatting.setOnClickListener(new View.OnClickListener() {
+    private void Dialog_Load()
+    {
+        //다이얼로그 생성
+        login_dialog= new Dialog(this);
+        login_dialog.setContentView(R.layout.dialog_yologinpage);
+        login_dialog.setCanceledOnTouchOutside(true);
+        login_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
-                intent.putExtra("chattingID", "");
-                intent.putExtra("productID", select_data.getProductId());
-                intent.putExtra("writerID", select_data.getWriterId());
-                intent.putExtra("homeAddress", select_data.getHome_adress());
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
                 startActivity(intent);
+            }
+        });
+        login_dialog.findViewById(R.id.dialog_canclebtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login_dialog.dismiss();
             }
         });
     }
