@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -47,6 +48,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.unicon_project.Classes.Item;
+import com.example.unicon_project.ProgressDialog;
 import com.example.unicon_project.R;
 import com.example.unicon_project.Classes.SaleProduct;
 import com.google.android.gms.common.ConnectionResult;
@@ -131,7 +133,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     private String productId;
     private LatLng currentCameraPosition;
     private Geocoder geocoder;
-
+    private View lo_spinner;
     private String filter = "";
     private Spinner filterSpinner;
 
@@ -153,12 +155,13 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     private String Month_rentprice_max, Month_rentprice_min, Deposit_price_max ,Live_period_start="" ,Live_period_end="" ,Maintenance_cost,
             Room_size_max , Room_size_min;
     private boolean deposit_bool=false,month_bool=false;
-
+    ProgressDialog progressDialog;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_test);
+        progressDialog = new ProgressDialog(MapTest.this);
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -266,6 +269,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
             }
         });
 
+        lo_spinner = findViewById(R.id.lo_spinner);
+
     }
 
 
@@ -350,6 +355,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        Log.e(TAG,"OnMapReady시작");
         mMap = googleMap;
         mUiSettings = mMap.getUiSettings();
 
@@ -383,6 +389,13 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        Log.e(TAG,"OnWindowFocusChanged");
+        mMap.setPadding(0,lo_spinner.getTop(),0,0);
+
+    }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
@@ -697,6 +710,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 break;
 
             case R.id.tv_search_current_camera_position:
+                progressDialog.show();
                 if(currentCameraPosition==null){
                     Toast.makeText(getApplicationContext(),"잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
                     break;
@@ -727,6 +741,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
 
                         }
+
+                        progressDialog.dismiss();
                     }
                 });
                 break;
