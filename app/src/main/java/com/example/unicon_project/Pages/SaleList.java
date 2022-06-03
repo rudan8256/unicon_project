@@ -1,6 +1,7 @@
 package com.example.unicon_project.Pages;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +33,7 @@ import com.example.unicon_project.Classes.SaleProductList;
 import com.example.unicon_project.Classes.TagData;
 import com.example.unicon_project.Manager.MyLocationManager;
 import com.example.unicon_project.Pages.SaleProductPage;
+import com.example.unicon_project.ProgressDialog;
 import com.example.unicon_project.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -79,12 +82,16 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
             Room_size_max , Room_size_min;
      private boolean deposit_bool=false,month_bool=false;
 
+    ProgressDialog progressDialog;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale_list);
+
+        progressDialog = new ProgressDialog(SaleList.this);
 
         tagDialog = new Dialog(SaleList.this);
         tagDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -164,6 +171,8 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
 
     public void updateDatas() {
+
+        progressDialog.show();
         mDatas = new ArrayList<>();//
         List<Double> dist = new ArrayList<>();
         mStore.collection("SaleProducts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -191,6 +200,8 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                     saleProductList.setSaleList(mDatas);
                     saleProductAdapter.setmDatas(saleProductList.getSaleList());
                     saleProductAdapter.notifyDataSetChanged();
+
+                    progressDialog.dismiss();
                 }
             }
         });

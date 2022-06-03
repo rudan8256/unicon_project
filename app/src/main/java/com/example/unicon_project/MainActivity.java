@@ -157,6 +157,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             login_dialog.show();
         }
 
+        recommend_condition=findViewById(R.id.recommend_condition);
+        recommend_condition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.e("@@@@@@"," 클릭 확인");
+
+                if(firebaseAuth.getCurrentUser() != null) {
+                    showDialog();
+
+                }
+                else{
+                    login_dialog.show();
+                    Log.e("@@@@@@","비로그인 확인");
+                }
+            }
+        });
+
 
         ToSalePage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private  void reccommend_start(){
-        recommend_condition=findViewById(R.id.recommend_condition);
+
         recommend_list=findViewById(R.id.recommend_list);
 
 
@@ -278,19 +296,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Construter();
         searchInFB();
 
+        Log.e("@@@@@@"," 진입 확인");
 
-        recommend_condition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                if(firebaseAuth.getCurrentUser() != null) {
-                    showDialog();
-                }
-                else{
-                    login_dialog.show();
-                }
-            }
-        });
     }
 
 
