@@ -151,6 +151,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                 tagAdapter.setmDatas(mTagList);
                 Log.e("SaleList",mTagList.toString());
                 tagAdapter.notifyDataSetChanged();
+                updateDatas();
 
             }
         });
