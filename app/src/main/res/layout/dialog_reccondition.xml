@@ -5,19 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/salepage_inputborder"
     tools:context=".MainActivity">
 
 
 <LinearLayout
-
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <TextView
-
        android:padding="20dp"
         android:textSize="22sp"
         android:layout_width="match_parent"
@@ -73,12 +69,20 @@
     </LinearLayout>
 
 
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="보증금 "/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="40dp"
        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/sale_purchase_white_round6"
         android:orientation="horizontal"
         android:gravity="center_vertical"
@@ -112,7 +116,9 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_margin="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
             android:textSize="15sp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
@@ -187,8 +193,9 @@
 
 
     <TextView
-        android:layout_margin="15dp"
-        android:layout_marginLeft="28dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"
@@ -214,7 +221,7 @@
             <EditText
                 android:id="@+id/live_period_start"
                 android:layout_marginLeft="5dp"
-                android:layout_width="90dp"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:textSize="13sp"
@@ -245,7 +252,7 @@
             <EditText
                 android:id="@+id/live_period_end"
                 android:layout_marginLeft="5dp"
-                android:layout_width="90dp"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:textSize="13sp"
@@ -272,7 +279,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:layout_margin="15dp"
+               android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -314,7 +323,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
                 android:text="구조"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -343,7 +354,9 @@
 
 
     <TextView
-        android:layout_margin="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"

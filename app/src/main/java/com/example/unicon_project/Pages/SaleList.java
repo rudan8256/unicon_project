@@ -71,7 +71,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
     private EditText maintenance_cost, room_size_min,room_size_max;
 
     private String structure;
-    private LinearLayout deposit,month_rent,filter_search;
+    private LinearLayout deposit,month_rent,filter_search, month_area;
     public Map<String, Integer> structure_sel_map = new HashMap<>();
     private Spinner structureSpinner;
     private Dialog condition_dialog;
@@ -392,7 +392,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
         day_first = condition_dialog.findViewById(R.id.day_first);
         day_last = condition_dialog.findViewById(R.id.day_last);
-
+        month_area = condition_dialog.findViewById(R.id.month_area);
 
 
 
@@ -440,16 +440,46 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                 break;
             case R.id.deposit:
                 if( !deposit_bool ){
-                    deposit_bool=true; deposit.setBackgroundColor(Color.BLUE); }
+                    deposit_bool=true;
+                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    deposit.setSelected(true);
+
+                    if( month_bool ) {
+                        month_bool = false;
+                        month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        month_rent.setSelected(false);
+                    }
+                    month_area.setVisibility(View.GONE);
+                  }
                 else{
-                    deposit_bool=false;deposit.setBackgroundColor(Color.WHITE); }
+                    deposit_bool=false;
+                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    deposit.setSelected(false);
+
+                    month_area.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.month_rent:
                 if( !month_bool ){
-                    month_bool=true;month_rent.setBackgroundColor(Color.BLUE); }
+                    month_bool=true;
+                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    month_rent.setSelected(true);
+
+                        if( deposit_bool ) {
+                            deposit_bool=false;
+                            deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                            deposit.setSelected(false);
+                        }
+                    month_area.setVisibility(View.VISIBLE);
+                   }
                 else{
-                    month_bool=false;month_rent.setBackgroundColor(Color.WHITE); }
+                    month_bool=false;
+                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    month_rent.setSelected(false);
+
+                    }
                 break;
+
         }
     }
 

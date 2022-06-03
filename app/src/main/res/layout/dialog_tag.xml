@@ -11,6 +11,7 @@
 
 
         <TextView
+            android:layout_margin="20dp"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,13 +24,32 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_done"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="완료"
+            android:id="@+id/tv_cancle"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="취소"
             android:textColor="@color/black"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_done"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+
+            android:gravity="center"
+            android:background="@drawable/salepage_inputborder_isclick"
+            android:id="@+id/tv_done"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:text="완료"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
@@ -43,6 +63,7 @@
 
 
             <LinearLayout
+                android:layout_margin="10dp"
                 android:id="@+id/center_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,6 +134,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_margin="10dp"
                 android:id="@+id/east_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -239,6 +261,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_margin="10dp"
                 android:id="@+id/west_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -310,6 +333,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_margin="10dp"
                 android:id="@+id/south_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -351,6 +375,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_margin="10dp"
                 android:id="@+id/north_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -533,6 +558,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_margin="10dp"
                 android:id="@+id/tntjd_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -660,6 +686,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_margin="10dp"
                 android:id="@+id/ekftj_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -780,69 +807,71 @@
                         android:layout_weight="1"
                         android:text="CheckBox" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal">
 
+                    <CheckBox
+                        android:id="@+id/checkBox_6_12"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="CheckBox" />
 
-            </LinearLayout>
+                    <CheckBox
+                        android:id="@+id/checkBox_6_13"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="CheckBox" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/checkBox_6_14"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="CheckBox" />
 
-                <CheckBox
-                    android:id="@+id/checkBox_6_12"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="CheckBox" />
+                </LinearLayout>
 
-                <CheckBox
-                    android:id="@+id/checkBox_6_13"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="CheckBox" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal">
 
-                <CheckBox
-                    android:id="@+id/checkBox_6_14"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="CheckBox" />
+                    <CheckBox
+                        android:id="@+id/checkBox_6_15"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="CheckBox" />
 
-            </LinearLayout>
+                    <CheckBox
+                        android:id="@+id/checkBox_6_16"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="CheckBox"
+                        android:visibility="gone"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/checkBox_6_17"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="CheckBox"
+                        android:visibility="invisible" />
 
-                <CheckBox
-                    android:id="@+id/checkBox_6_15"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="CheckBox" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_6_16"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="CheckBox"
-                    android:visibility="gone"/>
-
-                <CheckBox
-                    android:id="@+id/checkBox_6_17"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="CheckBox"
-                    android:visibility="invisible" />
+                </LinearLayout>
 
             </LinearLayout>
 
+
+
+
             <LinearLayout
+                android:layout_margin="10dp"
                 android:id="@+id/ekftjd_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

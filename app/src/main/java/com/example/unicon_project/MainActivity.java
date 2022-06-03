@@ -282,7 +282,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recommend_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+
+                if(firebaseAuth.getCurrentUser() != null) {
+                    showDialog();
+                }
+                else{
+                    login_dialog.show();
+                }
             }
         });
     }
@@ -672,7 +678,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         month_rent.setSelected(false);
 
                     }
-                    month_area.setVisibility(View.INVISIBLE);
+                    month_area.setVisibility(View.GONE);
                 }
                 else{
                     preUserdata.setDeposit(false);
@@ -693,7 +699,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
                         deposit.setSelected(false);
                     }
-
+                    month_area.setVisibility(View.VISIBLE);
                 }
                 else{
                     preUserdata.setMonth_rent(false);

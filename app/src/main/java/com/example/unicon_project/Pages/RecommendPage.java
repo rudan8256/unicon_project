@@ -434,7 +434,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                         month_rent.setSelected(false);
 
                     }
-                    month_area.setVisibility(View.INVISIBLE);
+                    month_area.setVisibility(View.GONE);
                 }
                 else{
                     preUserdata.setDeposit(false);
@@ -455,7 +455,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                         deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
                         deposit.setSelected(false);
                     }
-
+                    month_area.setVisibility(View.VISIBLE);
                 }
                 else{
                     preUserdata.setMonth_rent(false);

@@ -117,7 +117,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     ArrayList<Item> sampleList = new ArrayList<>();
     private View marker_root_view;
     private TextView tv_marker;
-    private LinearLayout marker_body;
+    private LinearLayout marker_body,month_area;
     private ImageView marker_tail;
     private LocationManager locationManager;
     private UiSettings mUiSettings;
@@ -740,15 +740,44 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
             case R.id.deposit:
                 if( !deposit_bool ){
-                    deposit_bool=true; deposit.setBackgroundColor(Color.BLUE); }
+                    deposit_bool=true;
+                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    deposit.setSelected(true);
+
+                    if( month_bool ) {
+                        month_bool = false;
+                        month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        month_rent.setSelected(false);
+                    }
+                    month_area.setVisibility(View.GONE);
+                }
                 else{
-                    deposit_bool=false;deposit.setBackgroundColor(Color.WHITE); }
+                    deposit_bool=false;
+                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    deposit.setSelected(false);
+
+                    month_area.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.month_rent:
                 if( !month_bool ){
-                    month_bool=true;month_rent.setBackgroundColor(Color.BLUE); }
+                    month_bool=true;
+                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    month_rent.setSelected(true);
+
+                    if( deposit_bool ) {
+                        deposit_bool=false;
+                        deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        deposit.setSelected(false);
+                    }
+                    month_area.setVisibility(View.VISIBLE);
+                }
                 else{
-                    month_bool=false;month_rent.setBackgroundColor(Color.WHITE); }
+                    month_bool=false;
+                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    month_rent.setSelected(false);
+
+                }
                 break;
         }
     }
@@ -1011,8 +1040,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
         day_first = condition_dialog.findViewById(R.id.day_first);
         day_last = condition_dialog.findViewById(R.id.day_last);
-
-
+        month_area = condition_dialog.findViewById(R.id.month_area);
 
 
         structureSpinner = condition_dialog.findViewById(R.id.structure);

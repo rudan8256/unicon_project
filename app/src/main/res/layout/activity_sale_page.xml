@@ -66,6 +66,7 @@
                         android:src="@drawable/addresssearch" />
 
                     <LinearLayout
+                        android:id="@+id/home_address_area"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -270,6 +271,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/day_first"
                         android:layout_width="160dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="10dp"
@@ -290,7 +292,7 @@
 
 
                         <ImageView
-                            android:id="@+id/day_first"
+
                             android:layout_width="30dp"
                             android:layout_height="22dp"
                             android:src="@drawable/calendar" />
@@ -306,6 +308,7 @@
                         android:textStyle="bold" />
 
                     <LinearLayout
+                        android:id="@+id/day_last"
                         android:layout_width="160dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="15dp"
@@ -326,7 +329,7 @@
                             android:textSize="13sp" />
 
                         <ImageView
-                            android:id="@+id/day_last"
+
                             android:layout_width="30dp"
                             android:layout_height="22dp"
                             android:src="@drawable/calendar" />

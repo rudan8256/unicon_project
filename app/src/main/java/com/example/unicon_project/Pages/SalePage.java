@@ -70,9 +70,8 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private String curdate, floor, structure,home_name;
     private LinearLayout deposit, month_rent, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
-    private LinearLayout convenience_store, subway, parking,month_area,deposit_area;
+    private LinearLayout convenience_store, subway, parking,month_area, home_address_area, day_first, day_last;
     private Map<String, Boolean> maintains, options;
-    private ImageView day_first, day_last;
     private DatePickerDialog datePickerDialog;
     private TextView live_period_start, live_period_end;
     private String str_live_period_start = "", str_live_period_end = "";
@@ -112,7 +111,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         back_activity = findViewById(R.id.back_acticity);
 
         month_area= findViewById(R.id.month_area);
-        deposit_area = findViewById(R.id.deposit_area);
+
 
 
         back_activity.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +192,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
 
         home_address.setFocusable(false);
-        home_address.setOnClickListener(this);
+        home_address_area.setOnClickListener(this);
 
         day_first.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,7 +311,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.home_address:
+            case R.id.home_address_area:
                 List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
 
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList).build(SalePage.this);
@@ -557,7 +556,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         room_size = findViewById(R.id.room_size);
         specific = findViewById(R.id.specific);
 
-
+        home_address_area = findViewById(R.id.home_address_area);
         day_first = findViewById(R.id.day_first);
         day_last = findViewById(R.id.day_last);
         deposit = findViewById(R.id.deposit);
