@@ -26,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -35,6 +36,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.OAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
@@ -47,9 +49,9 @@ import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.exception.KakaoException;
 
 public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
-   LinearLayout text_register;
+    LinearLayout text_register;
     TextView text_email, text_password;
-   TextView  btn_log_in;
+    TextView btn_log_in;
     FirebaseAuth firebaseAuth;
     LinearLayout btn_google;
 
@@ -96,7 +98,6 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
             UserManagement.getInstance().me(new MeV2ResponseCallback() {
                 @Override
                 public void onSuccess(MeV2Response result) {
-                    Log.e("###", "카카오 자동 로그인 성공");
                     goMainActivity();
                 }
 
@@ -106,7 +107,6 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
             });
         }//구글, 앱 로그인 자동로그인
         else if (firebaseAuth.getCurrentUser() != null) {
-            Log.e("###", "파이어베이스 자동로그인 성공");
             goMainActivity();
         }
 
@@ -173,7 +173,6 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                         String email = kakaoAccount.getEmail();
                         String pwd = String.valueOf(result.getId());
                         Profile profile = kakaoAccount.getProfile();
-                        Log.e("###", "email: "+email+"pwd: "+pwd+"name: "+profile.getNickname());
                         firebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(
                                 SignInActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -225,8 +224,6 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                Log.e("###", "google log in");
-                Log.e("###", "진행 1");
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
@@ -244,8 +241,6 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.e("###", "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
-
-                Log.e("###", "진행 2");
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.e("###", "Google sign in failed", e);
@@ -266,18 +261,31 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.e("###", "signInWithCredential:success");
-                            Log.e("###", "진행 3");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             newUser = new User();
                             newUser.setUsertoken(user.getUid());
                             newUser.setUsername("");
                             mstore.collection("User").document(newUser.getUsertoken())
-                                    .set(newUser)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                         @Override
-                                        public void onSuccess(Void unused) {
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            Log.e("###", "이미 존재합니다");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            mstore.collection("User").document(newUser.getUsertoken())
+                                                    .set(newUser)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+                                                        }
+                                                    });
                                         }
                                     });
+
                             updateUI(user);
                             goMainActivity();
                         } else {
