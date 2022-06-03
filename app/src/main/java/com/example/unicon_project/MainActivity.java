@@ -374,14 +374,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             if (preUserdata.getDeposit()) {
                                 deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                                deposit.setSelected(true);
                             } else {
                                 deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                                deposit.setSelected(false);
                             }
 
                             if (preUserdata.getMonth_rent()) {
                                 month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                                month_rent.setSelected(true);
                             } else {
                                 month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                                month_rent.setSelected(false);
                             }
 
                             updateDatas();
