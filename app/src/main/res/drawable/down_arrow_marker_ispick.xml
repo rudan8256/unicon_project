@@ -8,10 +8,10 @@
             android:toDegrees="45">
             <shape android:shape="rectangle" >
 
-                <solid android:color="#0050FF"/>
+                <solid  android:color="#4945E3"/>
                 <stroke
                     android:width="2dp"
-                    android:color="#0050FF" /> //선색
+                    android:color="#4945E3" /> //선색
                 <padding
                     android:left="0dp"
                     android:right="0dp"

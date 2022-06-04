@@ -734,6 +734,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                                 addMarker(temp,false);
 
                             }
+
                             if(mDatas.isEmpty()||mDatas==null){
                                 Log.e(TAG, "쿼리 : 비었음");
 

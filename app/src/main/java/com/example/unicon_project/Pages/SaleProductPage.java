@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.unicon_project.Adapters.ImageSliderAdapter;
@@ -68,6 +69,7 @@ public class SaleProductPage extends AppCompatActivity {
     private ArrayList<Uri> uriList = new ArrayList<Uri>();
     MultiImageAdapter photoadapter;
     private RecyclerView photo_list;
+    private Switch owner_switch;
 
 
     private ViewPager2 sliderViewPager;
@@ -90,11 +92,21 @@ public class SaleProductPage extends AppCompatActivity {
 
         photo_list = findViewById(R.id.photo_list);
         post_gallery = findViewById(R.id.pre_picture_shape);
+        owner_switch = findViewById(R.id.owner_switch);
 
         Construter();
         WritingData();
         Image_Load();
         Dialog_Load();
+
+        owner_switch.setClickable(false);
+
+        if(select_data.getMaintains().get("owner_agree")) {
+            owner_switch.setChecked(true);
+            owner_switch.setSwitchTextAppearance(getApplicationContext(), R.style.SwitchTextAppearance_isclick);
+        }else {
+            owner_switch.setSwitchTextAppearance(getApplicationContext(), R.style.SwitchTextAppearance);
+        }
 
         btn_sale_chatting = findViewById(R.id.btn_sale_chatting);
         btn_sale_chatting.setOnClickListener(new View.OnClickListener() {

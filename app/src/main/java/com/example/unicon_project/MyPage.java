@@ -290,4 +290,12 @@ public class MyPage extends AppCompatActivity {
 
         edit_nickname = findViewById(R.id.edit_nickname);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+
+    }
 }

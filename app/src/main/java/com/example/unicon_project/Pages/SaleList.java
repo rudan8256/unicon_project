@@ -172,7 +172,6 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
     public void updateDatas() {
 
-        progressDialog.show();
         mDatas = new ArrayList<>();//
         List<Double> dist = new ArrayList<>();
         mStore.collection("SaleProducts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -180,6 +179,8 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task!=null){
                     mDatas.clear();
+
+
                     Log.e("###","쿼리개수 : "+task.getResult().getDocuments().size());
                     for(DocumentSnapshot snap : task.getResult().getDocuments()){
                         mDatas.add(snap.toObject(SaleProduct.class));
@@ -193,15 +194,17 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                         }
 
                     }
+
                     for(SaleProduct item : mDatas){
                         dist.add(myLocationManager.getDist(myLocationManager.getLatLng(getApplicationContext(),item.getHome_adress()),myLocationManager.getMyCurrentPosition()));
                     }
+
+
                     saleProductList.setDist(dist);
                     saleProductList.setSaleList(mDatas);
                     saleProductAdapter.setmDatas(saleProductList.getSaleList());
                     saleProductAdapter.notifyDataSetChanged();
 
-                    progressDialog.dismiss();
                 }
             }
         });
@@ -280,6 +283,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
         condition_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
 
                 Month_rentprice_max=month_price_max.getText().toString();

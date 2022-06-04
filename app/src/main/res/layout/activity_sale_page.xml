@@ -60,13 +60,12 @@
 
 
                     <ImageView
-                        android:layout_width="200px"
-                        android:layout_height="200px"
+                        android:layout_width="80dp"
+                        android:layout_height="75dp"
                         android:layout_marginRight="60px"
                         android:src="@drawable/addresssearch" />
 
                     <LinearLayout
-                        android:id="@+id/home_address_area"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -75,7 +74,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="주소등록"
-                            android:textSize="60px"
+                            android:textSize="25sp"
                             android:textStyle="bold" />
 
                         <EditText
@@ -170,6 +169,7 @@
                             android:textSize="40px" />
 
                         <Switch
+
                             android:id="@+id/owner_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"

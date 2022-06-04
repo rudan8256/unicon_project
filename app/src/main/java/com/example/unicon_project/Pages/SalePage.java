@@ -142,14 +142,17 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
             }
         });
 
+
         owner_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     maintains.put("owner_agree", true);
                     owner_switch.setTextColor(Color.WHITE);
+                   owner_switch.setSwitchTextAppearance(getApplicationContext(), R.style.SwitchTextAppearance_isclick);
                 } else {
                     maintains.put("owner_agree", false);
+                    owner_switch.setSwitchTextAppearance(getApplicationContext(), R.style.SwitchTextAppearance);
                 }
             }
         });
@@ -192,7 +195,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
 
         home_address.setFocusable(false);
-        home_address_area.setOnClickListener(this);
+        home_address.setOnClickListener(this);
 
         day_first.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,6 +255,8 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                                     str_live_period_end =year + "/" + month + "/" + day;
                                 }
 
+
+
                                 live_period_end.setText(str_live_period_end);
                             }
                         }, mYear, mMonth, mDay);
@@ -264,14 +269,18 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
             public void onClick(View view) {
 
 
-
-                if ( deposit_price.getText().toString().equals("") ||  month_price.getText().toString().equals("") || home_address.getText().toString().equals("")|| maintenance_cost.getText().toString().equals("")||
+                if ( (deposit_price.getText().toString().equals("")&& newproduct.getDeposit()) || ( month_price.getText().toString().equals("") && newproduct.getMonth_rent()) || home_address.getText().toString().equals("")|| maintenance_cost.getText().toString().equals("")||
                 room_size.getText().toString().equals("") ){
 
                     Toast.makeText(getApplicationContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
 
                    return;
                 }
+                else if (Integer.parseInt(str_live_period_start.replace("/", "")) > Integer.parseInt(str_live_period_end.replace("/", ""))) {
+                    Toast.makeText(getApplicationContext(), "올바른 입주기간을 입력하세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // Create a new user with a first and last name
                 newproduct.setHome_adress(home_address.getText().toString());
                 newproduct.setMonth_rent_price(month_price.getText().toString());
@@ -311,7 +320,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.home_address_area:
+            case R.id.home_address:
                 List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
 
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList).build(SalePage.this);
@@ -353,6 +362,8 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                         deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
                         deposit.setSelected(false);
                     }
+
+                    month_area.setVisibility(View.VISIBLE);
 
                 } else {
                     newproduct.setMonth_rent(false);
@@ -556,7 +567,6 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         room_size = findViewById(R.id.room_size);
         specific = findViewById(R.id.specific);
 
-        home_address_area = findViewById(R.id.home_address_area);
         day_first = findViewById(R.id.day_first);
         day_last = findViewById(R.id.day_last);
         deposit = findViewById(R.id.deposit);
@@ -600,6 +610,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         convenience_store.setOnClickListener(this);
         subway.setOnClickListener(this);
         parking.setOnClickListener(this);
+        home_address.setOnClickListener(this);
     }
 
     private void useGallery() {

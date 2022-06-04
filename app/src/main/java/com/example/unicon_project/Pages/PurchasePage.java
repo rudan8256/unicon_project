@@ -50,7 +50,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private String curDate, structure, home_name;
     private LinearLayout deposit, month_rent, negotiable, elec_cost, gas_cost, water_cost, internet_cost;
-    private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
+    private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight,month_area;
     private LinearLayout convenience_store, subway, parking;
     private Spinner structureSpinner;
     private ImageView day_first, day_last;
@@ -69,6 +69,8 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
         back_activity = findViewById(R.id.back_acticity);
+
+        month_area =findViewById(R.id.month_area);
 
 
         back_activity.setOnClickListener(new View.OnClickListener() {
@@ -143,8 +145,8 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
 
-                if (home_address.getText().toString().equals("") || month_price_min.getText().toString().equals("") || month_price_max.getText().toString().equals("")
-                        || deposit_price_max.getText().toString().equals("") || str_live_period_start.equals("") || str_live_period_end.equals("")) {
+                if (home_address.getText().toString().equals("") || (( month_price_min.getText().toString().equals("") || month_price_max.getText().toString().equals("") ) && newProduct.getMonth_rent())
+                        ||  ( newProduct.getDeposit() && deposit_price_max.getText().toString().equals("") )|| str_live_period_start.equals("") || str_live_period_end.equals("")) {
                     Toast.makeText(getApplicationContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (Integer.parseInt(str_live_period_start.replace("/", "")) > Integer.parseInt(str_live_period_end.replace("/", ""))) {
@@ -203,24 +205,48 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.deposit:
                 if (!newProduct.getDeposit()) {
+
                     newProduct.setDeposit(true);
-                    deposit.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
                     deposit.setSelected(true);
+
+                    if (newProduct.getMonth_rent()) {
+                        newProduct.setMonth_rent(false);
+                        month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        month_rent.setSelected(false);
+
+                    }
+                    month_area.setVisibility(View.INVISIBLE);
+
                 } else {
                     newProduct.setDeposit(false);
-                    deposit.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
                     deposit.setSelected(false);
+
+
+                    month_area.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.month_rent:
                 if (!newProduct.getMonth_rent()) {
                     newProduct.setMonth_rent(true);
-                    month_rent.setBackgroundResource(R.drawable.sale_purchase_color_round15);
+                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
                     month_rent.setSelected(true);
+
+
+                    if (newProduct.getDeposit()) {
+                        newProduct.setDeposit(false);
+                        deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        deposit.setSelected(false);
+                    }
+
+                    month_area.setVisibility(View.VISIBLE);
+
                 } else {
                     newProduct.setMonth_rent(false);
-                    month_rent.setBackgroundResource(R.drawable.sale_purchase_white_round15);
+                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
                     month_rent.setSelected(false);
+
                 }
                 break;
             case R.id.negotiable:
