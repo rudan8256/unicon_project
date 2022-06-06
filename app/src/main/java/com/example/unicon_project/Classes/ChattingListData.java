@@ -5,6 +5,15 @@ public class ChattingListData {
     String userName;
     String productID;
     String chattingID;
+    String userID;
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
     public String getChattingID() {
         return chattingID;
@@ -29,15 +38,17 @@ public class ChattingListData {
         userName = new String();
         productID = new String();
         chattingID = new String();
+        userID = new String();
         unread = 0;
     }
 
-    public ChattingListData(String chattingName, String userName, String productID, String chattingID, int unread)
+    public ChattingListData(String chattingName, String userName, String productID, String chattingID, String userID, int unread)
     {
         this.chattingName = chattingName;
         this.userName = userName;
         this.productID = productID;
         this.chattingID = chattingID;
+        this.userID = userID;
         this.unread = unread;
     }
 

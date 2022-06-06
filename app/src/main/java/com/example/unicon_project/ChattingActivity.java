@@ -10,12 +10,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.unicon_project.Adapters.ChattingAdapter;
 import com.example.unicon_project.Classes.ChattingData;
 import com.example.unicon_project.Classes.ChattingListData;
+import com.example.unicon_project.Classes.User;
 import com.example.unicon_project.Manager.ChattingManager;
+import com.example.unicon_project.Pages.ChattingListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,16 +29,26 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Document;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class ChattingActivity extends AppCompatActivity {
     FirebaseDatabase database =FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference addDatabase;
+    private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+    ImageView iv_chatting_back;
+    TextView tv_chatting_nickname;
 
     String roomInformation;
     Button btn_sendMsg;
@@ -49,9 +63,12 @@ public class ChattingActivity extends AppCompatActivity {
     ChattingManager chattingManager = new ChattingManager();
 
     String uid;
-    String productID, writerID, homeAddress;
+    String productID, writerID, homeAddress, chattingUserID;
     String chattingID;
     String there;
+
+    //내 닉네임과 상대방의 UserID를 저장
+    String myUserID, writerUserID;
 
     boolean _isChattingListExist;
     Boolean Agree1, Agree2;
@@ -71,26 +88,66 @@ public class ChattingActivity extends AppCompatActivity {
         추후에 방 uuid를 roomInformation에 저장합니다.
          */
 
-
         Intent it = getIntent();
         chattingID = it.getExtras().get("chattingID").toString();
         productID = it.getExtras().get("productID").toString();
         writerID = it.getExtras().get("writerID").toString();
         homeAddress = it.getExtras().get("homeAddress").toString();
+        chattingUserID = it.getExtras().get("chattingUserID").toString();
 
         roomInformation = user.getUid();
 
         et_myMsg = findViewById(R.id.et_myMsg);
         btn_sendMsg = findViewById(R.id.btn_sendMsg);
 
+        tv_chatting_nickname = findViewById(R.id.tv_chatting_nickname);
+        tv_chatting_nickname.setText(chattingUserID+"님과의 채팅");
+
+        iv_chatting_back = findViewById(R.id.iv_chatting_back);
+        iv_chatting_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChattingActivity.this, ChattingListActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        /* 닉네임 설정 */
+        mstore.collection("User").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        User myUser = document.toObject(User.class);
+                        myUserID = myUser.getUsername();
+                        // 상대방에게 해당 chattingID가 있는지 검사하고 추가하기
+                        isChattingListExist(writerID, chattingID, myUserID);
+                    }
+                }
+            }
+        });
+        mstore.collection("User").document(writerID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        User myUser = document.toObject(User.class);
+                        writerUserID = myUser.getUsername();
+                        // 자신에게 해당 chattingID가 있는지 검사하고 추가하기
+                        isChattingListExist(uid, chattingID, writerUserID);
+                    }
+                }
+            }
+        });
+
         //chattingID 생성
         if(chattingID.equals(""))
             chattingID = chattingManager.generateChattingID(productID, uid);
-
-        // 자신에게 해당 chattingID가 있는지 검사하고 추가하기
-        isChattingListExist(uid, chattingID);
-        // 상대방에게 해당 chattingID가 있는지 검사하고 추가하기
-        isChattingListExist(writerID, chattingID);
 
         Toast.makeText(getApplicationContext(), "Current UID is.. "+uid, Toast.LENGTH_LONG).show();
         //처음 들어왔을시 unread 0으로 초기화
@@ -197,7 +254,7 @@ public class ChattingActivity extends AppCompatActivity {
         getInfo();
     }
 
-    public void isChattingListExist(String _uid, String _chattingID)
+    public void isChattingListExist(String _uid, String _chattingID, String _userID)
     {
         // 해당 uid에 productID 채팅정보가 존재하는지 검사하여 그 값을 반환한다.
         // input ( _uid, _chattingID )
@@ -222,13 +279,14 @@ public class ChattingActivity extends AppCompatActivity {
                     }
 
                     if(!_isChattingListExist) {
-                        ChattingListData data = new ChattingListData(homeAddress, _uid, productID, _chattingID, 0);
+                        ChattingListData data = new ChattingListData(homeAddress, _uid, productID, _chattingID, "", 0);
                         if(_uid == writerID)
                             // 현재 들어온 사람이 작성자인 경우
                             data.setUserName(_chattingID.replaceAll(productID, ""));
                         else
                             // 현재 들어온 사람이 구매자인 경우
                             data.setUserName(writerID);
+                        data.setUserID(_userID);
 
                         reference.child("chattingList").child(_uid).child(_chattingID).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

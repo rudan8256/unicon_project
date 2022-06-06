@@ -94,10 +94,10 @@
 
             <ImageView
                 android:id="@+id/edit_nickname"
-                android:layout_marginLeft="10dp"
                 android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_edit_nickname"/>
+                android:layout_height="16dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_edit_nickname" />
 
         </LinearLayout>
 

@@ -5,15 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.unicon_project.Adapters.ChattingListAdapter;
 import com.example.unicon_project.ChattingActivity;
 import com.example.unicon_project.Classes.ChattingListData;
+import com.example.unicon_project.Classes.User;
+import com.example.unicon_project.MainActivity;
 import com.example.unicon_project.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -29,6 +37,11 @@ public class ChattingListActivity extends AppCompatActivity {
     GridView gv;
     ChattingListAdapter adapter;
     ArrayList<ChattingListData> items = new ArrayList<>();
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
+
+    ImageView iv_chattinglist_back;
 
     FirebaseDatabase database =FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
@@ -43,6 +56,16 @@ public class ChattingListActivity extends AppCompatActivity {
         uid = user.getUid();
 
         gv = findViewById(R.id.gv_chattingList);
+
+        iv_chattinglist_back = findViewById(R.id.iv_chattinglist_back);
+        iv_chattinglist_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChattingListActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         reference.child("chattingList").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -75,6 +98,7 @@ public class ChattingListActivity extends AppCompatActivity {
                 intent.putExtra("productID", items.get(i).getProductID());
                 intent.putExtra("writerID", items.get(i).getUserName());
                 intent.putExtra("homeAddress", items.get(i).getChattingName());
+                intent.putExtra("chattingUserID", items.get(i).getUserID());
                 startActivity(intent);
             }
         });

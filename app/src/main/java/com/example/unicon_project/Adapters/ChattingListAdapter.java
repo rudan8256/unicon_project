@@ -54,7 +54,7 @@ public class ChattingListAdapter extends BaseAdapter {
         tv_chattingList_chattingname.setText(items.get(i).getChattingName());
 
         TextView tv_chattingList_username = view.findViewById(R.id.tv_chattingList_username);
-        tv_chattingList_username.setText(items.get(i).getUserName());
+        tv_chattingList_username.setText(items.get(i).getUserID());
 
         CardView cardView = view.findViewById(R.id.cv_chatting_list);
         TextView tv_unread = view.findViewById(R.id.tv_chattingList_unread);
