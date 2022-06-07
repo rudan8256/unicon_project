@@ -17,6 +17,7 @@ import com.example.unicon_project.ChattingActivity;
 import com.example.unicon_project.Classes.ChattingListData;
 import com.example.unicon_project.Classes.User;
 import com.example.unicon_project.MainActivity;
+import com.example.unicon_project.ProgressDialog;
 import com.example.unicon_project.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,12 +49,15 @@ public class ChattingListActivity extends AppCompatActivity {
     final FirebaseUser user = mFirebaseAuth.getInstance().getCurrentUser();
     String uid;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting_list);
 
         uid = user.getUid();
+        progressDialog= new ProgressDialog(ChattingListActivity.this);
 
         gv = findViewById(R.id.gv_chattingList);
 
@@ -66,6 +70,8 @@ public class ChattingListActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        progressDialog.show();
 
         reference.child("chattingList").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,11 +88,12 @@ public class ChattingListActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
                 gv.setAdapter(adapter);
+                progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                progressDialog.dismiss();
             }
         });
 

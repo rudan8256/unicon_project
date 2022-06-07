@@ -32,6 +32,7 @@ import com.example.unicon_project.ChattingActivity;
 import com.example.unicon_project.Classes.ChattingListData;
 import com.example.unicon_project.ImageViewpager;
 import com.example.unicon_project.MainActivity;
+import com.example.unicon_project.ProgressDialog;
 import com.example.unicon_project.R;
 import com.example.unicon_project.Classes.SaleProduct;
 import com.example.unicon_project.ViewpagerImageAdapter;
@@ -78,7 +79,7 @@ public class SaleProductPage extends AppCompatActivity {
     private int curnumImage;
 
     GestureDetector detector;
-
+    ProgressDialog progressDialog;
     Dialog login_dialog;
 
     @Override
@@ -86,7 +87,7 @@ public class SaleProductPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale_product_page);
 
-
+        progressDialog = new ProgressDialog(SaleProductPage.this);
         Intent intent = getIntent();
         select_data = (SaleProduct) intent.getSerializableExtra("select_data");
 
@@ -94,6 +95,7 @@ public class SaleProductPage extends AppCompatActivity {
         post_gallery = findViewById(R.id.pre_picture_shape);
         owner_switch = findViewById(R.id.owner_switch);
 
+        progressDialog.show();
         Construter();
         WritingData();
         Image_Load();
@@ -215,6 +217,7 @@ public class SaleProductPage extends AppCompatActivity {
 
                     if(uriList.size() == image_urllist.size()){
                         Viewpager_start();
+                        progressDialog.dismiss();
                     }
 
                     //  if(uriList.size() == image_urllist.size()) { ((MainActivity)MainActivity.maincontext).progressOFF(); }

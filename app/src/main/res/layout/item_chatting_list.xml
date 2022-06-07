@@ -10,20 +10,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <androidx.cardview.widget.CardView
+            android:backgroundTint="#EEF3FC"
+            android:layout_margin="12dp"
+            app:cardCornerRadius="15dp"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
         <LinearLayout
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_weight="3">
-
-            <TextView
-                android:id="@+id/tv_chattingList_chattingname"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="25sp"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                android:text="채팅방 제목"/>
 
             <TextView
                 android:id="@+id/tv_chattingList_username"
@@ -31,8 +31,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="30sp"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:text="채팅 작성자"/>
+
+            <TextView
+                android:id="@+id/tv_chattingList_chattingname"
+                android:layout_width="match_parent"
+                android:layout_height="25sp"
+                android:gravity="center_vertical"
+                android:maxWidth="200dp"
+                android:text="채팅방 제목"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView

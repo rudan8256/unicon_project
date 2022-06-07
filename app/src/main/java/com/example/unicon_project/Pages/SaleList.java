@@ -84,8 +84,6 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
     ProgressDialog progressDialog;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +94,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
         tagDialog = new Dialog(SaleList.this);
         tagDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         tagDialog.setContentView(R.layout.dialog_tag);
+
 
         tagAdapter = new TagAdapter();
         tagRecyclerView = findViewById(R.id.citylist_recy);
@@ -172,6 +171,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
     public void updateDatas() {
 
+        progressDialog.show();
         mDatas = new ArrayList<>();//
         List<Double> dist = new ArrayList<>();
         mStore.collection("SaleProducts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -194,6 +194,8 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                         }
 
                     }
+
+                    progressDialog.dismiss();
 
                     for(SaleProduct item : mDatas){
                         dist.add(myLocationManager.getDist(myLocationManager.getLatLng(getApplicationContext(),item.getHome_adress()),myLocationManager.getMyCurrentPosition()));

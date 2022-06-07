@@ -2,6 +2,7 @@ package com.example.unicon_project.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class ChattingAdapter extends BaseAdapter {
     ArrayList<ChattingData> items;
-    CardView cardView;
+    LinearLayout cardView;
     LinearLayout ll_chatting;
     String uid;
     Context context;
@@ -69,9 +70,8 @@ public class ChattingAdapter extends BaseAdapter {
             tv_chatting_time.setGravity(Gravity.RIGHT);
 
             ll_chatting.setGravity(Gravity.RIGHT);
-            cardView.setCardBackgroundColor(Color.parseColor("#231FFF"));
+            cardView.setBackgroundResource(R.drawable.chatting_me_box);
             tv_chatting_msg.setTextColor(Color.WHITE);
-            tv_chatting_time.setTextColor(Color.WHITE);
         }else{
             tv_chatting_id.setText("상대방");
             tv_chatting_id.setGravity(Gravity.LEFT);
@@ -79,7 +79,7 @@ public class ChattingAdapter extends BaseAdapter {
             tv_chatting_time.setGravity(Gravity.LEFT);
 
             ll_chatting.setGravity(Gravity.LEFT);
-            cardView.setCardBackgroundColor(Color.parseColor("#EEF3FC"));
+            cardView.setBackgroundResource(R.drawable.chatting_you_box);
             tv_chatting_msg.setTextColor(Color.BLACK);
             tv_chatting_time.setTextColor(Color.BLACK);
         }

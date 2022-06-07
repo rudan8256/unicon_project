@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -249,6 +250,12 @@ public class ChattingActivity extends AppCompatActivity {
                 et_myMsg.setText("");
             }
         });
+
+
+
+
+
+
 
         //GridView에 정보 삽입
         getInfo();
