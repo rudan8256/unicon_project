@@ -90,8 +90,10 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
 
         // 위에서 만든 GoogleSignInOptions을 사용해 GoogleSignInClient 객체를 만듬
         mGoogleSignInClient = GoogleSignIn.getClient(SignInActivity.this, gso);
+        mGoogleSignInClient.revokeAccess();
 
         firebaseAuth = FirebaseAuth.getInstance();
+
 
         //카카오톡 자동로그인
         if (Session.getCurrentSession().checkAndImplicitOpen()) {
@@ -270,22 +272,23 @@ public class SignInActivity<mGoogleSignInClient> extends AppCompatActivity {
                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                            Log.e("###", "이미 존재합니다");
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            mstore.collection("User").document(newUser.getUsertoken())
-                                                    .set(newUser)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void unused) {
-                                                        }
-                                                    });
+                                            if(task.isSuccessful()) {
+                                                DocumentSnapshot documentSnapshot = task.getResult();
+                                                if(documentSnapshot.exists()){
+                                                    Log.e("###", "이미 존재합니다");
+                                                }
+                                                else{
+                                                    mstore.collection("User").document(newUser.getUsertoken())
+                                                            .set(newUser)
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void unused) {
+                                                                }
+                                                            });
+                                                }
+                                            }
                                         }
                                     });
-
                             updateUI(user);
                             goMainActivity();
                         } else {

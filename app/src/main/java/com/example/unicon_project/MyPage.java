@@ -57,8 +57,9 @@ public class MyPage extends AppCompatActivity {
     private SessionCallBack mSessionCallback = new SessionCallBack();
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private DocumentReference documentReference;
-    private List<User> mDatas =new ArrayList<>();
+    private List<User> mDatas = new ArrayList<>();
 
+    private String token = "";
     private GoogleSignInClient mGoogleSignInClient;
     private Button btn_log_out;
     Dialog nickname_dialog;
@@ -73,17 +74,16 @@ public class MyPage extends AppCompatActivity {
             login_off.setVisibility(View.GONE);
             email.setText(firebaseAuth.getCurrentUser().getEmail());
             mstore.collection("User")
-                    .whereEqualTo("usertoken",firebaseAuth.getUid()).get()
+                    .whereEqualTo("usertoken", firebaseAuth.getUid()).get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                User userdata =document.toObject(User.class);
+                                User userdata = document.toObject(User.class);
 
-                                if(userdata.getUsername().equals("")){
+                                if (userdata.getUsername().equals("")) {
                                     name.setText("no name");
-                                }
-                                else{
+                                } else {
                                     name.setText(userdata.getUsername());
                                 }
 
@@ -191,7 +191,6 @@ public class MyPage extends AppCompatActivity {
                                 });
                     }
                     firebaseAuth.signOut();
-                    mGoogleSignInClient.revokeAccess();
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
@@ -231,14 +230,30 @@ public class MyPage extends AppCompatActivity {
                                 Log.e("###", "회원탈퇴 실패");
                             }
                         });
-                firebaseAuth.getCurrentUser().delete();
+                firebaseAuth.getCurrentUser()
+                        .delete()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.e("###", "회원탈퇴 성공");
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e("###", " "+e);
+                            }
+                        });
+
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        nickname_dialog= new Dialog(this);
+        nickname_dialog = new Dialog(this);
         nickname_dialog.setContentView(R.layout.dialog_edit_nickname);
         nickname_dialog.setCanceledOnTouchOutside(true);
         nickname_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
@@ -248,11 +263,11 @@ public class MyPage extends AppCompatActivity {
                 String nickname = text.getText().toString();
                 Log.e("###", firebaseAuth.getCurrentUser().getUid());
                 Log.e("###", nickname);
-                if(!nickname.equals("")){
+                if (!nickname.equals("")) {
                     mstore.collection("User").document(firebaseAuth.getUid()).update("username", nickname);
                     name.setText(nickname);
                 }
-               nickname_dialog.dismiss();
+                nickname_dialog.dismiss();
             }
         });
 
@@ -295,7 +310,7 @@ public class MyPage extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
     }
 }
