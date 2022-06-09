@@ -8,7 +8,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.example.unicon_project"
+        applicationId "com.unicon.unicon_project"
         minSdk 21
         targetSdk 30
         versionCode 1
