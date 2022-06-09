@@ -21,10 +21,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.unicon.unicon_project.Adapters.MultiImageAdapter;
 import com.unicon.unicon_project.Authentic.SignInActivity;
 import com.unicon.unicon_project.ChattingActivity;
+import com.unicon.unicon_project.Classes.User;
 import com.unicon.unicon_project.ImageViewpager;
 import com.unicon.unicon_project.ProgressDialog;
 import com.unicon.unicon_project.R;
@@ -63,7 +68,6 @@ public class SaleProductPage extends AppCompatActivity {
     private RecyclerView photo_list;
     private Switch owner_switch;
 
-
     private ViewPager2 sliderViewPager;
     private LinearLayout layoutIndicator;
     private ArrayList<Uri> images = new ArrayList<Uri>();
@@ -72,6 +76,8 @@ public class SaleProductPage extends AppCompatActivity {
     GestureDetector detector;
     ProgressDialog progressDialog;
     Dialog login_dialog;
+
+    String chattingUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +107,21 @@ public class SaleProductPage extends AppCompatActivity {
             owner_switch.setSwitchTextAppearance(getApplicationContext(), R.style.SwitchTextAppearance);
         }
 
+        /* 닉네임 가져오기 */
+        mstore.collection("User").document(select_data.getWriterId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        User myUser = document.toObject(User.class);
+                        chattingUserID = myUser.getUsername();
+                    }
+                }
+            }
+        });
+
         btn_sale_chatting = findViewById(R.id.btn_sale_chatting);
         btn_sale_chatting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +132,7 @@ public class SaleProductPage extends AppCompatActivity {
                     intent.putExtra("productID", select_data.getProductId());
                     intent.putExtra("writerID", select_data.getWriterId());
                     intent.putExtra("homeAddress", select_data.getHome_adress());
+                    intent.putExtra("chattingUserID", chattingUserID);
                     startActivity(intent);
                 }
                 else{

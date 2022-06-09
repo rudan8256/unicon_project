@@ -1,5 +1,6 @@
 package com.unicon.unicon_project.Pages;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,8 +11,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.unicon.unicon_project.ChattingActivity;
 import com.unicon.unicon_project.Classes.PurchaseProduct;
+import com.unicon.unicon_project.Classes.User;
 import com.unicon.unicon_project.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,6 +26,7 @@ import java.util.ArrayList;
 public class PurchaseProductPage extends AppCompatActivity {
 
     PurchaseProduct select_data;
+    String chattingUserID;
     private TextView home_address, deposit_price_max, month_price_min, month_price_max, live_period_start, live_period_end;
     private TextView maintenance_cost, room_size_min, room_size_max, specific, structure;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
@@ -46,6 +52,7 @@ public class PurchaseProductPage extends AppCompatActivity {
 
         Construter();
         WritingData();
+        GetUsername();
 
         btn_purchase_chatting = findViewById(R.id.btn_purchase_chatting);
         btn_purchase_chatting.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +63,7 @@ public class PurchaseProductPage extends AppCompatActivity {
                 intent.putExtra("productID", select_data.getProductId());
                 intent.putExtra("writerID", select_data.getWriterId());
                 intent.putExtra("homeAddress", select_data.getHome_address());
+                intent.putExtra("chattingUserID", chattingUserID);
                 startActivity(intent);
             }
         });
@@ -210,5 +218,23 @@ public class PurchaseProductPage extends AppCompatActivity {
             elec_boiler.setBackgroundResource(R.drawable.sale_purchase_color_round6);
             text_elec_boiler.setTextColor(Color.WHITE);
         }
+    }
+
+    private void GetUsername()
+    {
+        /* 닉네임 가져오기 */
+        mstore.collection("User").document(select_data.getWriterId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+                        User myUser = document.toObject(User.class);
+                        chattingUserID = myUser.getUsername();
+                    }
+                }
+            }
+        });
     }
 }

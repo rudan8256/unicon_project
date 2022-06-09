@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.unicon.unicon_project.Adapters.ChattingAdapter;
 import com.unicon.unicon_project.Classes.ChattingData;
@@ -90,7 +89,10 @@ public class ChattingActivity extends AppCompatActivity {
         productID = it.getExtras().get("productID").toString();
         writerID = it.getExtras().get("writerID").toString();
         homeAddress = it.getExtras().get("homeAddress").toString();
-        chattingUserID = it.getExtras().get("chattingUserID").toString();
+        if(it.getExtras().get("chattingUserID") != null)
+            chattingUserID = it.getExtras().get("chattingUserID").toString();
+        else
+            chattingUserID = "anonymous";
 
         roomInformation = user.getUid();
 
@@ -146,7 +148,6 @@ public class ChattingActivity extends AppCompatActivity {
         if(chattingID.equals(""))
             chattingID = chattingManager.generateChattingID(productID, uid);
 
-        Toast.makeText(getApplicationContext(), "Current UID is.. "+uid, Toast.LENGTH_LONG).show();
         //처음 들어왔을시 unread 0으로 초기화
         reference.child("chattingList").child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -202,8 +203,6 @@ public class ChattingActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-                Toast.makeText(getApplicationContext(), "Clicked!", Toast.LENGTH_LONG).show();
 
                 //상대방 정보 = there 가져오기
                 if(uid == writerID)
