@@ -45,7 +45,7 @@ public class MyPage extends AppCompatActivity {
     TextView name, email;
     LinearLayout login_on, login_off;
     Button btn_sign_up, btn_log_in, btn_my_sale, btn_contract;
-    LinearLayout layout_liked, layout_notify, layout_ask, layout_logout, layout_delete;
+    private LinearLayout layout_liked, layout_notify, layout_ask, layout_logout, layout_delete;
     ImageView btn_back, edit_nickname;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private SessionCallBack mSessionCallback = new SessionCallBack();
@@ -137,7 +137,9 @@ public class MyPage extends AppCompatActivity {
         layout_liked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), LikeListActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
         layout_notify.setOnClickListener(new View.OnClickListener() {

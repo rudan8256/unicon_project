@@ -6,12 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.unicon.unicon_project.ChattingActivity;
@@ -22,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PurchaseProductPage extends AppCompatActivity {
 
@@ -30,16 +36,17 @@ public class PurchaseProductPage extends AppCompatActivity {
     private TextView home_address, deposit_price_max, month_price_min, month_price_max, live_period_start, live_period_end;
     private TextView maintenance_cost, room_size_min, room_size_max, specific, structure;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
-    private FirebaseAuth mauth = FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private LinearLayout deposit, month_rent, negotiable, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
     private LinearLayout convenience_store, subway, parking;
     private TextView text_deposit, text_month_rent, text_negotiable, text_elec_cost, text_gas_cost, text_water_cost, text_internet_cost;
     private TextView text_elec_boiler, text_gas_boiler, text_induction, text_aircon, text_washer, text_refrigerator, text_closet, text_gasrange, text_highlight;
     private TextView text_convenience_store, text_subway, text_parking;
-
+    private boolean isLiked;
     private ArrayList<String> image_urllist;
-
+    private ArrayList<String> Likes= new ArrayList<>();
+    private ImageView likeButton;
     private Button btn_purchase_chatting;
 
     @Override
@@ -65,6 +72,70 @@ public class PurchaseProductPage extends AppCompatActivity {
                 intent.putExtra("homeAddress", select_data.getHome_address());
                 intent.putExtra("chattingUserID", chattingUserID);
                 startActivity(intent);
+            }
+        });
+
+
+        likeButton = findViewById(R.id.like_button);
+        if (mAuth.getCurrentUser() != null) {//UserInfo에 등록되어있는 닉네임을 가져오기 위해서
+            mstore.collection("User").document(mAuth.getCurrentUser().getUid())// 여기 콜렉션 패스 경로가 중요해 보면 패스 경로가 user로 되어있어서
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.getResult() != null) {
+
+                                User Userdata = task.getResult().toObject(User.class);
+
+
+                                Likes = (ArrayList<String>) Userdata.getLikedProductID();
+
+
+
+                                if (Likes != null) {
+                                    isLiked = Likes.contains(select_data.getProductId());
+
+                                    if (isLiked)
+                                        likeButton.setImageResource(R.drawable.ic_baseline_favorite_24);
+                                    else
+                                        likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                                } else {
+                                    likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                                    isLiked = false;
+                                }
+
+                            }
+                        }
+                    });
+        }
+
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isLiked) {
+                    Likes.remove(select_data.getProductId());
+                    likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+
+                } else {
+                    Likes.add(select_data.getProductId());
+                    likeButton.setImageResource(R.drawable.ic_baseline_favorite_24);
+                }
+                isLiked = !isLiked;
+
+                mstore.collection("User").document(select_data.getWriterId())
+                        .update("likedProductID", Likes)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
             }
         });
     }

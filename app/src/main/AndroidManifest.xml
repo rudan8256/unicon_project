@@ -9,49 +9,51 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.unicon.unicon_project.Authentic.GlobalApplication"
+        android:name=".Authentic.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_main"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Unicon_project">
-
         <activity
-            android:name="com.unicon.unicon_project.MyPage"
+            android:name=".LikeListActivity"
             android:exported="true" />
         <activity
-            android:name="com.unicon.unicon_project.Pages.RecommendPage"
+            android:name=".MyPage"
             android:exported="true" />
         <activity
-            android:name="com.unicon.unicon_project.Pages.PurchaseProductPage"
+            android:name=".Pages.RecommendPage"
+            android:exported="true" />
+        <activity
+            android:name=".Pages.PurchaseProductPage"
             android:exported="false" />
         <activity
-            android:name="com.unicon.unicon_project.Pages.PurchaseList"
+            android:name=".Pages.PurchaseList"
             android:exported="false" />
         <activity
-            android:name="com.unicon.unicon_project.Pages.PurchasePage"
+            android:name=".Pages.PurchasePage"
             android:exported="false" />
         <activity
-            android:name="com.unicon.unicon_project.ChattingActivity"
+            android:name=".ChattingActivity"
             android:exported="false" />
         <activity
-            android:name="com.unicon.unicon_project.Pages.SaleProductPage"
+            android:name=".Pages.SaleProductPage"
             android:exported="true" />
         <activity
-            android:name="com.unicon.unicon_project.Pages.ChattingListActivity"
+            android:name=".Pages.ChattingListActivity"
             android:exported="true" />
         <activity
-            android:name="com.unicon.unicon_project.Pages.SaleList"
+            android:name=".Pages.SaleList"
             android:exported="true" />
         <activity
-            android:name="com.unicon.unicon_project.Pages.SalePage"
+            android:name=".Pages.SalePage"
             android:exported="true" />
         <activity
-            android:name="com.unicon.unicon_project.Classes.Image_zoom"
+            android:name=".Classes.Image_zoom"
             android:exported="true" />
         <activity
-            android:name="com.unicon.unicon_project.ImageViewpager"
+            android:name=".ImageViewpager"
             android:exported="true" />
 
         <meta-data
@@ -59,10 +61,10 @@
             android:value="@string/kakao_app_key" />
 
         <activity
-            android:name="com.unicon.unicon_project.Authentic.SignUpActivity"
+            android:name=".Authentic.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name="com.unicon.unicon_project.Authentic.SignInActivity"
+            android:name=".Authentic.SignInActivity"
             android:exported="true" />
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
@@ -83,10 +85,10 @@
             android:value="AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA" />
 
         <activity
-            android:name="com.unicon.unicon_project.Pages.MapTest"
+            android:name=".Pages.MapTest"
             android:exported="true" />
         <activity
-            android:name="com.unicon.unicon_project.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
