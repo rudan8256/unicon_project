@@ -488,10 +488,16 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
     private Marker addMarker(SaleProduct saleProduct, boolean isSelectedMarker){
         Log.e(TAG,"saleproduct ID : "+saleProduct.getProductId());
         LatLng position = getLatLng(saleProduct.getHome_adress());
-        int price =Integer.parseInt(saleProduct.getMonth_rent_price());
+        int price=0;
+        if(saleProduct.getMonth_rent()) {
+            price = Integer.parseInt(saleProduct.getMonth_rent_price());
+        }
+        if(saleProduct.getDeposit()){
+            price = Integer.parseInt(saleProduct.getDeposit_price());
+        }
         String formatted = NumberFormat.getCurrencyInstance().format(price);
         Log.e(TAG,"addMarker"+formatted);
-        tv_marker.setText(price+"0,000원");
+        tv_marker.setText(price+"만원");
 
         if(isSelectedMarker){
             //tv_marker.setBackgroundResource(R.drawable);
