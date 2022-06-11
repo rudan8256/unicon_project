@@ -905,7 +905,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="70dp"
             android:background="@color/white"
             android:elevation="2dp"
             android:orientation="vertical"
@@ -929,12 +929,6 @@
         </LinearLayout>
 
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_purchase_chatting"
-                android:text="채팅버튼"/>
-
         </LinearLayout>
 
 
@@ -955,7 +949,7 @@
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_sale_chatting"
+        app:layout_constraintEnd_toStartOf="@+id/btn_purchase_chatting"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
@@ -973,7 +967,7 @@
         android:layout_marginBottom="5dp"
         app:cardBackgroundColor="#411FCC"
         app:layout_constraintStart_toEndOf="@+id/cardView2"
-        android:id="@+id/btn_sale_chatting"
+        android:id="@+id/btn_purchase_chatting"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_weight="1"

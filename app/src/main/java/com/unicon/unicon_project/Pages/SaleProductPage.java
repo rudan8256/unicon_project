@@ -57,7 +57,7 @@ public class SaleProductPage extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private LinearLayout deposit, month_rent, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
-    private LinearLayout convenience_store, subway, parking, post_gallery;;
+    private LinearLayout convenience_store, subway, parking;
     private TextView text_deposit, text_month_rent, text_negotiable, text_elec_cost, text_gas_cost, text_water_cost, text_internet_cost;
     private TextView text_elec_boiler, text_gas_boiler, text_induction, text_aircon, text_washer, text_refrigerator, text_closet, text_gasrange, text_highlight;
     private TextView text_convenience_store, text_subway, text_parking;
@@ -93,7 +93,6 @@ public class SaleProductPage extends AppCompatActivity {
         select_data = (SaleProduct) intent.getSerializableExtra("select_data");
 
         photo_list = findViewById(R.id.photo_list);
-        post_gallery = findViewById(R.id.pre_picture_shape);
         owner_switch = findViewById(R.id.owner_switch);
 
         progressDialog.show();
@@ -279,9 +278,7 @@ public class SaleProductPage extends AppCompatActivity {
     private void Image_Load() {
         image_urllist = select_data.getImages_url();
 
-        if(image_urllist.size()>0) {
-            post_gallery.setVisibility(View.GONE);
-        }
+
 
         for (String image_url : image_urllist) {
             Log.d("####", "image_url : " + image_url);

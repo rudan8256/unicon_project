@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public Map<String, Integer> structure_sel_map = new HashMap<>();
     private Spinner structureSpinner;
 
-    private ImageView day_first, day_last;
+    private ImageView day_first, day_last,transition_img;
     private DatePickerDialog datePickerDialog;
     private List<SaleProduct> sublist= new ArrayList<>(mDatas);
 
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         noitem_layout = findViewById(R.id.no_recitem);
         more_item_click = findViewById(R.id.more_item_text);
         more_item_layout= findViewById(R.id.more_item_layout);
-
+        transition_img = findViewById(R.id.transition_img);
 
         more_item_layout.setVisibility(View.GONE);
         noitem_layout.setVisibility(View.GONE);
@@ -168,7 +170,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if(firebaseAuth.getCurrentUser() != null) {
                     Intent intent = new Intent(getApplicationContext(), SalePage.class);
-                    startActivity(intent);
+
+
+                    Pair[] pairs = new Pair[1];
+                    pairs[0] = new Pair<View,String>(transition_img, "imagetransition");
+                    //액티비티에서 움직일 뷰와 트랜지션이름을 Pair배열에 담아둔다.
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
+                    //액티비티 옵션을 적용하기 위해 ActivityOptions객체를 만들고 트랜지션 에니메이션에 대한 설정을 넣는다
+
+                    startActivity(intent,options.toBundle());
                 }
                 else{
                     login_dialog.show();

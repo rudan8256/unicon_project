@@ -60,6 +60,7 @@
 
 
                     <ImageView
+                        android:transitionName="imagetransition"
                         android:layout_width="80dp"
                         android:layout_height="75dp"
                         android:layout_marginRight="60px"

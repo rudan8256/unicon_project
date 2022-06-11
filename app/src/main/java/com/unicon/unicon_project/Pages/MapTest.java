@@ -558,7 +558,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 else{ title.setText("전세"); }
                  deposit.setText(saleProduct[0].getDeposit_price());
               monthcost.setText(" / "+ saleProduct[0].getMonth_rent_price());
-                roomsize.setText(saleProduct[0].getRoom_size());
+                roomsize.setText(saleProduct[0].getRoom_size()+"㎡");
                 structure.setText(saleProduct[0].getStructure());
                address.setText(saleProduct[0].getHome_name());
                 living_start.setText(saleProduct[0].getLive_period_start());

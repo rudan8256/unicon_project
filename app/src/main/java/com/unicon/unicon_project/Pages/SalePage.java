@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.unicon.unicon_project.Adapters.MultiImageAdapter;
 import com.unicon.unicon_project.ImageViewpager;
+import com.unicon.unicon_project.ProgressDialog;
 import com.unicon.unicon_project.R;
 import com.unicon.unicon_project.Classes.SaleProduct;
 import com.google.android.gms.common.api.Status;
@@ -166,7 +167,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+
 
             }
 
@@ -695,6 +696,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private void UploadPhoto(ArrayList<Uri> uris, int n) {
 
         int i = 0;
+
         for (Uri uri : uris) {
             Log.d("###", "Uri 는: " + uri);
             String filename = mAuth.getUid() + "_" + System.currentTimeMillis() + n;
@@ -710,13 +712,13 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
-                    Toast.makeText(getApplicationContext(), "업로드 실패", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "업로드 실패", Toast.LENGTH_LONG).show();
 
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getApplicationContext(), "업로드 성공", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(), "업로드 성공", Toast.LENGTH_LONG).show();
 
                 }
             });

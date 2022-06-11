@@ -57,6 +57,7 @@
                 android:orientation="vertical">
 
                <LinearLayout
+
                    android:id="@+id/to_SalePage"
                    android:layout_weight="5"
                    android:gravity="center"
@@ -64,6 +65,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                    <ImageView
+                       android:id="@+id/transition_img"
+                       android:transitionName="imagetransition"
                        android:src="@drawable/home_icon_sell"
                        android:layout_width="30dp"
                        android:layout_height="30dp"/>
@@ -290,6 +293,7 @@
 
 
             <LinearLayout
+                android:layout_marginBottom="40dp"
                 android:id="@+id/more_item_layout"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -323,6 +327,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
+                android:layout_marginBottom="40dp"
                 >
 
                 <ImageView
