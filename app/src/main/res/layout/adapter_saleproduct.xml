@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/house_imgview"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
             android:layout_margin="13dp"
             android:background="@drawable/default_houseimg"
             android:scaleType="centerCrop"
@@ -41,6 +41,7 @@
                >
 
                 <TextView
+                    android:textColor="@color/black"
                     android:id="@+id/post_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,6 +49,7 @@
                     tools:text="Title" />
 
                 <TextView
+                    android:textColor="@color/black"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/post_deposit"
                     android:layout_width="wrap_content"
@@ -57,6 +59,7 @@
 
 
                 <TextView
+                    android:textColor="@color/black"
                     android:id="@+id/post_monthcost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,6 +70,7 @@
 
 
             <LinearLayout
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
@@ -78,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="15dp"
                     tools:text="Title" />
+
 
                 <TextView
                     android:layout_marginLeft="10dp"
@@ -92,7 +97,7 @@
 
 
             <TextView
-
+                android:maxLines="2"
                 android:id="@+id/post_address"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
@@ -131,6 +136,14 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E8E8E8"/>
 
 
 </LinearLayout>

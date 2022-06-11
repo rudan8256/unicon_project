@@ -109,7 +109,7 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
 
         viewHolder.deposit.setText(mDatas.get(position).getDeposit_price());
         viewHolder.monthcost.setText(" / "+mDatas.get(position).getMonth_rent_price());
-        viewHolder.roomsize.setText(mDatas.get(position).getRoom_size());
+        viewHolder.roomsize.setText(mDatas.get(position).getRoom_size()+"㎡");
         viewHolder.structure.setText(mDatas.get(position).getStructure());
         viewHolder.address.setText(mDatas.get(position).getHome_name());
         viewHolder.living_start.setText(mDatas.get(position).getLive_period_start());

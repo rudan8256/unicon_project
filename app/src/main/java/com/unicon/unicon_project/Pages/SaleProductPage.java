@@ -54,7 +54,7 @@ public class SaleProductPage extends AppCompatActivity {
     private TextView home_address, deposit_price, month_price, live_period_start, live_period_end,title_page;
     private TextView maintenance_cost, room_size, specific, floor, structure;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
-    private FirebaseAuth mauth = FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private LinearLayout deposit, month_rent, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
     private LinearLayout convenience_store, subway, parking, post_gallery;;
@@ -78,6 +78,10 @@ public class SaleProductPage extends AppCompatActivity {
     Dialog login_dialog;
 
     String chattingUserID;
+
+    private ArrayList<String> Likes= new ArrayList<>();
+    private ImageView likeButton;
+    private boolean isLiked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +123,70 @@ public class SaleProductPage extends AppCompatActivity {
                         chattingUserID = myUser.getUsername();
                     }
                 }
+            }
+        });
+
+
+        likeButton = findViewById(R.id.like_button);
+        if (mAuth.getCurrentUser() != null) {//UserInfo에 등록되어있는 닉네임을 가져오기 위해서
+            mstore.collection("User").document(mAuth.getCurrentUser().getUid())// 여기 콜렉션 패스 경로가 중요해 보면 패스 경로가 user로 되어있어서
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.getResult() != null) {
+
+                                User Userdata = task.getResult().toObject(User.class);
+
+
+                                Likes = (ArrayList<String>) Userdata.getLikedProductID();
+
+
+
+                                if (Likes != null) {
+                                    isLiked = Likes.contains(select_data.getProductId());
+
+                                    if (isLiked)
+                                        likeButton.setImageResource(R.drawable.ic_baseline_favorite_24);
+                                    else
+                                        likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                                } else {
+                                    likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                                    isLiked = false;
+                                }
+
+                            }
+                        }
+                    });
+        }
+
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isLiked) {
+                    Likes.remove(select_data.getProductId());
+                    likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+
+                } else {
+                    Likes.add(select_data.getProductId());
+                    likeButton.setImageResource(R.drawable.ic_baseline_favorite_24);
+                }
+                isLiked = !isLiked;
+
+                mstore.collection("User").document(mAuth.getCurrentUser().getUid())
+                        .update("likedProductID", Likes)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
             }
         });
 

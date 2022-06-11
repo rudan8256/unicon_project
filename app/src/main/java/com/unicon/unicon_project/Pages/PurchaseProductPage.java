@@ -43,10 +43,8 @@ public class PurchaseProductPage extends AppCompatActivity {
     private TextView text_deposit, text_month_rent, text_negotiable, text_elec_cost, text_gas_cost, text_water_cost, text_internet_cost;
     private TextView text_elec_boiler, text_gas_boiler, text_induction, text_aircon, text_washer, text_refrigerator, text_closet, text_gasrange, text_highlight;
     private TextView text_convenience_store, text_subway, text_parking;
-    private boolean isLiked;
+
     private ArrayList<String> image_urllist;
-    private ArrayList<String> Likes= new ArrayList<>();
-    private ImageView likeButton;
     private Button btn_purchase_chatting;
 
     @Override
@@ -76,68 +74,7 @@ public class PurchaseProductPage extends AppCompatActivity {
         });
 
 
-        likeButton = findViewById(R.id.like_button);
-        if (mAuth.getCurrentUser() != null) {//UserInfo에 등록되어있는 닉네임을 가져오기 위해서
-            mstore.collection("User").document(mAuth.getCurrentUser().getUid())// 여기 콜렉션 패스 경로가 중요해 보면 패스 경로가 user로 되어있어서
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.getResult() != null) {
 
-                                User Userdata = task.getResult().toObject(User.class);
-
-
-                                Likes = (ArrayList<String>) Userdata.getLikedProductID();
-
-
-
-                                if (Likes != null) {
-                                    isLiked = Likes.contains(select_data.getProductId());
-
-                                    if (isLiked)
-                                        likeButton.setImageResource(R.drawable.ic_baseline_favorite_24);
-                                    else
-                                        likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-                                } else {
-                                    likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-                                    isLiked = false;
-                                }
-
-                            }
-                        }
-                    });
-        }
-
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isLiked) {
-                    Likes.remove(select_data.getProductId());
-                    likeButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-
-                } else {
-                    Likes.add(select_data.getProductId());
-                    likeButton.setImageResource(R.drawable.ic_baseline_favorite_24);
-                }
-                isLiked = !isLiked;
-
-                mstore.collection("User").document(select_data.getWriterId())
-                        .update("likedProductID", Likes)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        });
-            }
-        });
     }
 
     private void Construter() {
