@@ -52,7 +52,7 @@ public class SaleProductPage extends AppCompatActivity {
     private Button complete_btn;
     CardView btn_sale_chatting;
     private TextView home_address, deposit_price, month_price, live_period_start, live_period_end,title_page;
-    private TextView maintenance_cost, room_size, specific, floor, structure;
+    private TextView maintenance_cost, room_size, specific, floor, structure,deposit_month;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private LinearLayout deposit, month_rent, elec_cost, gas_cost, water_cost, internet_cost;
@@ -439,6 +439,8 @@ public class SaleProductPage extends AppCompatActivity {
         text_parking = findViewById(R.id.text_parking);
 
         title_page=findViewById(R.id.title_address);
+
+        deposit_month=findViewById(R.id.deposit_month);
     }
 
 
@@ -446,16 +448,27 @@ public class SaleProductPage extends AppCompatActivity {
 
         //데이터 부여
         home_address.setText(select_data.getHome_adress());
+
+        if(select_data.getMonth_rent()){
+            deposit_month.setText("월세");
+            month_price.setText("/" +select_data.getMonth_rent_price());
+        }
+        else{
+            deposit_month.setText("전세");
+
+        }
+
         deposit_price.setText(select_data.getDeposit_price());
-        month_price.setText(select_data.getMonth_rent_price());
+
         live_period_start.setText(select_data.getLive_period_start());
         live_period_end.setText(select_data.getLive_period_end());
         maintenance_cost.setText(select_data.getMaintenance_cost());
-        room_size.setText(select_data.getRoom_size());
+        room_size.setText(select_data.getRoom_size()+"㎡");
         specific.setText(select_data.getSpecific());
         floor.setText(select_data.getFloor());
         structure.setText(select_data.getStructure());
     title_page.setText(select_data.getHome_name());
+
 
         if (select_data.getDeposit()) {
 

@@ -8,12 +8,15 @@ import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -123,6 +126,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login_dialog= new Dialog(this);
         login_dialog.setContentView(R.layout.dialog_yologinpage);
         login_dialog.setCanceledOnTouchOutside(true);
+
+
+
         login_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,6 +152,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         recommend_condition=findViewById(R.id.recommend_condition);
+
+
         recommend_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -288,8 +296,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         condition_dialog= new Dialog(this);
+        condition_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        condition_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         condition_dialog.setContentView(R.layout.dialog_reccondition);
         condition_dialog.setCanceledOnTouchOutside(true);
+
+
 
         Construter();
         searchInFB();
@@ -636,6 +648,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         set_Clicklistner();
 
 
+        condition_dialog.findViewById(R.id.cancle_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                condition_dialog.dismiss();
+            }
+        });
         condition_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

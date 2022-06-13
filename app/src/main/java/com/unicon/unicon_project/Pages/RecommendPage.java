@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -82,6 +85,8 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
 
         condition_dialog= new Dialog(this);
+        condition_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        condition_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         condition_dialog.setContentView(R.layout.dialog_reccondition);
         condition_dialog.setCanceledOnTouchOutside(true);
 
@@ -377,6 +382,12 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
         set_Clicklistner();
 
+        condition_dialog.findViewById(R.id.cancle_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                condition_dialog.dismiss();
+            }
+        });
 
         condition_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
             @Override

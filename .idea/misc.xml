@@ -8,21 +8,35 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable-v24/chatting_btn_salepage.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable-v24/salepage_edittextborder.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/bg_indicator_inactive.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/chatting_top_box.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/custom_thumb.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/custom_thumb_main.xml" value="0.2484375" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/custom_track.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/default_houseimg.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/dialog_rec_complete.xml" value="0.2786458333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/down_arrow_marker.xml" value="0.15092592592592594" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/down_arrow_marker_ispick.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.2484375" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_baseline_mark_chat_unread_24.xml" value="0.2484375" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2484375" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_center.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_delete.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_house_pic.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_login_back.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_login_complete.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_main_background.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/ic_round_square_white_main.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/main_item_border.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/maptest_picker_clickitem.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/maptest_round_corner.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/marker_border.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/marker_border_ispick.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/market_border.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/recco_white_round15.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/sale_purchase_color_round15.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/sale_purchase_color_round6.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/drawable/sale_purchase_white_round15.xml" value="0.26979166666666665" />
@@ -59,10 +73,13 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/dialog_tag.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/dialog_yologinpage.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/item_chatting.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/item_chatting_list.xml" value="0.25" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/item_emptytag.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/item_tag.xml" value="0.4" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/marker.xml" value="0.8800000000000001" />
         <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/layout/multi_image_item.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/unicon_project/app/src/main/res/mipmap-anydpi-v26/ic_main.xml" value="0.26614583333333336" />
       </map>
     </option>
   </component>
