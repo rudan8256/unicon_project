@@ -2,6 +2,7 @@ package com.unicon.unicon_project.Pages;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -45,7 +46,7 @@ public class PurchaseProductPage extends AppCompatActivity {
     private TextView text_convenience_store, text_subway, text_parking;
 
     private ArrayList<String> image_urllist;
-    private Button btn_purchase_chatting;
+    private CardView btn_purchase_chatting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

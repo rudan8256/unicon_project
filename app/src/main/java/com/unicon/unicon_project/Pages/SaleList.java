@@ -9,6 +9,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -118,6 +120,8 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
         //condition dialog constructer
         condition_dialog= new Dialog(this);
+        condition_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        condition_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         condition_dialog.setContentView(R.layout.dialog_reccondition);
         condition_dialog.setCanceledOnTouchOutside(true);
 
@@ -195,12 +199,14 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                     for(SaleProduct item : mDatas){
                         dist.add(myLocationManager.getDist(myLocationManager.getLatLng(getApplicationContext(),item.getHome_adress()),myLocationManager.getMyCurrentPosition()));
                     }
-
+                    progressDialog.show();
 
                     saleProductList.setDist(dist);
                     saleProductList.setSaleList(mDatas);
                     saleProductAdapter.setmDatas(saleProductList.getSaleList());
                     saleProductAdapter.notifyDataSetChanged();
+
+                    progressDialog.dismiss();
 
                 }
             }

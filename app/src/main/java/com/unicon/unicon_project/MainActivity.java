@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if(firebaseAuth.getCurrentUser() != null) {
                         Intent intent = new Intent(MainActivity.this, ChattingListActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
                     }
                     else{
                         login_dialog.show();

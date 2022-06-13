@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="10dp"
     android:background="@drawable/recco_white_round15"
     tools:context=".MainActivity">
 
@@ -26,6 +25,7 @@
 
 
     <LinearLayout
+        android:layout_marginTop="4dp"
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

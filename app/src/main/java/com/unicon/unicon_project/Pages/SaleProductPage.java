@@ -462,7 +462,7 @@ public class SaleProductPage extends AppCompatActivity {
 
         live_period_start.setText(select_data.getLive_period_start());
         live_period_end.setText(select_data.getLive_period_end());
-        maintenance_cost.setText(select_data.getMaintenance_cost());
+        maintenance_cost.setText(select_data.getMaintenance_cost()+"만원");
         room_size.setText(select_data.getRoom_size()+"㎡");
         specific.setText(select_data.getSpecific());
         floor.setText(select_data.getFloor());
@@ -470,16 +470,6 @@ public class SaleProductPage extends AppCompatActivity {
     title_page.setText(select_data.getHome_name());
 
 
-        if (select_data.getDeposit()) {
-
-            deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
-            deposit.setSelected(true);
-        }
-        if (select_data.getMonth_rent()) {
-
-            month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
-            month_rent.setSelected(true);
-        }
 
 
         if (select_data.getMaintains().get("elec_cost")) {
