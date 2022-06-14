@@ -19,6 +19,7 @@
 
 
     <LinearLayout
+        android:elevation="2dp"
         android:id="@+id/lo_spinner"
         android:background="@drawable/ic_round_square_white_main"
         android:layout_marginLeft="10dp"
@@ -49,6 +50,7 @@
 
 
         <LinearLayout
+            android:elevation="2dp"
             android:id="@+id/lo_filter"
             android:layout_margin="10dp"
             app:layout_constraintEnd_toEndOf="parent"
