@@ -63,11 +63,11 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private static final int FROM_ADDRESS = 100;
     private Button complete_btn;
     private SaleProduct newproduct;
-    private EditText home_address, deposit_price, month_price;
+    private EditText home_address, home_name, deposit_price, month_price;
     private EditText maintenance_cost, room_size, specific;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private String curdate, floor, structure,home_name;
+    private String curdate, floor, structure;
     private LinearLayout deposit, month_rent, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
     private LinearLayout convenience_store, subway, parking,month_area, home_address_area, day_first, day_last;
@@ -294,7 +294,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                 newproduct.setWriterId(mAuth.getUid());
                 newproduct.setFloor(floor);
                 newproduct.setStructure(structure);
-                newproduct.setHome_name(home_name);
+                newproduct.setHome_name(home_name.getText().toString());
                 newproduct.setHome_latlng(home_latlng);
 
                 curdate = String.valueOf(System.currentTimeMillis());
@@ -561,6 +561,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private void Construter() {
         complete_btn = findViewById(R.id.complete_btn);
         home_address = findViewById(R.id.home_address);
+        home_name = findViewById(R.id.home_name);
         deposit_price = findViewById(R.id.deposit_price);
         month_price = findViewById(R.id.month_price);
         live_period_start = findViewById(R.id.live_period_start);
@@ -633,7 +634,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
 
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 home_address.setText(place.getAddress());
-                home_name = place.getName();
+                //home_name = place.getName();
                 home_latlng = place.getLatLng();
                 //set Address on EditText
                 //Set LocalityName
