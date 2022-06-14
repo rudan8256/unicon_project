@@ -23,6 +23,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,10 +49,10 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class SaleProductPage extends AppCompatActivity {
+public class SaleProductPage extends AppCompatActivity implements OnMapReadyCallback {
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-
+    private GoogleMap mMap;
     SaleProduct select_data;
     private Button complete_btn;
     CardView btn_sale_chatting;
@@ -87,6 +92,10 @@ public class SaleProductPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale_product_page);
+        //Google Map ready
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        //Google Map ready done.
 
         progressDialog = new ProgressDialog(SaleProductPage.this);
         Intent intent = getIntent();
@@ -567,4 +576,12 @@ public class SaleProductPage extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(select_data.getHome_latlng(select_data.getLatlng_double()));
+        mMap.addMarker(markerOptions);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(select_data.getHome_latlng(select_data.getLatlng_double()),15));
+    }
 }

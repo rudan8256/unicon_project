@@ -1,13 +1,18 @@
 package com.unicon.unicon_project.Classes;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.Timestamp;
+
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PurchaseProduct implements Serializable {
 
     private String home_address;
+    private List<Double> home_latlng_double;
+    private LatLng home_latlng;
     private Boolean month_rent, deposit, negotiable;
     private String deposit_price_max;
     private String month_price_min, month_price_max;
@@ -67,8 +72,11 @@ public class PurchaseProduct implements Serializable {
 
     }
 
-    public PurchaseProduct(String home_address, Boolean month_rent, Boolean deposit, Boolean negotiable, String deposit_price_max, String month_price_min, String month_price_max, String live_period_start, String live_period_end, String maintenance_cost, String room_size_min, String room_size_max, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, String productId, String writerId, String home_name, Timestamp timestamp) {
+
+    public PurchaseProduct(String home_address, Boolean month_rent, Boolean deposit, Boolean negotiable, String deposit_price_max, String month_price_min, String month_price_max, String live_period_start, String live_period_end, String maintenance_cost, String room_size_min, String room_size_max, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, String productId, String writerId, String home_name, Timestamp timestamp,List<Double> home_latlng_double) {
         this.home_address = home_address;
+        this.home_latlng_double = home_latlng_double;
+        this.home_latlng=getHome_latlng(home_latlng_double);
         this.month_rent = month_rent;
         this.deposit = deposit;
         this.negotiable = negotiable;
@@ -264,5 +272,22 @@ public class PurchaseProduct implements Serializable {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public List<Double> getHome_latlng_double() {
+        return home_latlng_double;
+    }
+
+    public void setHome_latlng_double(List<Double> home_latlng_double) {
+        this.home_latlng_double = home_latlng_double;
+    }
+
+    public com.google.android.gms.maps.model.LatLng getHome_latlng(List<Double> p) {
+        LatLng ret = new LatLng(p.get(0),p.get(1));
+        return ret;
+    }
+
+    public void setHome_latlng(LatLng home_latlng) {
+        this.home_latlng = home_latlng;
     }
 }

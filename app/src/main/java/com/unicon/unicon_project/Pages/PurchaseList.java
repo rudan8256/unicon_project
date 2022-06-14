@@ -78,7 +78,7 @@ public class PurchaseList extends AppCompatActivity implements PurchaseProductAd
                         mDatas.add(snap.toObject(PurchaseProduct.class));
                     }
                     for (PurchaseProduct item : mDatas) {
-                        dist.add(myLocationManager.getDist(myLocationManager.getLatLng(getApplicationContext(), item.getHome_address()), myLocationManager.getMyCurrentPosition()));
+                        dist.add(myLocationManager.getDist(item.getHome_latlng(item.getHome_latlng_double()), myLocationManager.getMyCurrentPosition()));
                     }
                     purchaseProductList.setDist(dist);
                     purchaseProductList.setPurchaseList(mDatas);

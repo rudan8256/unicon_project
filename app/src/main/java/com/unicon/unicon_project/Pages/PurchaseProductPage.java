@@ -3,8 +3,11 @@ package com.unicon.unicon_project.Pages;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +17,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,7 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PurchaseProductPage extends AppCompatActivity {
+public class PurchaseProductPage extends AppCompatActivity implements OnMapReadyCallback {
 
     PurchaseProduct select_data;
     String chattingUserID;
@@ -44,7 +53,7 @@ public class PurchaseProductPage extends AppCompatActivity {
     private TextView text_deposit, text_month_rent, text_negotiable, text_elec_cost, text_gas_cost, text_water_cost, text_internet_cost;
     private TextView text_elec_boiler, text_gas_boiler, text_induction, text_aircon, text_washer, text_refrigerator, text_closet, text_gasrange, text_highlight;
     private TextView text_convenience_store, text_subway, text_parking;
-
+    private GoogleMap mMap;
     private ArrayList<String> image_urllist;
     private CardView btn_purchase_chatting;
 
@@ -53,6 +62,10 @@ public class PurchaseProductPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase_product_page);
 
+        //Google Map ready
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        //Google Map ready done.
         Intent intent = getIntent();
         select_data = (PurchaseProduct) intent.getSerializableExtra("select_data");
 
@@ -245,5 +258,22 @@ public class PurchaseProductPage extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(select_data.getHome_latlng(select_data.getHome_latlng_double()));
+        mMap.addMarker(markerOptions);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(select_data.getHome_latlng(select_data.getHome_latlng_double()),15));
+
+
+
+
+
+
+
+
     }
 }
