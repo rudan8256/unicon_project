@@ -81,7 +81,7 @@ public class PurchaseProductAdapter extends RecyclerView.Adapter<PurchaseProduct
         // contents of the view with that element
         if (mDatas.get(position).getMonth_rent()) {
             viewHolder.title.setText("월세");
-            viewHolder.monthCost.setText(mDatas.get(position).getMonth_price_min() + "~" + mDatas.get(position).getMonth_price_max());
+            viewHolder.monthCost.setText(" / "+mDatas.get(position).getMonth_price_min() + "~" + mDatas.get(position).getMonth_price_max());
         } else if (mDatas.get(position).getDeposit()) {
             viewHolder.title.setText("전세");
         }
@@ -89,7 +89,7 @@ public class PurchaseProductAdapter extends RecyclerView.Adapter<PurchaseProduct
             viewHolder.negotiable.setVisibility(View.GONE);
         }
 
-        viewHolder.deposit.setText(mDatas.get(position).getDeposit_price_max() + "/");
+        viewHolder.deposit.setText(mDatas.get(position).getDeposit_price_max() );
 
         viewHolder.roomSize.setText(mDatas.get(position).getRoom_size_min() + "㎡~" + mDatas.get(position).getRoom_size_max() + "㎡");
         viewHolder.structure.setText(mDatas.get(position).getStructure());
