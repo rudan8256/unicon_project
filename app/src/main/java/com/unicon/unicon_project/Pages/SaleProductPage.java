@@ -80,7 +80,7 @@ public class SaleProductPage extends AppCompatActivity {
     String chattingUserID;
 
     private ArrayList<String> Likes= new ArrayList<>();
-    private ImageView likeButton;
+    private ImageView likeButton, back_acticity;
     private boolean isLiked;
 
     @Override
@@ -109,6 +109,16 @@ public class SaleProductPage extends AppCompatActivity {
         }else {
             owner_switch.setSwitchTextAppearance(getApplicationContext(), R.style.SwitchTextAppearance);
         }
+
+        //뒤로가기
+        back_acticity =findViewById(R.id.back_acticity);
+
+        back_acticity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         /* 닉네임 가져오기 */
         mstore.collection("User").document(select_data.getWriterId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

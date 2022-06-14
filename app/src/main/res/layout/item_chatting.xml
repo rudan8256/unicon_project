@@ -16,9 +16,11 @@
         app:cardElevation="0dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
+
         >
 
         <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -27,17 +29,18 @@
                 android:id="@+id/tv_chatting_id"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="25sp"
+                android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:text="상대방"/>
 
             <TextView
+                android:layout_marginBottom="5dp"
                 android:id="@+id/tv_chatting_msg"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="30sp"
+                android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:layout_marginLeft="10sp"

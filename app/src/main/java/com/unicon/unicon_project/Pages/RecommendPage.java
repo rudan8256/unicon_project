@@ -71,7 +71,6 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
         recommend_condition=findViewById(R.id.recommend_condition);
         recommend_list=findViewById(R.id.recommend_list);
 
-
         structure_sel_map.put("상관없음",0);
         structure_sel_map.put("오픈형 원룸",1);
         structure_sel_map.put("분리형 원룸(방1, 거실)",2);
@@ -523,5 +522,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
         month_rent.setOnClickListener(this);
 
     }
+
+
 
 }
