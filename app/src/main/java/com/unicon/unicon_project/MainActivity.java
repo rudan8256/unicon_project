@@ -468,7 +468,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 for(int i=0;i<mDatas.size()-1;i++){
                     for(int j=0;j<mDatas.size()-1;j++){
-                        if(dataScore.get(j)>dataScore.get(j+1))
+                        if(dataScore.get(j)<dataScore.get(j+1))
                             swap(j,j+1);
                     }
                 }
@@ -538,7 +538,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return -1;
         }
         //날짜
-        else if( ! cur_data_end.equals("") && !cur_data_start.equals("") && !pre_data_end.equals("") && !pre_data_start.equals("")) {
+         if( ! cur_data_end.equals("") && !cur_data_start.equals("") && !pre_data_end.equals("") && !pre_data_start.equals("")) {
             if(Integer.parseInt(pre_data_end) <Integer.parseInt(cur_data_start) || Integer.parseInt(cur_data_end) < Integer.parseInt(pre_data_start) ) {
                 return -1;
             }
@@ -547,7 +547,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         //구조
-        else  if(! preUserdata.getStructure().equals("")) {
+       if(! preUserdata.getStructure().equals("")) {
             if( ! preUserdata.getStructure().equals(curdata.getStructure()) && ! preUserdata.getStructure().equals("상관없음")) {
                 return -1;
             }
@@ -555,7 +555,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 total  +=1000;
             }
         }
-        else {
+
 
             //전세금
             if (!preUserdata.getDeposit_price_max().equals("")) {
@@ -571,7 +571,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             //월세
-            if (!preUserdata.getMonth_rentprice_max().equals("") && !preUserdata.getMonth_rentprice_min().equals("")) {
+            if (preUserdata.getMonth_rent() && !preUserdata.getMonth_rentprice_max().equals("") && !preUserdata.getMonth_rentprice_min().equals("")) {
 
                 if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) >= Integer.parseInt(curdata.getMonth_rent_price()) &&
                         Integer.parseInt(preUserdata.getMonth_rentprice_min()) <= Integer.parseInt(curdata.getMonth_rent_price())) {
@@ -610,7 +610,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     total += 1000;
                 }
             }
-        }
+
         return total;
     }
 
