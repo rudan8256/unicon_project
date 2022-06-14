@@ -949,6 +949,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:elevation="2dp"
         android:gravity="center"
         android:layout_marginBottom="7dp"
         android:id="@+id/cardView2"
@@ -976,6 +977,7 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
+        android:elevation="2dp"
         android:layout_marginBottom="5dp"
         app:cardBackgroundColor="#411FCC"
         app:layout_constraintStart_toEndOf="@+id/cardView2"

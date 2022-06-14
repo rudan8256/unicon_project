@@ -6,9 +6,6 @@
         android:color="#FFFFFF"
         />
 
-    <stroke
-        android:color="#411FCC"
-        android:width="4dp"/>
 
 
     <corners
