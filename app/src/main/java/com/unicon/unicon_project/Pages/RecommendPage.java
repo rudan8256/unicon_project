@@ -267,6 +267,12 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
                 if (Integer.parseInt(preUserdata.getDeposit_price_max()) >= Integer.parseInt(curdata.getDeposit_price())) {
                     total += 1000;
                 }
+                else if ( Integer.parseInt(curdata.getDeposit_price()) - Integer.parseInt(preUserdata.getDeposit_price_max())<=50  ){
+                    total += (Integer.parseInt(curdata.getDeposit_price()) - Integer.parseInt(preUserdata.getDeposit_price_max()) )*10;
+                }
+                else{
+                    return -1;
+                }
             }
 
             //월세
