@@ -143,8 +143,11 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
         complete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (home_address.getText().toString().equals("") || (( month_price_min.getText().toString().equals("") || month_price_max.getText().toString().equals("") ) && newProduct.getMonth_rent())
+                if (home_address.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "필수정보 주소를 입력하세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if ((( month_price_min.getText().toString().equals("") || month_price_max.getText().toString().equals("") ) && newProduct.getMonth_rent())
                         ||  ( newProduct.getDeposit() && deposit_price_max.getText().toString().equals("") )|| str_live_period_start.equals("") || str_live_period_end.equals("")) {
                     Toast.makeText(getApplicationContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
                     return;
@@ -206,12 +209,12 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 if (!newProduct.getDeposit()) {
 
                     newProduct.setDeposit(true);
-                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    deposit.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                     deposit.setSelected(true);
 
                     if (newProduct.getMonth_rent()) {
                         newProduct.setMonth_rent(false);
-                        month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        month_rent.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                         month_rent.setSelected(false);
 
                     }
@@ -219,7 +222,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
 
                 } else {
                     newProduct.setDeposit(false);
-                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    deposit.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                     deposit.setSelected(false);
 
 
@@ -229,13 +232,13 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
             case R.id.month_rent:
                 if (!newProduct.getMonth_rent()) {
                     newProduct.setMonth_rent(true);
-                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    month_rent.setBackgroundResource(R.drawable.sale_purchase_color_round15);
                     month_rent.setSelected(true);
 
 
                     if (newProduct.getDeposit()) {
                         newProduct.setDeposit(false);
-                        deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        deposit.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                         deposit.setSelected(false);
                     }
 
@@ -243,7 +246,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
 
                 } else {
                     newProduct.setMonth_rent(false);
-                    month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    month_rent.setBackgroundResource(R.drawable.sale_purchase_white_round15);
                     month_rent.setSelected(false);
 
                 }

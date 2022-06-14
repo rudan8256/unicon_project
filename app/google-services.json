@@ -1,18 +1,67 @@
 {
   "project_info": {
     "project_number": "157651431543",
+    "firebase_url": "https://uniconproject-2be63-default-rtdb.firebaseio.com",
     "project_id": "uniconproject-2be63",
     "storage_bucket": "uniconproject-2be63.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:157651431543:android:51d7b28e3677e38b395672",
+        "mobilesdk_app_id": "1:157651431543:android:43c959b40bacbdd1395672",
         "android_client_info": {
           "package_name": "com.unicon.unicon_project"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "157651431543-dup7q4n6a4tjov446289b1e7mketf0p5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unicon.unicon_project",
+            "certificate_hash": "2e1ce7806272058b116d22c274445281ceee764b"
+          }
+        },
+        {
+          "client_id": "157651431543-ioj24m9g8ufdd0mumgbk40qcna0daa4p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unicon.unicon_project",
+            "certificate_hash": "5f71f8d77310c39a20ea6aeeac14643d0c4ca54a"
+          }
+        },
+        {
+          "client_id": "157651431543-ktjcrqiape6rf0n68csem52am8gi9au0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unicon.unicon_project",
+            "certificate_hash": "e4ae3782c45175f549b18a586d11b818ff40934f"
+          }
+        },
+        {
+          "client_id": "157651431543-l1sqvckbvsm0pnvh13lrcfegk9o0vc14.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unicon.unicon_project",
+            "certificate_hash": "320d9093c88af2f2d9ceda89b80774be7ef0fe86"
+          }
+        },
+        {
+          "client_id": "157651431543-rrg439ip221s3u822vfrh4k19k0jcsph.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unicon.unicon_project",
+            "certificate_hash": "a900cf8b031cf2d86e80f2c0e72bbf1f6bbc1026"
+          }
+        },
+        {
+          "client_id": "157651431543-u9nqi8qtqo2ltf4qja4jevan6huqfphd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unicon.unicon_project",
+            "certificate_hash": "23a63871ba3e3c5b928e5604564f400d87c1f7c6"
+          }
+        },
         {
           "client_id": "157651431543-bu1mitubmeiqvh89jtqk93rkn025m7ee.apps.googleusercontent.com",
           "client_type": 3
