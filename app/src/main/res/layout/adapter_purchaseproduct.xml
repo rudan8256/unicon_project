@@ -51,6 +51,7 @@
 
 
                     <TextView
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:id="@+id/post_title"
                         android:layout_width="wrap_content"
@@ -60,6 +61,7 @@
                         tools:text="월/전" />
 
                     <TextView
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:id="@+id/post_deposit"
                         android:layout_width="wrap_content"
@@ -69,6 +71,7 @@
                         tools:text="보증금" />
 
                     <TextView
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -77,6 +80,7 @@
                         tools:text="/" />
 
                     <TextView
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:id="@+id/post_month_cost"
                         android:layout_width="wrap_content"
@@ -103,6 +107,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/post_roomSize"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -110,6 +115,7 @@
                         tools:text="집 면적" />
 
                     <TextView
+                        android:textColor="@color/black"
                         android:id="@+id/post_structure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -122,6 +128,7 @@
 
 
                 <TextView
+                    android:textColor="@color/black"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/post_address"
                     android:layout_width="wrap_content"
