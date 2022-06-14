@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.unicon.unicon_project.Adapters.SaleProductAdapter;
 import com.unicon.unicon_project.Adapters.TagAdapter;
 import com.unicon.unicon_project.Classes.SaleProduct;
@@ -178,10 +179,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task!=null){
                     mDatas.clear();
-
-
                     Log.e("###","쿼리개수 : "+task.getResult().getDocuments().size());
-
                     Log.e("###","여긴가?");
                     for(DocumentSnapshot snap : task.getResult().getDocuments()){
                         mDatas.add(snap.toObject(SaleProduct.class));
@@ -193,13 +191,12 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                             }
                             if(!isContain)mDatas.remove(mDatas.size()-1);
                         }
-
                     }
 
                     Log.e("###","아닌가?");
 
                     for(SaleProduct item : mDatas){
-                        dist.add(myLocationManager.getDist(item.getHome_latlng(),myLocationManager.getMyCurrentPosition()));
+                        dist.add(myLocationManager.getDist(item.getHome_latlng(item.getLatlng_double()),myLocationManager.getMyCurrentPosition()));
                     }
 
                     saleProductList.setDist(dist);

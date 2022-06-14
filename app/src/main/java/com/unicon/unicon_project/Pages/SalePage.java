@@ -295,7 +295,10 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                 newproduct.setFloor(floor);
                 newproduct.setStructure(structure);
                 newproduct.setHome_name(home_name.getText().toString());
-                newproduct.setHome_latlng(home_latlng);
+                List<Double> p = new ArrayList<>();
+                p.add(home_latlng.latitude);
+                p.add(home_latlng.longitude);
+                newproduct.setLatlng_double(p);
 
                 curdate = String.valueOf(System.currentTimeMillis());
                 newproduct.setProductId(curdate + mAuth.getUid());

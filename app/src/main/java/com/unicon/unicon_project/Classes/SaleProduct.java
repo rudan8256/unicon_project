@@ -6,6 +6,7 @@ import com.google.firebase.Timestamp;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SaleProduct implements Serializable {
@@ -31,7 +32,6 @@ public class SaleProduct implements Serializable {
      */
 
     private String home_adress;
-    private LatLng home_latlng;
     private Boolean month_rent,deposit;
     private String month_rent_price , deposit_price;
     private String live_period_start, live_period_end;
@@ -47,10 +47,10 @@ public class SaleProduct implements Serializable {
     private String writerId;
     private String home_name;
     private Timestamp timestamp;
+    private List<Double> latlng_double;
 
 
     public SaleProduct(){
-        this.home_latlng = new LatLng(37.5666805,126.9784147);
         this.home_adress="" ;
         this.month_rent_price="";
         this.deposit_price="";
@@ -100,8 +100,7 @@ public class SaleProduct implements Serializable {
 
     }
 
-    public SaleProduct(String home_adress, Boolean month_rent, Boolean deposit, String month_rent_price, String deposit_price, String live_period_start, String live_period_end, ArrayList<String> images_url, String maintenance_cost, String room_size, String floor, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, Map<String, String> personal_proposal, String productId, String writerId, String home_name, Timestamp timestamp,LatLng home_latLng) {
-        this.home_latlng = home_latLng;
+    public SaleProduct(String home_adress, Boolean month_rent, Boolean deposit, String month_rent_price, String deposit_price, String live_period_start, String live_period_end, ArrayList<String> images_url, String maintenance_cost, String room_size, String floor, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, Map<String, String> personal_proposal, String productId, String writerId, String home_name, Timestamp timestamp,List<Double> latlng_double) {
         this.home_adress = home_adress;
         this.month_rent = month_rent;
         this.deposit = deposit;
@@ -122,10 +121,10 @@ public class SaleProduct implements Serializable {
         this.writerId = writerId;
         this.home_name = home_name;
         this.timestamp = timestamp;
+        this.latlng_double = latlng_double;
     }
 
     public SaleProduct(String home_adress, Boolean month_rent, Boolean deposit, String month_rent_price, String deposit_price, String live_period_start, String live_period_end, ArrayList<String> images_url, String maintenance_cost, String room_size, String floor, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, Map<String, String> personal_proposal, String productId, String writerId, String home_name, Timestamp timestamp) {
-        this.home_latlng = new LatLng(37.5666805,126.9784147);
         this.home_adress = home_adress;
         this.month_rent = month_rent;
         this.deposit = deposit;
@@ -146,8 +145,16 @@ public class SaleProduct implements Serializable {
         this.writerId = writerId;
         this.home_name = home_name;
         this.timestamp = timestamp;
+        this.latlng_double= null;
     }
 
+    public List<Double> getLatlng_double() {
+        return latlng_double;
+    }
+
+    public void setLatlng_double(List<Double> latlng_double) {
+        this.latlng_double = latlng_double;
+    }
 
     public String getHome_name() {
         return home_name;
@@ -310,11 +317,9 @@ public class SaleProduct implements Serializable {
         this.writerId = writerId;
     }
 
-    public LatLng getHome_latlng() {
-        return home_latlng;
-    }
 
-    public void setHome_latlng(LatLng home_latlng) {
-        this.home_latlng = home_latlng;
+    public LatLng getHome_latlng(List<Double> p){
+        LatLng ret =new LatLng(p.get(0),p.get(1));
+        return ret;
     }
 }

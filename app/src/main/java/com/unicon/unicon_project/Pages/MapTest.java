@@ -487,7 +487,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
     private Marker addMarker(SaleProduct saleProduct, boolean isSelectedMarker){
         Log.e(TAG,"saleproduct ID : "+saleProduct.getProductId());
-        LatLng position = getLatLng(saleProduct.getHome_adress());
+        LatLng position = saleProduct.getHome_latlng(saleProduct.getLatlng_double());
         int price=0;
         if(saleProduct.getMonth_rent()) {
             price = Integer.parseInt(saleProduct.getMonth_rent_price());
@@ -498,13 +498,14 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         String formatted = NumberFormat.getCurrencyInstance().format(price);
         Log.e(TAG,"addMarker"+formatted);
         tv_marker.setText(price+"만원");
-
+        float zindex = 0;
         if(isSelectedMarker){
             //tv_marker.setBackgroundResource(R.drawable);
             tv_marker.setTextColor(Color.WHITE);
             tv_marker.setBackground(getDrawable(R.drawable.marker_border_ispick));
             marker_body.setBackground(getDrawable(R.drawable.marker_border_ispick));
             marker_tail.setBackground(getDrawable(R.drawable.down_arrow_marker_ispick));
+            zindex=1;
         }
         else{
             //tv_marker.setBackgroundResource(R.drawable);
@@ -517,10 +518,10 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.title(Integer.toString(price));
         markerOptions.snippet(saleProduct.getProductId());
+        markerOptions.zIndex(zindex);
         Log.e(TAG,"snippet : "+markerOptions.getSnippet());
         markerOptions.position(position);
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createDrawableFromView(this,marker_root_view)));
-
         Log.e(TAG,"addMarker"+position);
         return mMap.addMarker(markerOptions);
     }
@@ -531,7 +532,6 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
         SaleProduct saleProduct = new SaleProduct();
         for(int i=0;i<mDatas.size();i++){
             if(mDatas.get(i).getProductId().equals(marker.getSnippet())){
-
                 saleProduct = mDatas.get(i);
                 break;
             }
@@ -725,7 +725,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                             Log.e(TAG, "쿼리개수 : " + task.getResult().getDocuments().size());
                             for (DocumentSnapshot snap : task.getResult().getDocuments()) {
                                 SaleProduct temp = snap.toObject(SaleProduct.class);
-                                LatLng latlng=getLatLng(temp.getHome_adress());
+                                LatLng latlng=temp.getHome_latlng(temp.getLatlng_double());
 
                                 if(getDist(currentCameraPosition,latlng)>Boundary)continue;
 
@@ -934,7 +934,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
                 for (SaleProduct snap : mDatas) {
                     SaleProduct temp = snap;
-                    LatLng latlng=getLatLng(temp.getHome_adress());
+                    LatLng latlng=temp.getHome_latlng(temp.getLatlng_double());
 
                     if(getDist(currentCameraPosition,latlng)>Boundary)continue;
 
