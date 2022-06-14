@@ -1,5 +1,6 @@
 package com.unicon.unicon_project.Classes;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.Timestamp;
 
 import java.io.Serializable;
@@ -30,6 +31,7 @@ public class SaleProduct implements Serializable {
      */
 
     private String home_adress;
+    private LatLng home_latlng;
     private Boolean month_rent,deposit;
     private String month_rent_price , deposit_price;
     private String live_period_start, live_period_end;
@@ -48,6 +50,7 @@ public class SaleProduct implements Serializable {
 
 
     public SaleProduct(){
+        this.home_latlng = new LatLng(37.5666805,126.9784147);
         this.home_adress="" ;
         this.month_rent_price="";
         this.deposit_price="";
@@ -97,7 +100,32 @@ public class SaleProduct implements Serializable {
 
     }
 
+    public SaleProduct(String home_adress, Boolean month_rent, Boolean deposit, String month_rent_price, String deposit_price, String live_period_start, String live_period_end, ArrayList<String> images_url, String maintenance_cost, String room_size, String floor, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, Map<String, String> personal_proposal, String productId, String writerId, String home_name, Timestamp timestamp,LatLng home_latLng) {
+        this.home_latlng = home_latLng;
+        this.home_adress = home_adress;
+        this.month_rent = month_rent;
+        this.deposit = deposit;
+        this.month_rent_price = month_rent_price;
+        this.deposit_price = deposit_price;
+        this.live_period_start = live_period_start;
+        this.live_period_end = live_period_end;
+        this.images_url = images_url;
+        this.maintenance_cost = maintenance_cost;
+        this.room_size = room_size;
+        this.floor = floor;
+        this.structure = structure;
+        this.specific = specific;
+        this.maintains = maintains;
+        this.options = options;
+        this.personal_proposal = personal_proposal;
+        this.productId = productId;
+        this.writerId = writerId;
+        this.home_name = home_name;
+        this.timestamp = timestamp;
+    }
+
     public SaleProduct(String home_adress, Boolean month_rent, Boolean deposit, String month_rent_price, String deposit_price, String live_period_start, String live_period_end, ArrayList<String> images_url, String maintenance_cost, String room_size, String floor, String structure, String specific, Map<String, Boolean> maintains, Map<String, Boolean> options, Map<String, String> personal_proposal, String productId, String writerId, String home_name, Timestamp timestamp) {
+        this.home_latlng = new LatLng(37.5666805,126.9784147);
         this.home_adress = home_adress;
         this.month_rent = month_rent;
         this.deposit = deposit;
@@ -282,4 +310,11 @@ public class SaleProduct implements Serializable {
         this.writerId = writerId;
     }
 
+    public LatLng getHome_latlng() {
+        return home_latlng;
+    }
+
+    public void setHome_latlng(LatLng home_latlng) {
+        this.home_latlng = home_latlng;
+    }
 }

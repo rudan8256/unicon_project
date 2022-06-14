@@ -27,6 +27,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.unicon.unicon_project.Adapters.MultiImageAdapter;
 import com.unicon.unicon_project.ImageViewpager;
 import com.unicon.unicon_project.ProgressDialog;
@@ -73,6 +74,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private Map<String, Boolean> maintains, options;
     private DatePickerDialog datePickerDialog;
     private TextView live_period_start, live_period_end;
+    private LatLng home_latlng;
     private String str_live_period_start = "", str_live_period_end = "";
     private Map<String, String> personal_proposal;
     private Switch owner_switch;
@@ -293,6 +295,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                 newproduct.setFloor(floor);
                 newproduct.setStructure(structure);
                 newproduct.setHome_name(home_name);
+                newproduct.setHome_latlng(home_latlng);
 
                 curdate = String.valueOf(System.currentTimeMillis());
                 newproduct.setProductId(curdate + mAuth.getUid());
@@ -631,6 +634,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 home_address.setText(place.getAddress());
                 home_name = place.getName();
+                home_latlng = place.getLatLng();
                 //set Address on EditText
                 //Set LocalityName
 

@@ -181,6 +181,8 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
 
                     Log.e("###","쿼리개수 : "+task.getResult().getDocuments().size());
+
+                    Log.e("###","여긴가?");
                     for(DocumentSnapshot snap : task.getResult().getDocuments()){
                         mDatas.add(snap.toObject(SaleProduct.class));
                         if(!mTagList.isEmpty()) {
@@ -194,12 +196,11 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
 
                     }
 
-                    progressDialog.dismiss();
+                    Log.e("###","아닌가?");
 
                     for(SaleProduct item : mDatas){
-                        dist.add(myLocationManager.getDist(myLocationManager.getLatLng(getApplicationContext(),item.getHome_adress()),myLocationManager.getMyCurrentPosition()));
+                        dist.add(myLocationManager.getDist(item.getHome_latlng(),myLocationManager.getMyCurrentPosition()));
                     }
-                    progressDialog.show();
 
                     saleProductList.setDist(dist);
                     saleProductList.setSaleList(mDatas);
