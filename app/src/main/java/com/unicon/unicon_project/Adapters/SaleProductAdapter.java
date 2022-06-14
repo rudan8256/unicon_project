@@ -104,11 +104,13 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        if(mDatas.get(position).getMonth_rent()){  viewHolder.title.setText("월세");}
+        if(mDatas.get(position).getMonth_rent()){
+            viewHolder.title.setText("월세");
+            viewHolder.monthcost.setText("/"+mDatas.get(position).getMonth_rent_price());}
         else{ viewHolder.title.setText("전세"); }
 
         viewHolder.deposit.setText(mDatas.get(position).getDeposit_price());
-        viewHolder.monthcost.setText(" / "+mDatas.get(position).getMonth_rent_price());
+
         viewHolder.roomsize.setText(mDatas.get(position).getRoom_size()+"㎡");
         viewHolder.structure.setText(mDatas.get(position).getStructure());
         viewHolder.address.setText(mDatas.get(position).getHome_name());
