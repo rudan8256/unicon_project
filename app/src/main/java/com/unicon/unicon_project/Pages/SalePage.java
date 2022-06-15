@@ -82,7 +82,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private Spinner floorSpinner, structureSpinner;
     private ImageView back_activity;
     boolean deposit_btn=false,month_btn=false;
-    String KEY = BuildConfig.googlemapkey;//api 키 감추기
+    //String KEY = BuildConfig.googlemapkey;//api 키 감추기
 
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     StorageReference storageReference;
@@ -98,8 +98,8 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale_page);
 
-        Places.initialize(getApplicationContext(), KEY, Locale.KOREAN);
-        //Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
+        //Places.initialize(getApplicationContext(), KEY, Locale.KOREAN);
+        Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
 
         //새로운 판매글 클래스 생성
         newproduct = new SaleProduct();
