@@ -107,7 +107,8 @@ public class SaleProductAdapter extends RecyclerView.Adapter<SaleProductAdapter.
         if(mDatas.get(position).getMonth_rent()){
             viewHolder.title.setText("월세");
             viewHolder.monthcost.setText("/"+mDatas.get(position).getMonth_rent_price());}
-        else{ viewHolder.title.setText("전세"); }
+        else{ viewHolder.title.setText("전세");
+            viewHolder.monthcost.setText("");}
 
         viewHolder.deposit.setText(mDatas.get(position).getDeposit_price());
 

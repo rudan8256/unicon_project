@@ -940,7 +940,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 mDatas.clear();
                 mMap.clear();
                 mDatas=filter_datas;
-
+                selectedMarker = null;
                 Log.e("@@@@@@", "aa"+String.valueOf(filter_datas.size()));
 
                 for (SaleProduct snap : mDatas) {

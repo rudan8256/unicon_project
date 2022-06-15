@@ -320,6 +320,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                 }
                 saleProductAdapter.setmDatas(filter_datas);
                 saleProductAdapter.notifyDataSetChanged();
+                mPostRecyclerView.setAdapter(saleProductAdapter);
 
 
                 condition_dialog.dismiss();
@@ -449,6 +450,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
         saleProductList.sort(i);
         saleProductAdapter.setmDatas(saleProductList.getSaleList());
         saleProductAdapter.notifyDataSetChanged();
+        mPostRecyclerView.setAdapter(saleProductAdapter);
     }
 
     @Override

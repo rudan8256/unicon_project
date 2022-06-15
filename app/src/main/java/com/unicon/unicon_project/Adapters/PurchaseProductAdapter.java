@@ -84,9 +84,13 @@ public class PurchaseProductAdapter extends RecyclerView.Adapter<PurchaseProduct
             viewHolder.monthCost.setText(" / "+mDatas.get(position).getMonth_price_min() + "~" + mDatas.get(position).getMonth_price_max());
         } else if (mDatas.get(position).getDeposit()) {
             viewHolder.title.setText("전세");
+            viewHolder.monthCost.setText("");
         }
         if (!mDatas.get(position).getNegotiable()) {
             viewHolder.negotiable.setVisibility(View.GONE);
+        }
+        else{
+            viewHolder.negotiable.setVisibility(View.VISIBLE);
         }
 
         viewHolder.deposit.setText(mDatas.get(position).getDeposit_price_max() );
