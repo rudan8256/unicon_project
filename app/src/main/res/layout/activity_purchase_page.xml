@@ -570,7 +570,7 @@
                     android:background="@drawable/sale_purchase_white_round6"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:padding="5dp">
 
                     <EditText
                         android:id="@+id/room_size_min"
@@ -605,7 +605,7 @@
                     android:background="@drawable/sale_purchase_white_round6"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:padding="5dp">
 
                     <EditText
                         android:id="@+id/room_size_max"

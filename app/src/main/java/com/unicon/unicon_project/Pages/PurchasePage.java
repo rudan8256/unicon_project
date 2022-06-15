@@ -32,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -54,6 +55,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     private Spinner structureSpinner;
     private ImageView day_first, day_last;
     private Map<String, Boolean> maintains, options;
+    private List<Double> latlng_double= new ArrayList<>();
     private DatePickerDialog datePickerDialog;
     private TextView live_period_start, live_period_end;
     private String str_live_period_start = "", str_live_period_end = "";
@@ -154,7 +156,8 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 } else if (Integer.parseInt(str_live_period_start.replace("/", "")) > Integer.parseInt(str_live_period_end.replace("/", ""))) {
                     Toast.makeText(getApplicationContext(), "올바른 입주기간을 입력하세요", Toast.LENGTH_SHORT).show();
                     return;
-                }else if(Integer.parseInt(month_price_min.getText().toString())>Integer.parseInt(month_price_max.getText().toString())){
+                }else if(newProduct.getMonth_rent() )
+                    if(Integer.parseInt(month_price_min.getText().toString())>Integer.parseInt(month_price_max.getText().toString())){
                     Toast.makeText(getApplicationContext(), "올바른 월세범위를 입력하세요", Toast.LENGTH_SHORT).show();
                     return;
                 }else if(!room_size_min.getText().toString().equals("")&&!room_size_max.getText().toString().equals("")){
@@ -179,7 +182,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 newProduct.setSpecific(specific.getText().toString());
                 newProduct.setStructure(structure);
                 newProduct.setHome_name(home_name);
-
+                newProduct.setHome_latlng_double(latlng_double);
                 curDate = String.valueOf(System.currentTimeMillis());
                 newProduct.setProductId(curDate + mAuth.getUid());
 
@@ -518,6 +521,8 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 home_address.setText(place.getAddress());
                 home_name = place.getName();
+                latlng_double.add(place.getLatLng().latitude);
+                latlng_double.add(place.getLatLng().longitude);
                 //set Address on EditText
                 //Set LocalityName
 
