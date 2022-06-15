@@ -152,7 +152,7 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(getApplicationContext(), "필수정보 주소를 입력하세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if ((( month_price_min.getText().toString().equals("") || month_price_max.getText().toString().equals("") ) && newProduct.getMonth_rent())
+                if ((newProduct.getMonth_rent()&&( month_price_min.getText().toString().equals("") || month_price_max.getText().toString().equals("") ) )
                         ||  ( newProduct.getDeposit() && deposit_price_max.getText().toString().equals("") )|| str_live_period_start.equals("") || str_live_period_end.equals("")) {
                     Toast.makeText(getApplicationContext(), "필수정보를 입력하세요", Toast.LENGTH_SHORT).show();
                     return;
