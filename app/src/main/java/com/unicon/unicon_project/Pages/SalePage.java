@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.unicon.unicon_project.Adapters.MultiImageAdapter;
+import com.unicon.unicon_project.BuildConfig;
 import com.unicon.unicon_project.ImageViewpager;
 import com.unicon.unicon_project.ProgressDialog;
 import com.unicon.unicon_project.R;
@@ -81,7 +82,7 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     private Spinner floorSpinner, structureSpinner;
     private ImageView back_activity;
     boolean deposit_btn=false,month_btn=false;
-
+    String KEY = BuildConfig.googlemapkey;//api 키 감추기
 
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     StorageReference storageReference;
@@ -96,7 +97,9 @@ public class SalePage extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale_page);
-        Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
+
+        Places.initialize(getApplicationContext(), KEY, Locale.KOREAN);
+        //Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
 
         //새로운 판매글 클래스 생성
         newproduct = new SaleProduct();

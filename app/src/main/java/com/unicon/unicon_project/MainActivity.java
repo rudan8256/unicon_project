@@ -35,6 +35,7 @@ import com.unicon.unicon_project.Authentic.SignInActivity;
 import com.unicon.unicon_project.Classes.ChattingListData;
 import com.unicon.unicon_project.Classes.RecommendCondition;
 import com.unicon.unicon_project.Classes.SaleProduct;
+import com.unicon.unicon_project.Classes.User;
 import com.unicon.unicon_project.Pages.ChattingListActivity;
 import com.unicon.unicon_project.Pages.MapTest;
 import com.unicon.unicon_project.Pages.PurchaseList;
@@ -66,45 +67,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    LinearLayout ToSalePage, ToPurchasePage, ToSaleList, ToPurchaseList,Tomypage,ToMapTest,ToRecoPage,more_item_layout, month_area;
-    ImageView  btn_toChatting;
+    LinearLayout ToSalePage, ToPurchasePage, ToSaleList, ToPurchaseList, Tomypage, ToMapTest, ToRecoPage, more_item_layout, month_area;
+    ImageView btn_toChatting;
     FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // *** [ 장준승 ]채팅기능 관계로 추가 ***
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-    FirebaseDatabase database =FirebaseDatabase.getInstance();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
     final FirebaseUser user = mFirebaseAuth.getInstance().getCurrentUser();
     String uid;
     // *********************************
 
 
-    FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private long clickTime = 0;
     Dialog login_dialog;
     private TextView more_item_click;
 
     private LinearLayout recommend_condition, noitem_layout;
     private RecyclerView recommend_list;
-    private List<SaleProduct> mDatas =new ArrayList<>();
+    private List<SaleProduct> mDatas = new ArrayList<>();
     private List<Integer> dataScore = new ArrayList<>();
     SaleProductAdapter saleProductAdapter;
     private Dialog condition_dialog;
     RecommendCondition preUserdata;
 
-    private EditText deposit_price_max, month_price_min,month_price_max,live_period_start,live_period_end;
-    private EditText maintenance_cost, room_size_min,room_size_max;
+    private EditText deposit_price_max, month_price_min, month_price_max, live_period_start, live_period_end;
+    private EditText maintenance_cost, room_size_min, room_size_max;
     private String structure;
-    private LinearLayout deposit,month_rent;
+    private LinearLayout deposit, month_rent;
     public Map<String, Integer> structure_sel_map = new HashMap<>();
     private Spinner structureSpinner;
 
-    private ImageView day_first, day_last,transition_img;
+    private ImageView day_first, day_last, transition_img;
     private DatePickerDialog datePickerDialog;
-    private List<SaleProduct> sublist= new ArrayList<>(mDatas);
+    private List<SaleProduct> sublist = new ArrayList<>(mDatas);
+    private int declare_time;
 
 
     @Override
@@ -122,17 +124,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ToRecoPage = findViewById(R.id.To_reccoPage);
         noitem_layout = findViewById(R.id.no_recitem);
         more_item_click = findViewById(R.id.more_item_text);
-        more_item_layout= findViewById(R.id.more_item_layout);
+        more_item_layout = findViewById(R.id.more_item_layout);
         transition_img = findViewById(R.id.transition_img);
 
         more_item_layout.setVisibility(View.GONE);
         noitem_layout.setVisibility(View.GONE);
 
         //다이얼로그 생성
-        login_dialog= new Dialog(this);
+        login_dialog = new Dialog(this);
         login_dialog.setContentView(R.layout.dialog_yologinpage);
         login_dialog.setCanceledOnTouchOutside(true);
-
 
 
         login_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
@@ -150,29 +151,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-        if(firebaseAuth.getCurrentUser() != null) {
+        if (firebaseAuth.getCurrentUser() != null) {
             reccommend_start();
-        }
-        else{
+        } else {
             login_dialog.show();
         }
 
-        recommend_condition=findViewById(R.id.recommend_condition);
+        recommend_condition = findViewById(R.id.recommend_condition);
 
 
         recommend_condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Log.e("@@@@@@"," 클릭 확인");
+                Log.e("@@@@@@", " 클릭 확인");
 
-                if(firebaseAuth.getCurrentUser() != null) {
+                if (firebaseAuth.getCurrentUser() != null) {
                     showDialog();
 
-                }
-                else{
+                } else {
                     login_dialog.show();
-                    Log.e("@@@@@@","비로그인 확인");
+                    Log.e("@@@@@@", "비로그인 확인");
                 }
             }
         });
@@ -182,20 +181,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
 
-                if(firebaseAuth.getCurrentUser() != null) {
-                    Intent intent = new Intent(getApplicationContext(), SalePage.class);
+                if (firebaseAuth.getCurrentUser() != null) {
+                    if (checking_user()) {
+                        Intent intent = new Intent(getApplicationContext(), SalePage.class);
 
 
-                    Pair[] pairs = new Pair[1];
-                    pairs[0] = new Pair<View,String>(transition_img, "imagetransition");
-                    //액티비티에서 움직일 뷰와 트랜지션이름을 Pair배열에 담아둔다.
+                        Pair[] pairs = new Pair[1];
+                        pairs[0] = new Pair<View, String>(transition_img, "imagetransition");
+                        //액티비티에서 움직일 뷰와 트랜지션이름을 Pair배열에 담아둔다.
 
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
-                    //액티비티 옵션을 적용하기 위해 ActivityOptions객체를 만들고 트랜지션 에니메이션에 대한 설정을 넣는다
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, pairs);
+                        //액티비티 옵션을 적용하기 위해 ActivityOptions객체를 만들고 트랜지션 에니메이션에 대한 설정을 넣는다
 
-                    startActivity(intent,options.toBundle());
-                }
-                else{
+                        startActivity(intent, options.toBundle());
+                    }
+                } else {
                     login_dialog.show();
                 }
 
@@ -205,11 +205,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
 
-                if(firebaseAuth.getCurrentUser() != null) {
-                    Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
-                    startActivity(intent);
-                }
-                else{
+                if (firebaseAuth.getCurrentUser() != null) {
+                    if (checking_user()) {
+                        Intent intent = new Intent(getApplicationContext(), PurchasePage.class);
+                        startActivity(intent);
+                    }
+
+                } else {
                     login_dialog.show();
                 }
 
@@ -221,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MapTest.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up,R.anim.not_move);
+                overridePendingTransition(R.anim.slide_in_up, R.anim.not_move);
 
             }
         });
@@ -244,37 +246,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Tomypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(getApplicationContext(), MyPage.class);
+                Intent intent = new Intent(getApplicationContext(), MyPage.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
 
-
-            btn_toChatting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(firebaseAuth.getCurrentUser() != null) {
-                        Intent intent = new Intent(MainActivity.this, ChattingListActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-                    }
-                    else{
-                        login_dialog.show();
-                    }
-
+        btn_toChatting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (firebaseAuth.getCurrentUser() != null) {
+                    Intent intent = new Intent(MainActivity.this, ChattingListActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    login_dialog.show();
                 }
-            });
+
+            }
+        });
 
         ToRecoPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(firebaseAuth.getCurrentUser() != null) {
+                if (firebaseAuth.getCurrentUser() != null) {
                     Intent intent = new Intent(MainActivity.this, RecommendPage.class);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     login_dialog.show();
                 }
 
@@ -286,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void getHashKey(){
+    private void getHashKey() {
         PackageInfo packageInfo = null;
         try {
             packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
@@ -296,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (packageInfo == null)
             Log.e("KeyHash", "KeyHash:null");
 
-             for (Signature signature : packageInfo.signatures) {
+        for (Signature signature : packageInfo.signatures) {
             try {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
@@ -307,24 +306,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private  void reccommend_start(){
+    private void reccommend_start() {
 
-        recommend_list=findViewById(R.id.recommend_list);
+        recommend_list = findViewById(R.id.recommend_list);
 
 
-        structure_sel_map.put("상관없음",0);
-        structure_sel_map.put("오픈형 원룸",1);
-        structure_sel_map.put("분리형 원룸(방1, 거실)",2);
-        structure_sel_map.put("복층형 원룸",3);
-        structure_sel_map.put("투룸",4);
-        structure_sel_map.put("쓰리룸",5);
+        structure_sel_map.put("상관없음", 0);
+        structure_sel_map.put("오픈형 원룸", 1);
+        structure_sel_map.put("분리형 원룸(방1, 거실)", 2);
+        structure_sel_map.put("복층형 원룸", 3);
+        structure_sel_map.put("투룸", 4);
+        structure_sel_map.put("쓰리룸", 5);
 
         Log.e("$$$$", String.valueOf(structure_sel_map.get("오픈형 원룸")));
 
         preUserdata = new RecommendCondition();
 
 
-        condition_dialog= new Dialog(this);
+        condition_dialog = new Dialog(this);
         condition_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         condition_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         condition_dialog.setContentView(R.layout.dialog_reccondition);
@@ -335,11 +334,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Construter();
         searchInFB();
 
-        Log.e("@@@@@@"," 진입 확인");
+        Log.e("@@@@@@", " 진입 확인");
 
 
     }
-
 
 
     // 뒤로가기 버튼 2번 누를 시에 앱 종료
@@ -361,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStart() {
         super.onStart();
 
-        if(firebaseAuth.getCurrentUser() != null) {
+        if (firebaseAuth.getCurrentUser() != null) {
 
             btn_toChatting.setBackground(getResources().getDrawable(R.drawable.chatting_icon));
 
@@ -384,17 +382,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void searchInFB(){
+    public void searchInFB() {
 
 
         mstore.collection("Usercondition")
-                .whereEqualTo("writerId",firebaseAuth.getUid()).get()
+                .whereEqualTo("writerId", firebaseAuth.getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            preUserdata =document.toObject(RecommendCondition.class);
-                            Log.e("@@@@@@","들어옴?");
+                            preUserdata = document.toObject(RecommendCondition.class);
+                            Log.e("@@@@@@", "들어옴?");
 
                             deposit_price_max.setText(preUserdata.getDeposit_price_max());
                             month_price_max.setText(preUserdata.getMonth_rentprice_max());
@@ -448,15 +446,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mstore.collection("SaleProducts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task!=null){
+                if (task != null) {
                     mDatas.clear();
-                    Log.e("###","쿼리개수 : "+task.getResult().getDocuments().size());
-                    for(DocumentSnapshot snap : task.getResult().getDocuments()){
+                    Log.e("###", "쿼리개수 : " + task.getResult().getDocuments().size());
+                    for (DocumentSnapshot snap : task.getResult().getDocuments()) {
 
                         SaleProduct curdata = snap.toObject(SaleProduct.class);
 
-                        int cur_score= Judge(curdata);
-                        if(cur_score >= 1000) {
+                        int cur_score = Judge(curdata);
+                        if (cur_score >= 1000) {
 
 
                             mDatas.add(curdata);
@@ -473,16 +471,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
 
-               sublist= new ArrayList<>(mDatas);
+                sublist = new ArrayList<>(mDatas);
 
-                int datasize=mDatas.size();
-                if(datasize==0){
+                int datasize = mDatas.size();
+                if (datasize == 0) {
                     noitem_layout.setVisibility(View.VISIBLE);
                 }
-                if(datasize>5){
-                   sublist= mDatas.subList(0,4);
+                if (datasize > 5) {
+                    sublist = mDatas.subList(0, 4);
                     more_item_layout.setVisibility(View.VISIBLE);
-                    more_item_click.setText((datasize-4)+"개의 매물이더있습니다");
+                    more_item_click.setText((datasize - 4) + "개의 매물이더있습니다");
 
                     more_item_layout.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -507,26 +505,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void swap(int v,int e){
+    private void swap(int v, int e) {
         SaleProduct temp;
-        temp=mDatas.get(v);
-        mDatas.set(v,mDatas.get(e));
-        mDatas.set(e,temp);
+        temp = mDatas.get(v);
+        mDatas.set(v, mDatas.get(e));
+        mDatas.set(e, temp);
 
         int score_temp;
-        score_temp=dataScore.get(v);
-        dataScore.set(v,dataScore.get(e));
-        dataScore.set(e,score_temp);
+        score_temp = dataScore.get(v);
+        dataScore.set(v, dataScore.get(e));
+        dataScore.set(e, score_temp);
     }
 
-    private int Judge(SaleProduct curdata){
+    private int Judge(SaleProduct curdata) {
 
-        int total=0;
+        int total = 0;
 
-        String cur_data_start= curdata.getLive_period_start().replace("/","");
-        String cur_data_end= curdata.getLive_period_end().replace("/","");
-        String pre_data_start = preUserdata.getLive_period_start().replace("/","");
-        String pre_data_end =preUserdata.getLive_period_end().replace("/","");
+        String cur_data_start = curdata.getLive_period_start().replace("/", "");
+        String cur_data_end = curdata.getLive_period_end().replace("/", "");
+        String pre_data_start = preUserdata.getLive_period_start().replace("/", "");
+        String pre_data_end = preUserdata.getLive_period_end().replace("/", "");
 
 
 
@@ -534,25 +532,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         //전세 월세여부
-        if(  !(preUserdata.getDeposit() == curdata.getDeposit() || preUserdata.getMonth_rent() == curdata.getMonth_rent())){
+        if (!(preUserdata.getDeposit() == curdata.getDeposit() || preUserdata.getMonth_rent() == curdata.getMonth_rent())) {
             return -1;
         }
         //날짜
          if( ! cur_data_end.equals("") && !cur_data_start.equals("") && !pre_data_end.equals("") && !pre_data_start.equals("")) {
             if(Integer.parseInt(pre_data_end) <Integer.parseInt(cur_data_start) || Integer.parseInt(cur_data_end) < Integer.parseInt(pre_data_start) ) {
                 return -1;
-            }
-            else{
-                total  +=1000;
+            } else {
+                total += 1000;
             }
         }
         //구조
        if(! preUserdata.getStructure().equals("")) {
             if( ! preUserdata.getStructure().equals(curdata.getStructure()) && ! preUserdata.getStructure().equals("상관없음")) {
                 return -1;
-            }
-            else{
-                total  +=1000;
+            } else {
+                total += 1000;
             }
         }
 
@@ -627,16 +623,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month = month + 1;
-                        if(month<10 && day <10){
-                            live_period_start.setText( year+"/0"+month+"/0"+day);
-                        }
-                        else if(month<10 ){
-                            live_period_start.setText( year+"/0"+month+"/"+day);
-                        }
-                        else if(day<10 ){
-                            live_period_start.setText( year+"/"+month+"/0"+day);
-                        }
-                        else {
+                        if (month < 10 && day < 10) {
+                            live_period_start.setText(year + "/0" + month + "/0" + day);
+                        } else if (month < 10) {
+                            live_period_start.setText(year + "/0" + month + "/" + day);
+                        } else if (day < 10) {
+                            live_period_start.setText(year + "/" + month + "/0" + day);
+                        } else {
                             live_period_start.setText(year + "/" + month + "/" + day);
                         }
                     }
@@ -647,16 +640,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month = month + 1;
-                        if(month<10 && day <10){
-                            live_period_end.setText( year+"/0"+month+"/0"+day);
-                        }
-                        else if(month<10 ){
-                            live_period_end.setText( year+"/0"+month+"/"+day);
-                        }
-                        else if(day<10 ){
-                            live_period_end.setText( year+"/"+month+"/0"+day);
-                        }
-                        else {
+                        if (month < 10 && day < 10) {
+                            live_period_end.setText(year + "/0" + month + "/0" + day);
+                        } else if (month < 10) {
+                            live_period_end.setText(year + "/0" + month + "/" + day);
+                        } else if (day < 10) {
+                            live_period_end.setText(year + "/" + month + "/0" + day);
+                        } else {
                             live_period_end.setText(year + "/" + month + "/" + day);
                         }
                     }
@@ -708,13 +698,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 preUserdata.setWriterId(firebaseAuth.getUid());
 
 
-
                 mstore.collection("Usercondition").document(firebaseAuth.getUid())
                         .set(preUserdata)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Log.e("*****","업로드 성공");
+                                Log.e("*****", "업로드 성공");
                                 condition_dialog.dismiss();
                                 searchInFB();
                             }
@@ -728,9 +717,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch ( view.getId()){
+        switch (view.getId()) {
             case R.id.deposit:
-                if( !preUserdata.getDeposit() ){
+                if (!preUserdata.getDeposit()) {
                     preUserdata.setDeposit(true);
                     deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
                     deposit.setSelected(true);
@@ -742,16 +731,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                     month_area.setVisibility(View.GONE);
-                }
-                else{
+                } else {
                     preUserdata.setDeposit(false);
                     deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
                     deposit.setSelected(false);
 
-                    month_area.setVisibility(View.VISIBLE); }
+                    month_area.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.month_rent:
-                if( !preUserdata.getMonth_rent() ){
+                if (!preUserdata.getMonth_rent()) {
 
                     preUserdata.setMonth_rent(true);
                     month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
@@ -763,8 +752,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         deposit.setSelected(false);
                     }
                     month_area.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     preUserdata.setMonth_rent(false);
                     month_rent.setBackground(getDrawable(R.drawable.salepage_inputborder));
                     month_rent.setSelected(false);
@@ -774,13 +762,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void Construter(){
+    private void Construter() {
 
 
         deposit = condition_dialog.findViewById(R.id.deposit);
         month_rent = condition_dialog.findViewById(R.id.month_rent);
         deposit_price_max = condition_dialog.findViewById(R.id.deposit_price_max);
-        month_price_min= condition_dialog.findViewById(R.id.month_price_min);
+        month_price_min = condition_dialog.findViewById(R.id.month_price_min);
         month_price_max = condition_dialog.findViewById(R.id.month_price_max);
 
         live_period_start = condition_dialog.findViewById(R.id.live_period_start);
@@ -794,8 +782,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         day_first = condition_dialog.findViewById(R.id.day_first);
         day_last = condition_dialog.findViewById(R.id.day_last);
         month_area = condition_dialog.findViewById(R.id.month_area);
-
-
 
 
         structureSpinner = condition_dialog.findViewById(R.id.structure);
@@ -815,10 +801,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void set_Clicklistner(){
+    private void set_Clicklistner() {
 
         deposit.setOnClickListener(this);
         month_rent.setOnClickListener(this);
 
+    }
+
+    private boolean checking_user() {
+        mstore.collection("User").whereEqualTo("usertoken", user.getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            User userdata = document.toObject(User.class);
+                            declare_time = userdata.getDeclare_time();
+                        }
+                    }
+                });
+        return declare_time < 5;
     }
 }

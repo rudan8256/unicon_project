@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -31,8 +32,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.unicon.unicon_project.Adapters.MultiImageAdapter;
 import com.unicon.unicon_project.Authentic.SignInActivity;
+import com.unicon.unicon_project.Authentic.SignUpActivity;
 import com.unicon.unicon_project.ChattingActivity;
 import com.unicon.unicon_project.Classes.User;
 import com.unicon.unicon_project.ImageViewpager;
@@ -48,6 +52,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SaleProductPage extends AppCompatActivity implements OnMapReadyCallback {
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
@@ -56,16 +62,13 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
     SaleProduct select_data;
     private Button complete_btn;
     CardView btn_sale_chatting;
-    private TextView home_address, deposit_price, month_price, live_period_start, live_period_end,title_page;
-    private TextView maintenance_cost, room_size, specific, floor, structure,deposit_month;
+    private TextView home_address, deposit_price, month_price, live_period_start, live_period_end, title_page;
+    private TextView maintenance_cost, room_size, specific, floor, structure, deposit_month;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private LinearLayout deposit, month_rent, elec_cost, gas_cost, water_cost, internet_cost;
     private LinearLayout elec_boiler, gas_boiler, induction, aircon, washer, refrigerator, closet, gasrange, highlight;
     private LinearLayout convenience_store, subway, parking;
-    private TextView text_deposit, text_month_rent, text_negotiable, text_elec_cost, text_gas_cost, text_water_cost, text_internet_cost;
-    private TextView text_elec_boiler, text_gas_boiler, text_induction, text_aircon, text_washer, text_refrigerator, text_closet, text_gasrange, text_highlight;
-    private TextView text_convenience_store, text_subway, text_parking;
 
     private ArrayList<String> image_urllist;
     private ArrayList<Uri> uriList = new ArrayList<Uri>();
@@ -77,15 +80,17 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
     private LinearLayout layoutIndicator;
     private ArrayList<Uri> images = new ArrayList<Uri>();
     private int curnumImage;
+    int declare_time;
+    private String str_declare;
 
     GestureDetector detector;
     ProgressDialog progressDialog;
-    Dialog login_dialog;
+    Dialog login_dialog, declare_dialog;
 
     String chattingUserID;
 
     private ArrayList<String> Likes= new ArrayList<>();
-    private ImageView likeButton, back_acticity;
+    private ImageView likeButton, back_acticity, declareButton;
     private boolean isLiked;
 
     @Override
@@ -112,10 +117,10 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
 
         owner_switch.setClickable(false);
 
-        if(select_data.getMaintains().get("owner_agree")) {
+        if (select_data.getMaintains().get("owner_agree")) {
             owner_switch.setChecked(true);
             owner_switch.setSwitchTextAppearance(getApplicationContext(), R.style.SwitchTextAppearance_isclick);
-        }else {
+        } else {
             owner_switch.setSwitchTextAppearance(getApplicationContext(), R.style.SwitchTextAppearance);
         }
 
@@ -133,10 +138,9 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
         mstore.collection("User").document(select_data.getWriterId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if(document.exists()){
+                    if (document.exists()) {
                         User myUser = document.toObject(User.class);
                         chattingUserID = myUser.getUsername();
                     }
@@ -208,11 +212,78 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
             }
         });
 
+        //신고기능
+        declareButton = findViewById(R.id.declare_button);
+        mstore.collection("Declare").document(select_data.getProductId()+mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot documentSnapshot =task.getResult();
+                            if(documentSnapshot.exists()){
+                                declareButton.setClickable(false);
+                                declareButton.setImageResource(R.drawable.ic_declare_black);
+                            }
+                        }
+                    }
+                });
+        Map<String, Object> obj = new HashMap<>();
+        declare_dialog = new Dialog(this);
+        declare_dialog.setContentView(R.layout.dialog_edit_declaration);
+        declare_dialog.setCanceledOnTouchOutside(true);
+        declare_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText text = (EditText) declare_dialog.findViewById(R.id.text_declare);
+                str_declare = text.getText().toString();
+                if(str_declare.equals("")){
+                    Toast.makeText(SaleProductPage.this, "신고 사유를 적어주세요", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    mstore.collection("User").whereEqualTo("usertoken", select_data.getWriterId()).get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                    User userdata = document.toObject(User.class);
+                                    declare_time=userdata.getDeclare_time();
+                                    mstore.collection("User").document(select_data.getWriterId()).update("declare_time", declare_time+1);
+                                }
+                            }
+                        });
+                    obj.put("warning", str_declare);
+                    mstore.collection("Declare").document(select_data.getProductId()+mAuth.getCurrentUser().getUid())
+                            .set(obj).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.e("###", "declare");
+                        }
+                    });
+                    declareButton.setImageResource(R.drawable.ic_declare_black);
+                    declareButton.setClickable(false);
+                    declare_dialog.dismiss();
+                }
+            }
+        });
+        declare_dialog.findViewById(R.id.dialog_cancelbtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                declare_dialog.dismiss();
+            }
+        });
+        declareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                declare_dialog.show();
+            }
+        });
+
         btn_sale_chatting = findViewById(R.id.btn_sale_chatting);
         btn_sale_chatting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(firebaseAuth.getCurrentUser() != null) {
+                if (firebaseAuth.getCurrentUser() != null) {
                     Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
                     intent.putExtra("chattingID", "");
                     intent.putExtra("productID", select_data.getProductId());
@@ -220,8 +291,7 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
                     intent.putExtra("homeAddress", select_data.getHome_adress());
                     intent.putExtra("chattingUserID", chattingUserID);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     login_dialog.show();
                 }
             }
@@ -258,9 +328,9 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
 
             @Override
             public void onLongPress(MotionEvent motionEvent) {
-                Intent intent = new Intent(getApplicationContext(),ImageViewpager.class);
-                intent.putExtra("uri",uriList);
-                intent.putExtra("uri_Num",String.valueOf(curnumImage));
+                Intent intent = new Intent(getApplicationContext(), ImageViewpager.class);
+                intent.putExtra("uri", uriList);
+                intent.putExtra("uri_Num", String.valueOf(curnumImage));
                 startActivity(intent);
             }
 
@@ -273,10 +343,9 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
 
     }
 
-    private void Dialog_Load()
-    {
+    private void Dialog_Load() {
         //다이얼로그 생성
-        login_dialog= new Dialog(this);
+        login_dialog = new Dialog(this);
         login_dialog.setContentView(R.layout.dialog_yologinpage);
         login_dialog.setCanceledOnTouchOutside(true);
         login_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
@@ -298,7 +367,6 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
         image_urllist = select_data.getImages_url();
 
 
-
         for (String image_url : image_urllist) {
             Log.d("####", "image_url : " + image_url);
             FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -312,7 +380,7 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
 
                     uriList.add(uri);
 
-                    if(uriList.size() == image_urllist.size()){
+                    if (uriList.size() == image_urllist.size()) {
                         Viewpager_start();
                         progressDialog.dismiss();
                     }
@@ -328,13 +396,12 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
-    private void Viewpager_start(){
+    private void Viewpager_start() {
         sliderViewPager = findViewById(R.id.sliderViewPager);
         layoutIndicator = findViewById(R.id.layoutIndicators);
 
 
-
-        images= uriList ;
+        images = uriList;
         curnumImage = 0;
 
         Log.e("&&&&", String.valueOf(images.size()));
@@ -437,29 +504,10 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
 
         floor = findViewById(R.id.floor);
         structure = findViewById(R.id.structure);
-        text_deposit = findViewById(R.id.text_deposit);
-        text_month_rent = findViewById(R.id.text_month_rent);
-        text_negotiable = findViewById(R.id.text_negotiable);
-        text_elec_boiler = findViewById(R.id.text_elec_boiler);
-        text_elec_cost = findViewById(R.id.text_elec_cost);
-        text_gas_cost = findViewById(R.id.text_gas_cost);
-        text_water_cost = findViewById(R.id.text_water_cost);
-        text_internet_cost = findViewById(R.id.text_internet_cost);
-        text_gas_boiler = findViewById(R.id.text_gas_boiler);
-        text_induction = findViewById(R.id.text_induction);
-        text_aircon = findViewById(R.id.text_aircon);
-        text_washer = findViewById(R.id.text_washer);
-        text_refrigerator = findViewById(R.id.text_refrigerator);
-        text_closet = findViewById(R.id.text_closet);
-        text_gasrange = findViewById(R.id.text_gasrange);
-        text_highlight = findViewById(R.id.text_highlight);
-        text_convenience_store = findViewById(R.id.text_convenience_store);
-        text_subway = findViewById(R.id.text_subway);
-        text_parking = findViewById(R.id.text_parking);
 
-        title_page=findViewById(R.id.title_address);
+        title_page = findViewById(R.id.title_address);
 
-        deposit_month=findViewById(R.id.deposit_month);
+        deposit_month = findViewById(R.id.deposit_month);
     }
 
 
@@ -468,11 +516,10 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
         //데이터 부여
         home_address.setText(select_data.getHome_adress());
 
-        if(select_data.getMonth_rent()){
+        if (select_data.getMonth_rent()) {
             deposit_month.setText("월세");
-            month_price.setText("/" +select_data.getMonth_rent_price());
-        }
-        else{
+            month_price.setText("/" + select_data.getMonth_rent_price());
+        } else {
             deposit_month.setText("전세");
 
         }
@@ -481,14 +528,12 @@ public class SaleProductPage extends AppCompatActivity implements OnMapReadyCall
 
         live_period_start.setText(select_data.getLive_period_start());
         live_period_end.setText(select_data.getLive_period_end());
-        maintenance_cost.setText(select_data.getMaintenance_cost()+"만원");
-        room_size.setText(select_data.getRoom_size()+"㎡");
+        maintenance_cost.setText(select_data.getMaintenance_cost() + "만원");
+        room_size.setText(select_data.getRoom_size() + "㎡");
         specific.setText(select_data.getSpecific());
         floor.setText(select_data.getFloor());
         structure.setText(select_data.getStructure());
-    title_page.setText(select_data.getHome_name());
-
-
+        title_page.setText(select_data.getHome_name());
 
 
         if (select_data.getMaintains().get("elec_cost")) {

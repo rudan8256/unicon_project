@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unicon.unicon_project.BuildConfig;
 import com.unicon.unicon_project.Classes.PurchaseProduct;
 import com.unicon.unicon_project.R;
 import com.google.android.gms.common.api.Status;
@@ -62,12 +63,14 @@ public class PurchasePage extends AppCompatActivity implements View.OnClickListe
     FirebaseFirestore mStore = FirebaseFirestore.getInstance();
     StorageReference storageReference;
     private ImageView back_activity;
+    String KEY = BuildConfig.googlemapkey;//api 키 감추기
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase_page);
-        Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
+        Places.initialize(getApplicationContext(), KEY, Locale.KOREAN);
+        //Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://uniconproject-2be63.appspot.com/");
         back_activity = findViewById(R.id.back_acticity);
 

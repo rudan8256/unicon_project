@@ -56,6 +56,7 @@ public class MyPage extends AppCompatActivity {
     private String token = "";
     private GoogleSignInClient mGoogleSignInClient;
     private Button btn_log_out;
+    private int declare_time;
     Dialog nickname_dialog;
 
     @Override
@@ -198,54 +199,56 @@ public class MyPage extends AppCompatActivity {
         layout_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mstore.collection("User").document(firebaseAuth.getCurrentUser().getUid())
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                if (Session.getCurrentSession().checkAndImplicitOpen()) {
-                                    UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
-                                        @Override
-                                        public void onSessionClosed(ErrorResult errorResult) {
-                                            super.onSessionClosed(errorResult);
-                                        }
-
-                                        @Override
-                                        public void onCompleteLogout() {
-                                            if (mSessionCallback != null) {
-                                                Session.getCurrentSession().removeCallback(mSessionCallback);
+                if (checking_user()) {
+                    mstore.collection("User").document(firebaseAuth.getCurrentUser().getUid())
+                            .delete()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    if (Session.getCurrentSession().checkAndImplicitOpen()) {
+                                        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+                                            @Override
+                                            public void onSessionClosed(ErrorResult errorResult) {
+                                                super.onSessionClosed(errorResult);
                                             }
-                                        }
-                                    });
-                                }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.e("###", "회원탈퇴 실패");
-                            }
-                        });
-                firebaseAuth.getCurrentUser()
-                        .delete()
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.e("###", "회원탈퇴 성공");
-                                }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.e("###", " "+e);
-                            }
-                        });
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+                                            @Override
+                                            public void onCompleteLogout() {
+                                                if (mSessionCallback != null) {
+                                                    Session.getCurrentSession().removeCallback(mSessionCallback);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("###", "회원탈퇴 실패");
+                                }
+                            });
+                    firebaseAuth.getCurrentUser()
+                            .delete()
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.e("###", "회원탈퇴 성공");
+                                    }
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("###", " " + e);
+                                }
+                            });
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -308,5 +311,19 @@ public class MyPage extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
+    }
+
+    private boolean checking_user(){
+        mstore.collection("User").whereEqualTo("usertoken", firebaseAuth.getCurrentUser().getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            User userdata = document.toObject(User.class);
+                            declare_time=userdata.getDeclare_time();
+                        }
+                    }
+                });
+        return declare_time < 5;
     }
 }

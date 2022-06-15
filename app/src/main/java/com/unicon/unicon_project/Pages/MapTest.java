@@ -42,6 +42,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.unicon.unicon_project.BuildConfig;
 import com.unicon.unicon_project.Classes.Item;
 import com.unicon.unicon_project.ProgressDialog;
 import com.unicon.unicon_project.R;
@@ -149,6 +150,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
             Room_size_max , Room_size_min;
     private boolean deposit_bool=false,month_bool=false;
     ProgressDialog progressDialog;
+    String KEY = BuildConfig.googlemapkey;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,7 +230,9 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
             }
         });
 
-        Places.initialize(getApplicationContext(),"AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA",Locale.KOREAN);
+
+        Places.initialize(getApplicationContext(), KEY, Locale.KOREAN);
+        //Places.initialize(getApplicationContext(), "AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA", Locale.KOREAN);
 
 
         //마커클릭시 리니어 요소들

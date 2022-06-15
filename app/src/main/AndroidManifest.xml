@@ -59,6 +59,9 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${GOOGLE_API_KEY}"/>
 
         <activity
             android:name=".Authentic.SignUpActivity"
@@ -82,7 +85,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBslpmgHhMBvhT2ZrhV7tX4kmT_3jDrPAA" />
+            android:value="${GOOGLE_API_KEY}"  />
 
         <activity
             android:name=".Pages.MapTest"

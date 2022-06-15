@@ -1,0 +1,78 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_margin="20dp"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="신고하기"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_declare_red"
+                android:layout_marginRight="20dp"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/text_declare"
+            android:inputType="text"
+            android:layout_margin="20dp"
+            android:textSize="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="신고사유"/>
+
+
+        <LinearLayout
+            android:layout_margin="20dp"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textSize="15sp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:id="@+id/dialog_cancelbtn"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="취소"/>
+
+            <Button
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/salepage_inputborder_isclick"
+                android:id="@+id/complete_btn"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="제출"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
