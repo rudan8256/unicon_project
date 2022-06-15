@@ -420,6 +420,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if (preUserdata.getDeposit()) {
                                 deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
                                 deposit.setSelected(true);
+                                month_area.setVisibility(View.GONE);
                             } else {
                                 deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
                                 deposit.setSelected(false);
@@ -517,95 +518,97 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dataScore.set(e, score_temp);
     }
 
-    private int Judge(SaleProduct curdata) {
 
-        int total = 0;
+    private int Judge(SaleProduct curdata){
 
-        String cur_data_start = curdata.getLive_period_start().replace("/", "");
-        String cur_data_end = curdata.getLive_period_end().replace("/", "");
-        String pre_data_start = preUserdata.getLive_period_start().replace("/", "");
-        String pre_data_end = preUserdata.getLive_period_end().replace("/", "");
+        int total=0;
 
-
+        String cur_data_start= curdata.getLive_period_start().replace("/","");
+        String cur_data_end= curdata.getLive_period_end().replace("/","");
+        String pre_data_start = preUserdata.getLive_period_start().replace("/","");
+        String pre_data_end =preUserdata.getLive_period_end().replace("/","");
 
         //완변 조건매물 토탈 4000
 
 
         //전세 월세여부
-        if (!(preUserdata.getDeposit() == curdata.getDeposit() || preUserdata.getMonth_rent() == curdata.getMonth_rent())) {
+        if(  !(preUserdata.getDeposit() == curdata.getDeposit() || preUserdata.getMonth_rent() == curdata.getMonth_rent())){
             return -1;
         }
         //날짜
-         if( ! cur_data_end.equals("") && !cur_data_start.equals("") && !pre_data_end.equals("") && !pre_data_start.equals("")) {
+        if( ! cur_data_end.equals("") && !cur_data_start.equals("") && !pre_data_end.equals("") && !pre_data_start.equals("")) {
             if(Integer.parseInt(pre_data_end) <Integer.parseInt(cur_data_start) || Integer.parseInt(cur_data_end) < Integer.parseInt(pre_data_start) ) {
                 return -1;
-            } else {
-                total += 1000;
+            }
+            else{
+                total  +=1000;
             }
         }
         //구조
-       if(! preUserdata.getStructure().equals("")) {
+        if(! preUserdata.getStructure().equals("")) {
             if( ! preUserdata.getStructure().equals(curdata.getStructure()) && ! preUserdata.getStructure().equals("상관없음")) {
+
                 return -1;
-            } else {
-                total += 1000;
+            }
+            else{
+                total  +=1000;
             }
         }
 
 
-            //전세금
-            if (!preUserdata.getDeposit_price_max().equals("")) {
-                if (Integer.parseInt(preUserdata.getDeposit_price_max()) >= Integer.parseInt(curdata.getDeposit_price())) {
-                    total += 1000;
-                }
-                else if ( Integer.parseInt(curdata.getDeposit_price()) - Integer.parseInt(preUserdata.getDeposit_price_max())<=50  ){
-                    total += (Integer.parseInt(curdata.getDeposit_price()) - Integer.parseInt(preUserdata.getDeposit_price_max()) )*10;
-                }
-                else{
-                    return -1;
-                }
+        //전세금
+        if (!preUserdata.getDeposit_price_max().equals("")) {
+            if (Integer.parseInt(preUserdata.getDeposit_price_max()) >= Integer.parseInt(curdata.getDeposit_price())) {
+                total += 1000;
             }
+            else if ( Integer.parseInt(curdata.getDeposit_price()) - Integer.parseInt(preUserdata.getDeposit_price_max())<=50  ){
+                total += (Integer.parseInt(curdata.getDeposit_price()) - Integer.parseInt(preUserdata.getDeposit_price_max()) )*10;
+            }
+            else{
+                return -1;
+            }
+        }
 
-            //월세
-            if (preUserdata.getMonth_rent() && !preUserdata.getMonth_rentprice_max().equals("") && !preUserdata.getMonth_rentprice_min().equals("")) {
+        //월세
+        if (preUserdata.getMonth_rent() && !preUserdata.getMonth_rentprice_max().equals("") && !preUserdata.getMonth_rentprice_min().equals("")) {
 
-                if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) >= Integer.parseInt(curdata.getMonth_rent_price()) &&
-                        Integer.parseInt(preUserdata.getMonth_rentprice_min()) <= Integer.parseInt(curdata.getMonth_rent_price())) {
-                    total += 1000;
+            if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) >= Integer.parseInt(curdata.getMonth_rent_price()) &&
+                    Integer.parseInt(preUserdata.getMonth_rentprice_min()) <= Integer.parseInt(curdata.getMonth_rent_price())) {
+                total += 1000;
 
-                } else if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) < Integer.parseInt(curdata.getMonth_rent_price())) {
-                    if (Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()) <= 5) {
-                        total += 500 - 100 * (Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()));
-
-                    } else {
-                        return -1;
-                    }
+            } else if (Integer.parseInt(preUserdata.getMonth_rentprice_max()) < Integer.parseInt(curdata.getMonth_rent_price())) {
+                if (Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()) <= 5) {
+                    total += 500 - 100 * (Integer.parseInt(curdata.getMonth_rent_price()) - Integer.parseInt(preUserdata.getMonth_rentprice_max()));
 
                 } else {
-                    if (Integer.parseInt(preUserdata.getMonth_rentprice_min()) - Integer.parseInt(curdata.getMonth_rent_price()) <= 5) {
-                        total += 500 - 100 * (Integer.parseInt(preUserdata.getMonth_rentprice_min()) - Integer.parseInt(curdata.getMonth_rent_price()));
-                    } else {
-                        return -1;
-                    }
-
+                    return -1;
                 }
-            }
 
-            //관리비
-            if (!preUserdata.getMaintenance_cost().equals("")) {
-                if (Integer.parseInt(preUserdata.getMaintenance_cost()) >= Integer.parseInt(curdata.getMaintenance_cost())) {
-                    total += 1000;
+            } else {
+                if (Integer.parseInt(preUserdata.getMonth_rentprice_min()) - Integer.parseInt(curdata.getMonth_rent_price()) <= 5) {
+                    total += 500 - 100 * (Integer.parseInt(preUserdata.getMonth_rentprice_min()) - Integer.parseInt(curdata.getMonth_rent_price()));
+                } else {
+                    return -1;
                 }
-            }
 
-            //방사이즈
-            if (!preUserdata.getRoom_size_max().equals("") && !preUserdata.getRoom_size_min().equals("")) {
-                if (Integer.parseInt(preUserdata.getRoom_size_min()) <= Integer.parseInt(curdata.getRoom_size()) &&
-                        Integer.parseInt(preUserdata.getRoom_size_max()) >= Integer.parseInt(curdata.getRoom_size())
-                ) {
-                    total += 1000;
-                }
             }
+        }
+
+        //관리비
+        if (!preUserdata.getMaintenance_cost().equals("")) {
+            if (Integer.parseInt(preUserdata.getMaintenance_cost()) >= Integer.parseInt(curdata.getMaintenance_cost())) {
+                total += 1000;
+            }
+        }
+
+        //방사이즈
+        if (!preUserdata.getRoom_size_max().equals("") && !preUserdata.getRoom_size_min().equals("")) {
+            if (Integer.parseInt(preUserdata.getRoom_size_min()) <= Integer.parseInt(curdata.getRoom_size()) &&
+                    Integer.parseInt(preUserdata.getRoom_size_max()) >= Integer.parseInt(curdata.getRoom_size())
+            ) {
+                total += 1000;
+            }
+        }
 
         return total;
     }

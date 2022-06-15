@@ -174,6 +174,7 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
         progressDialog.show();
         mDatas = new ArrayList<>();//
         List<Double> dist = new ArrayList<>();
+        myLocationManager.getCurrentPositionFromGPS(SaleList.this,SaleList.this);
         mStore.collection("SaleProducts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -193,10 +194,12 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
                         }
                     }
 
-                    Log.e("###","아닌가?");
 
                     for(SaleProduct item : mDatas){
                         dist.add(myLocationManager.getDist(item.getHome_latlng(item.getLatlng_double()),myLocationManager.getMyCurrentPosition()));
+
+
+
                     }
 
                     saleProductList.setDist(dist);
