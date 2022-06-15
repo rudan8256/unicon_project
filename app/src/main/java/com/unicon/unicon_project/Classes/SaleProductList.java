@@ -1,6 +1,7 @@
 package com.unicon.unicon_project.Classes;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +49,18 @@ public class SaleProductList {
 
             for(int i=0;i<_size;i++){
                 for(int j=0;j<_size-1;j++){
-                    if(Integer.parseInt(saleList.get(j).getMonth_rent_price())>Integer.parseInt(saleList.get(j+1).getMonth_rent_price()))
-                        swap(j,j+1);
+
+
+                    if(saleList.get(j).getMonth_rent() && saleList.get(j+1).getMonth_rent()) {
+
+                        Log.e("@@@@@","들어옴" + String.valueOf(saleList.get(j).getMonth_rent_price()));
+                        if (Integer.parseInt(saleList.get(j).getMonth_rent_price()) > Integer.parseInt(saleList.get(j + 1).getMonth_rent_price())) {
+                            swap(j, j + 1);
+                        }
+                    }
+                    else if(saleList.get(j+1).getMonth_rent() && saleList.get(j).getDeposit() ){
+                        swap(j, j + 1);
+                    }
                 }
             }
         }
@@ -57,8 +68,16 @@ public class SaleProductList {
             //가격 높은
             for(int i=0;i<_size;i++){
                 for(int j=0;j<_size-1;j++){
-                    if(Integer.parseInt(saleList.get(j).getMonth_rent_price())<Integer.parseInt(saleList.get(j+1).getMonth_rent_price()))
-                        swap(j,j+1);
+
+                    if(saleList.get(j).getMonth_rent() && saleList.get(j+1).getMonth_rent()) {
+                        if(Integer.parseInt(saleList.get(j).getMonth_rent_price())<Integer.parseInt(saleList.get(j+1).getMonth_rent_price())) {
+                            swap(j, j + 1);
+                        }
+                    }
+                    else if(saleList.get(j+1).getMonth_rent() && saleList.get(j).getDeposit() ){
+                        swap(j, j + 1);
+                    }
+
                 }
             }
         }
