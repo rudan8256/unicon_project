@@ -757,8 +757,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
             case R.id.deposit:
                 if( !deposit_bool ){
                     deposit_bool=true;
-                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
-                    deposit.setSelected(true);
+                    filter_deposit.setBackground(getDrawable(R.drawable.salepage_inputborder_isclick));
+                    filter_deposit.setSelected(true);
 
                     if( month_bool ) {
                         month_bool = false;
@@ -769,8 +769,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
                 }
                 else{
                     deposit_bool=false;
-                    deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
-                    deposit.setSelected(false);
+                    filter_deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                    filter_deposit.setSelected(false);
 
                     month_area.setVisibility(View.VISIBLE);
                 }
@@ -783,8 +783,8 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
                     if( deposit_bool ) {
                         deposit_bool=false;
-                        deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
-                        deposit.setSelected(false);
+                        filter_deposit.setBackground(getDrawable(R.drawable.salepage_inputborder));
+                        filter_deposit.setSelected(false);
                     }
                     month_area.setVisibility(View.VISIBLE);
                 }
@@ -890,6 +890,13 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
             }
         });
 
+
+        condition_dialog.findViewById(R.id.cancle_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                condition_dialog.dismiss();
+            }
+        });
 
         set_Clicklistner();
 
@@ -1032,7 +1039,7 @@ public class MapTest extends AppCompatActivity implements OnMapReadyCallback, Go
 
     private void set_Clicklistner(){
 
-        deposit.setOnClickListener(this);
+        filter_deposit.setOnClickListener(this);
         month_rent.setOnClickListener(this);
 
     }

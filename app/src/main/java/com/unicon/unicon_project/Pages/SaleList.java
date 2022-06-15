@@ -277,6 +277,13 @@ public class SaleList extends AppCompatActivity implements SaleProductAdapter.On
             }
         });
 
+        condition_dialog.findViewById(R.id.cancle_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                condition_dialog.dismiss();
+            }
+        });
+
 
         set_Clicklistner();
 
