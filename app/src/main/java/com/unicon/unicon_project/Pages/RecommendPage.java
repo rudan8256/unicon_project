@@ -195,7 +195,7 @@ public class RecommendPage extends AppCompatActivity implements View.OnClickList
 
                 for(int i=0;i<mDatas.size()-1;i++){
                     for(int j=0;j<mDatas.size()-1;j++){
-                        if(dataScore.get(j)>dataScore.get(j+1))
+                        if(dataScore.get(j)<dataScore.get(j+1))
                             swap(j,j+1);
                     }
                 }
