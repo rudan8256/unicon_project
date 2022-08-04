@@ -3,6 +3,7 @@ package com.unicon.unicon_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +13,11 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.unicon.unicon_project.Adapters.ChattingAdapter;
 import com.unicon.unicon_project.Classes.ChattingData;
 import com.unicon.unicon_project.Classes.ChattingListData;
@@ -30,21 +35,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.unicon.unicon_project.Pages.SaleProductPage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChattingActivity extends AppCompatActivity {
-    FirebaseDatabase database =FirebaseDatabase.getInstance();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference = database.getReference();
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference addDatabase;
     private FirebaseFirestore mstore = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    ImageView iv_chatting_back;
+    ImageView iv_chatting_back, user_filter;
     TextView tv_chatting_nickname;
+
+    Dialog more_dialog, declare_dialog;
 
     String roomInformation;
     Button btn_sendMsg;
@@ -62,6 +72,8 @@ public class ChattingActivity extends AppCompatActivity {
     String productID, writerID, homeAddress, chattingUserID;
     String chattingID;
     String there;
+    String str_declare;
+    int declare_time;
 
     //내 닉네임과 상대방의 UserID를 저장
     String myUserID, writerUserID;
@@ -89,7 +101,7 @@ public class ChattingActivity extends AppCompatActivity {
         productID = it.getExtras().get("productID").toString();
         writerID = it.getExtras().get("writerID").toString();
         homeAddress = it.getExtras().get("homeAddress").toString();
-        if(it.getExtras().get("chattingUserID") != null)
+        if (it.getExtras().get("chattingUserID") != null)
             chattingUserID = it.getExtras().get("chattingUserID").toString();
         else
             chattingUserID = "anonymous";
@@ -100,7 +112,7 @@ public class ChattingActivity extends AppCompatActivity {
         btn_sendMsg = findViewById(R.id.btn_sendMsg);
 
         tv_chatting_nickname = findViewById(R.id.tv_chatting_nickname);
-        tv_chatting_nickname.setText(chattingUserID+"님과의 채팅");
+        tv_chatting_nickname.setText(chattingUserID + "님과의 채팅");
 
         iv_chatting_back = findViewById(R.id.iv_chatting_back);
         iv_chatting_back.setOnClickListener(new View.OnClickListener() {
@@ -116,10 +128,9 @@ public class ChattingActivity extends AppCompatActivity {
         mstore.collection("User").document(uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if(document.exists()){
+                    if (document.exists()) {
                         User myUser = document.toObject(User.class);
                         myUserID = myUser.getUsername();
                         // 상대방에게 해당 chattingID가 있는지 검사하고 추가하기
@@ -131,10 +142,9 @@ public class ChattingActivity extends AppCompatActivity {
         mstore.collection("User").document(writerID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if(document.exists()){
+                    if (document.exists()) {
                         User myUser = document.toObject(User.class);
                         writerUserID = myUser.getUsername();
                         // 자신에게 해당 chattingID가 있는지 검사하고 추가하기
@@ -145,7 +155,7 @@ public class ChattingActivity extends AppCompatActivity {
         });
 
         //chattingID 생성
-        if(chattingID.equals(""))
+        if (chattingID.equals(""))
             chattingID = chattingManager.generateChattingID(productID, uid);
 
         //처음 들어왔을시 unread 0으로 초기화
@@ -154,21 +164,19 @@ public class ChattingActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
+                } else {
                     ChattingListData chattingListData = new ChattingListData();
                     for (final DataSnapshot data : task.getResult().getChildren()) {
                         ChattingListData cld = data.getValue(ChattingListData.class);
 
                         //chattingID가 똑같은 채팅방을 가져온다
-                        if(cld.getChattingID().equals(chattingID))
+                        if (cld.getChattingID().equals(chattingID))
                             chattingListData = cld;
                     }
 
                     chattingListData.setUnread(0);
 
-                    if(chattingListData.getChattingID().length() > 0)
-                    {
+                    if (chattingListData.getChattingID().length() > 0) {
                         reference.child("chattingList").child(uid).child(chattingID).setValue(chattingListData).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -179,7 +187,8 @@ public class ChattingActivity extends AppCompatActivity {
                         });
                     }
                 }
-            }});
+            }
+        });
 
 
         gv = findViewById(R.id.gv_chatting);
@@ -198,14 +207,14 @@ public class ChattingActivity extends AppCompatActivity {
                 reference.child("chatting").child(chattingID).push().setValue(chattingData).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             //삽입 완료시
                         }
                     }
                 });
 
                 //상대방 정보 = there 가져오기
-                if(uid == writerID)
+                if (uid == writerID)
                     // 현재 들어온 사람이 작성자인 경우
                     there = chattingID.replaceAll(productID, "");
                 else
@@ -218,18 +227,17 @@ public class ChattingActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
                             Log.e("firebase", "Error getting data", task.getException());
-                        }
-                        else {
+                        } else {
                             ChattingListData chattingListData = new ChattingListData();
                             for (final DataSnapshot data : task.getResult().getChildren()) {
                                 ChattingListData cld = data.getValue(ChattingListData.class);
 
                                 //내가 대상으로 되어있는 채팅방을 가져온다.
-                                if(cld.getUserName().equals(uid))
+                                if (cld.getUserName().equals(uid))
                                     chattingListData = cld;
                             }
 
-                            chattingListData.setUnread(chattingListData.getUnread()+1);
+                            chattingListData.setUnread(chattingListData.getUnread() + 1);
 
                             reference.child("chattingList").child(there).child(chattingID).setValue(chattingListData).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -240,24 +248,86 @@ public class ChattingActivity extends AppCompatActivity {
                                 }
                             });
                         }
-                    }});
+                    }
+                });
 
                 et_myMsg.setText("");
             }
         });
 
+        //사용자 차단, 신고기능
+        Map<String, Object> obj = new HashMap<>();
+        declare_dialog=new Dialog(this);
+        declare_dialog.setContentView(R.layout.dialog_edit_declaration);
+        declare_dialog.setCanceledOnTouchOutside(true);
+        declare_dialog.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText text = (EditText)declare_dialog.findViewById(R.id.text_declare);
+                str_declare= text.getText().toString();
+                if(str_declare.equals("")){
+                    Toast.makeText(ChattingActivity.this, "신고 사유를 적어주세요", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    mstore.collection("User").whereEqualTo("usertoken", writerID).get()
+                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                        User userdata = document.toObject(User.class);
+                                        declare_time=userdata.getDeclare_time();
+                                        mstore.collection("User").document(writerID).update("declare_time", declare_time+1);
+                                    }
+                                }
+                            });
+                    obj.put("warning", str_declare);
+                    mstore.collection("Declare").document(writerID+chattingID)
+                            .set(obj).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.e("###", "declare");
+                        }
+                    });
+                    declare_dialog.dismiss();
+                }
+            }
+        });
+        declare_dialog.findViewById(R.id.dialog_cancelbtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                declare_dialog.dismiss();
+            }
+        });
+        user_filter = findViewById(R.id.filter_user);
+        more_dialog=new Dialog(this);
+        more_dialog.setContentView(R.layout.dialog_more);
+        more_dialog.setCanceledOnTouchOutside(true);
+        more_dialog.findViewById(R.id.btn_block).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-
-
-
+            }
+        });
+        more_dialog.findViewById(R.id.btn_declare).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                more_dialog.dismiss();
+                declare_dialog.show();
+            }
+        });
+        user_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                more_dialog.show();
+            }
+        });
 
 
         //GridView에 정보 삽입
         getInfo();
     }
 
-    public void isChattingListExist(String _uid, String _chattingID, String _userID)
-    {
+    public void isChattingListExist(String _uid, String _chattingID, String _userID) {
         // 해당 uid에 productID 채팅정보가 존재하는지 검사하여 그 값을 반환한다.
         // input ( _uid, _chattingID )
         _isChattingListExist = false;
@@ -267,22 +337,19 @@ public class ChattingActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    for (final DataSnapshot data : task.getResult().getChildren())
-                    {
+                } else {
+                    for (final DataSnapshot data : task.getResult().getChildren()) {
                         ChattingListData gds = data.getValue(ChattingListData.class);
-                        Log.e("###", "result = "+gds.getProductID().equals(productID));
-                        if(gds.getChattingID().equals(_chattingID))
-                        {
+                        Log.e("###", "result = " + gds.getProductID().equals(productID));
+                        if (gds.getChattingID().equals(_chattingID)) {
                             //존재하는 경우 true 처리
                             _isChattingListExist = true;
                         }
                     }
 
-                    if(!_isChattingListExist) {
+                    if (!_isChattingListExist) {
                         ChattingListData data = new ChattingListData(homeAddress, _uid, productID, _chattingID, "", 0);
-                        if(_uid == writerID)
+                        if (_uid == writerID)
                             // 현재 들어온 사람이 작성자인 경우
                             data.setUserName(_chattingID.replaceAll(productID, ""));
                         else
@@ -304,21 +371,19 @@ public class ChattingActivity extends AppCompatActivity {
         });
     }
 
-    public void getInfo(){
+    public void getInfo() {
         reference.child("chatting").child(chattingID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 items.clear();
                 for (final DataSnapshot data : snapshot.getChildren()) {
                     ChattingData gds = data.getValue(ChattingData.class);
-                    if(!gds.msg.equals("Agree"))
-                    {
+                    if (!gds.msg.equals("Agree")) {
                         items.add(gds);
-                    }else{
-                        if(gds.uid.equals(user.getUid()))
-                        {
+                    } else {
+                        if (gds.uid.equals(user.getUid())) {
                             Agree1 = true;
-                        }else{
+                        } else {
                             Agree2 = true;
                         }
                     }
